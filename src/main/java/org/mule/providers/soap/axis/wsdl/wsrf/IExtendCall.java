@@ -15,5 +15,6 @@ import org.apache.axis.client.Call;
 
 
 public interface IExtendCall {
+	
 	public void extendCall(Call call , UMOEvent event);
 }

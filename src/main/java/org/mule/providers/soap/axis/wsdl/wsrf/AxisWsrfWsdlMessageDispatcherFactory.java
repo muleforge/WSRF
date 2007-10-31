@@ -22,6 +22,7 @@ public class AxisWsrfWsdlMessageDispatcherFactory extends AbstractMessageDispatc
 {
     public UMOMessageDispatcher create(UMOImmutableEndpoint endpoint) throws UMOException
     {
+    	
         return new AxisWsrfWsdlMessageDispatcher(endpoint);
     }
 }

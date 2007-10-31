@@ -31,6 +31,7 @@ public class AxisWsrfWsdlMessageDispatcher extends AxisWsdlMessageDispatcher imp
 
     public AxisWsrfWsdlMessageDispatcher(UMOImmutableEndpoint endpoint)
     {
+    	
         super(endpoint);
     }
     protected UMOMessage doSend(UMOEvent event) throws Exception
