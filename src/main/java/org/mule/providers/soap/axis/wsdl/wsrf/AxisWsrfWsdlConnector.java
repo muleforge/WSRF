@@ -13,7 +13,7 @@ package org.mule.providers.soap.axis.wsdl.wsrf;
 import org.mule.providers.soap.axis.AxisConnector;
 /**
  * 
- * @author $Author
+ * @author $$Author
  *
  */
 class AxisWsrfWsdlConnector extends AxisConnector 
