@@ -20,8 +20,8 @@ import org.mule.umo.provider.UMOMessageDispatcher;
  */
 public class AxisWsrfWsdlMessageDispatcherFactory extends AbstractMessageDispatcherFactory
 {
-    public UMOMessageDispatcher create(UMOImmutableEndpoint endpoint) throws UMOException
+    public final UMOMessageDispatcher create(UMOImmutableEndpoint endpoint) throws UMOException
     {
-       return new AxisWsrfWsdlMessageDispatcher(endpoint);
+    return new AxisWsrfWsdlMessageDispatcher(endpoint);
     }
 }

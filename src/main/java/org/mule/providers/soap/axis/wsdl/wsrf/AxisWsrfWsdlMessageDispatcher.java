@@ -15,11 +15,12 @@ package org.mule.providers.soap.axis.wsdl.wsrf;
 
 
 import org.apache.axis.client.Call;
+
+import org.mule.providers.soap.axis.wsdl.AxisWsdlMessageDispatcher;
 import org.mule.umo.UMOEvent;
 import org.mule.umo.UMOMessage;
 import org.mule.umo.endpoint.UMOImmutableEndpoint;
-import org.mule.providers.soap.axis.wsdl.*;
-import org.mule.providers.soap.axis.wsdl.wsrf.IExtendCall;
+
 
 
 
@@ -29,19 +30,17 @@ import org.mule.providers.soap.axis.wsdl.wsrf.IExtendCall;
 public class AxisWsrfWsdlMessageDispatcher extends AxisWsdlMessageDispatcher implements IExtendCall
 {
 
-    public AxisWsrfWsdlMessageDispatcher(UMOImmutableEndpoint endpoint)
+public AxisWsrfWsdlMessageDispatcher(UMOImmutableEndpoint endpoint)
     {
-    	super(endpoint);
+    super(endpoint);
     }
-    protected UMOMessage doSend(UMOEvent event) throws Exception
-    {
-    	 
-    	return null;
-    }
-	public void extendCall(Call call, UMOEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
+protected final UMOMessage doSend(UMOEvent event) throws Exception
+{
+return null;
+}
+public void extendCall(Call call, UMOEvent event)
+{
+}
 
    
 }

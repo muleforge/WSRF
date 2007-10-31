@@ -14,8 +14,7 @@ import org.mule.umo.UMOEvent;
 import org.apache.axis.client.Call;
 
 
-public interface IExtendCall {
-	
-	public void extendCall(Call call , UMOEvent event);
-	
+public interface IExtendCall 
+{
+void extendCall(Call call , UMOEvent event);
 }
