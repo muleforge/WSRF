@@ -13,8 +13,17 @@ import org.mule.umo.UMOEvent;
 
 import org.apache.axis.client.Call;
 
-
+/**
+ * 
+ * @author $Author
+ *
+ */
 public interface IExtendCall 
 {
+/**
+ * 
+ * @param call call
+ * @param event event
+ */
 void extendCall(Call call , UMOEvent event);
 }

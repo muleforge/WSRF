@@ -18,7 +18,9 @@ import org.mule.providers.soap.axis.AxisConnector;
  */
 class AxisWsrfWsdlConnector extends AxisConnector 
 {
-
+/**
+ * @return String
+ */
 public final String getProtocol()
 {
 return "wsrf-wsdl-axis";

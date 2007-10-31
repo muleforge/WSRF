@@ -21,23 +21,33 @@ import org.mule.umo.UMOEvent;
 import org.mule.umo.UMOMessage;
 import org.mule.umo.endpoint.UMOImmutableEndpoint;
 
-
-
-
 /**
  * Creates and Axis client services from WSDL and invokes it.
  */
 public class AxisWsrfWsdlMessageDispatcher extends AxisWsdlMessageDispatcher implements IExtendCall
 {
-
+/**
+ * 
+ * @param endpoint endpoint
+ */
 public AxisWsrfWsdlMessageDispatcher(UMOImmutableEndpoint endpoint)
     {
     super(endpoint);
     }
+/**
+ * @param event event
+ * @throws Exception exception
+ * @return UMOMessage
+ */
 protected final UMOMessage doSend(UMOEvent event) throws Exception
 {
 return null;
 }
+/**
+ * @param call call
+ * @param event event
+ * 
+ */
 public void extendCall(Call call, UMOEvent event)
 {
 }
