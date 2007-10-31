@@ -14,7 +14,7 @@ import org.mule.providers.soap.axis.AxisConnector;
 
 /**
  * 
- * @author $Author$
+ * @author raffaele.picardi
  *
  */
 class AxisWsrfWsdlConnector extends AxisConnector 

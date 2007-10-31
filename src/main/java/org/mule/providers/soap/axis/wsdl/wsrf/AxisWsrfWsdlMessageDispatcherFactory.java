@@ -17,6 +17,7 @@ import org.mule.umo.provider.UMOMessageDispatcher;
 
 /**
  * Creates an WSDL Message dispatcher using the Axis client
+ * @author raffaele.picardi
  */
 public class AxisWsrfWsdlMessageDispatcherFactory extends AbstractMessageDispatcherFactory
 {

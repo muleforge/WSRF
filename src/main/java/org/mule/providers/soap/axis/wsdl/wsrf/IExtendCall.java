@@ -12,10 +12,9 @@ package org.mule.providers.soap.axis.wsdl.wsrf;
 import org.mule.umo.UMOEvent;
 
 import org.apache.axis.client.Call;
-
 /**
  * 
- * @author $Author$
+ * @author raffaele.picardi
  *
  */
 public interface IExtendCall 
