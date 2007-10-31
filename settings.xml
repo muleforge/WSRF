@@ -8,12 +8,12 @@
     </server>
     <server>
       <id>muleforge.webdav.snapshots</id>
-      <username>xx</username>
+       <username>xx</username>
       <password>yy</password>
     </server>
     <server>
       <id>muleforge.webdav.sites</id>
-      <username>xx</username>
+        <username>xx</username>
       <password>yy</password>
     </server>
   </servers>
