@@ -15,7 +15,7 @@ import org.apache.axis.client.Call;
 
 /**
  * 
- * @author $Id$
+ * @author $Author$
  *
  */
 public interface IExtendCall 
