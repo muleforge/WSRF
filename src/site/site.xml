@@ -6,7 +6,7 @@
 <item name="WSRF MuleForge" href="http://xircles.muleforge.org/projects/wsrf-transport" /> 
 </links>
 <menu name="General Information">
-<item name="About" href="index.html" /> 
+	
 </menu>
 <menu ref="reports" /> 
 </body>
