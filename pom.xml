@@ -6,7 +6,11 @@
   <name>org.mule.transports.mule-transport-wsrf</name>
   <version>1.0</version>
   <description>The aim of this Project is to extend WSDL SOAP mule transport in order to integrate Grid Globus Service (GT4 Globus Alliance org) on Mule.</description>
-  <build>
+	<issueManagement>
+      <system>JIRA</system>
+      <url>http://wsrf-transport.muleforge.org/</url>
+   </issueManagement>   
+ <build>
     <extensions>
       <extension>
         <groupId>org.apache.maven.wagon</groupId>
@@ -57,7 +61,7 @@
       <groupId>org.mule</groupId>
       <artifactId>mule-core</artifactId>
       <version>${muleVersion}</version>
-    </dependency>
+	 </dependency>
     <dependency>
       <groupId>org.mule.tests</groupId>
       <artifactId>mule-tests-functional</artifactId>
@@ -99,7 +103,7 @@
       <id>muleforge.webdav.releases</id>
       <url>dav:https://dav.muleforge.org/repository/wsrf-transport/</url>
     </repository>
-		</repositories>
+	</repositories>
   <properties>
     <muleVersion>1.4.1</muleVersion>
   </properties>
