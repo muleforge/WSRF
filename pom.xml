@@ -20,7 +20,7 @@
         <configuration>
           <finalName>${artifactId}-${version}</finalName>
           <descriptors>
-            <descriptor>assembly.xml</descriptor>
+            <descriptor>dist/assembly.xml</descriptor>
           </descriptors>
           <appendAssemblyId>false</appendAssemblyId>
         </configuration>
@@ -94,6 +94,12 @@
       <url>dav:https://dav.muleforge.org/wsrf-transport/</url>
     </site>
   </distributionManagement>
+	<repositories>
+		<repository>
+      <id>muleforge.webdav.releases</id>
+      <url>dav:https://dav.muleforge.org/repository/wsrf-transport/</url>
+    </repository>
+		</repositories>
   <properties>
     <muleVersion>1.4.1</muleVersion>
   </properties>
