@@ -10,6 +10,35 @@
       <system>JIRA</system>
       <url>http://wsrf-transport.muleforge.org/</url>
    </issueManagement>   
+	 <ciManagement>
+      <system>bamboo</system>
+      <url>http://bamboo.muleforge.org/browse/WSRF</url>
+      <notifiers>
+         <notifier>
+            <type>mail</type>
+            <address>raffaele.picardi@gmail.com</address>
+         </notifier>
+      </notifiers>
+   </ciManagement>
+	 <developers>
+      <developer>
+         <id>raffaele.picardi</id>
+         <name>Raffaele Picardi</name>
+         <email>raffaele.picardi@gmail.com</email>
+         <roles>
+			 <role>Developer</role>
+			 <role>Architect</role>
+ 			 <role>Project Manager</role>
+          </roles>
+      </developer>  
+   </developers>
+ <scm>
+      <connection>svn://svn.wsrf-transport.muleforge.org/wsrf-transport/</connection>
+      <developerConnection>https://svn.muleforge.org/wsrf-transport/</developerConnection>
+      <url>http://svn.muleforge.org/wsrf-transport/</url>
+   </scm> 
+
+
  <build>
     <extensions>
       <extension>
@@ -100,16 +129,9 @@
   </distributionManagement>
 	<repositories>
 	<repository>
-		<id>repo_maven</id>
-		<url>http://repo1.maven.org/maven2/</url>
-	</repository>
-			<repository>
       <id>muleforge.webdav.releases</id>
       <url>dav:https://dav.muleforge.org/repository/wsrf-transport/</url>
     </repository>
-	
-		
-
 	</repositories>
   <properties>
     <muleVersion>1.4.1</muleVersion>
