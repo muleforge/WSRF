@@ -73,6 +73,9 @@
 					<snapshotRepositoryId>muleforge.webdav.snapshots</snapshotRepositoryId>
 				</configuration>
 			</plugin>
+			<plugin>
+
+			</plugin>
 		</plugins>
 		<extensions>
 			<extension>
