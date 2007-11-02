@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?> 
-<project name="Mule JCR Transport">
+<project name="Mule WSRF Transport">
 <body>
 <links>
 <item name="WSRF Mule Wiki" href="http://mule.mulesource.org/display/WSRF/Home" /> 
