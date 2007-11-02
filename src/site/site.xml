@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?> 
+<project name="Mule JCR Transport">
+<body>
+<links>
+<item name="WSRF Mule Wiki" href="http://mule.mulesource.org/display/WSRF/Home" /> 
+<item name="WSRF MuleForge" href="http://xircles.muleforge.org/projects/wsrf-transport" /> 
+</links>
+<menu name="General Information">
+<item name="About" href="index.html" /> 
+</menu>
+<menu ref="reports" /> 
+</body>
+</project>
