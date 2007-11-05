@@ -10,14 +10,14 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf;
 
-import org.mule.providers.soap.axis.AxisConnector;
+import org.mule.providers.soap.axis.wsdl.AxisWsdlConnector;
 
 /**
  * 
  * @author raffaele.picardi
  *
  */
-class AxisWsrfWsdlConnector extends AxisConnector 
+class AxisWsdlWsrfConnector extends AxisWsdlConnector 
 {
 /**
  * @return String

@@ -19,7 +19,7 @@ import org.mule.umo.provider.UMOMessageDispatcher;
  * Creates an WSDL Message dispatcher using the Axis client
  * @author raffaele.picardi
  */
-public class AxisWsrfWsdlMessageDispatcherFactory extends AbstractMessageDispatcherFactory
+public class AxisWsdlWsrfMessageDispatcherFactory extends AbstractMessageDispatcherFactory
 {
 /**
  * @param endpoint endpoint
@@ -28,6 +28,6 @@ public class AxisWsrfWsdlMessageDispatcherFactory extends AbstractMessageDispatc
 */
 public final UMOMessageDispatcher create(UMOImmutableEndpoint endpoint) throws UMOException
 {
-    return new AxisWsrfWsdlMessageDispatcher(endpoint);
+    return new AxisWsdlWsrfMessageDispatcher(endpoint);
 }
 }

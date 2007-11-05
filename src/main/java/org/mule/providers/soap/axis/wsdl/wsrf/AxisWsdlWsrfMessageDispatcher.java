@@ -25,13 +25,13 @@ import org.mule.umo.endpoint.UMOImmutableEndpoint;
  * Creates and Axis client services from WSDL and invokes it.
  * @author raffaele.picardi
  */
-public class AxisWsrfWsdlMessageDispatcher extends AxisWsdlMessageDispatcher implements IExtendCall
+public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher implements IExtendCall
 {
 /**
  * 
  * @param endpoint endpoint
  */
-public AxisWsrfWsdlMessageDispatcher(UMOImmutableEndpoint endpoint)
+public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
     {
     super(endpoint);
     }
