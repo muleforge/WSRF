@@ -18,7 +18,6 @@ import org.apache.axis.client.Call;
 
 import org.mule.providers.soap.axis.wsdl.AxisWsdlMessageDispatcher;
 import org.mule.umo.UMOEvent;
-import org.mule.umo.UMOMessage;
 import org.mule.umo.endpoint.UMOImmutableEndpoint;
 
 /**
@@ -39,11 +38,13 @@ public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
  * @param event event
  * @throws Exception exception
  * @return UMOMessage
- */
+ 
 protected final UMOMessage doSend(UMOEvent event) throws Exception
 {
-return null;
+return doSend(event);
 }
+*/
+
 /**
  * @param call call
  * @param event event
