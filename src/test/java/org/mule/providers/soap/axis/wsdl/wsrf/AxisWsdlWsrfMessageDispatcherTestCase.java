@@ -42,7 +42,7 @@ public class AxisWsdlWsrfMessageDispatcherTestCase extends AbstractMuleTestCase
 public final void testNullParametersInCallAllowed() throws Exception
     {
 System.out.println("test ");    
-	//UMOImmutableEndpoint ep = new ImmutableMuleEndpoint("axis:http://www.muleumo.org/services/myService?method=myTestMethod", false);
+//UMOImmutableEndpoint ep = new ImmutableMuleEndpoint("axis:http://www.muleumo.org/services/myService?method=myTestMethod", false);
         //AxisWsdlWsrfMessageDispatcher dispatcher = new AxisWsdlWsrfMessageDispatcher(ep);
         /*   dispatcher.service = new Service();
         UMOEvent event = getTestEvent("testPayload", ep);
