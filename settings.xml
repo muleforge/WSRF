@@ -13,8 +13,8 @@
     </server>
     <server>
       <id>repo1.maven.org</id>
-   <username>raffaele.picardi</username>
-      <password>pi31rdi</password>
+   <username></username>
+      <password></password>
     </server>
 	<id>muleforge.webdav.sites</id>
    <username>raffaele.picardi</username>
