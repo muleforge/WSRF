@@ -12,29 +12,21 @@ package org.mule.providers.soap.axis.wsdl.wsrf;
 
 import org.mule.config.MuleProperties;
 import org.mule.extras.client.MuleClient;
-import org.mule.impl.ImmutableMuleEndpoint;
-import org.mule.providers.AbstractMessageDispatcher;
 import org.mule.providers.soap.NamedParameter;
 import org.mule.providers.soap.SoapMethod;
-import org.mule.providers.soap.axis.AxisMessageDispatcher;
 import org.mule.tck.AbstractMuleTestCase;
-import org.mule.umo.endpoint.UMOImmutableEndpoint;
 
 
 
-import org.mule.umo.UMOEvent;
 import org.mule.umo.UMOMessage;
 
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.namespace.QName;
 import javax.xml.rpc.ParameterMode;
 
-import org.apache.axis.client.Call;
-import org.apache.axis.client.Service;
 
 /**
  * Test Message Dispatcher synchr for Wsdl Wsrf Web Service
@@ -43,12 +35,12 @@ import org.apache.axis.client.Service;
  */
 public class AxisWsdlWsrfMessageDispatcherTestCase extends AbstractMuleTestCase
 {
-    protected String getConfigResources()
+protected String getConfigResources()
     {
         return "axis-named-param-mule-config.xml";
     }
 
-    public void testNamedParameters() throws Exception
+public void testNamedParameters() throws Exception
     {
         MuleClient client = new MuleClient();
         // The component itself will throw an exception if the parameters in the
