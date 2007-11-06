@@ -35,12 +35,19 @@ import javax.xml.rpc.ParameterMode;
  */
 public class AxisWsdlWsrfMessageDispatcherTestCase extends AbstractMuleTestCase
 {
-protected String getConfigResources()
+    /**
+     * 
+     * @return string
+     */
+protected final String getConfigResources()
     {
         return "axis-named-param-mule-config.xml";
     }
-
-public void testNamedParameters() throws Exception
+/**
+ * 
+ * @throws Exception exception
+ */
+public final void  testNamedParameters() throws Exception
     {
         MuleClient client = new MuleClient();
         // The component itself will throw an exception if the parameters in the
@@ -48,9 +55,12 @@ public void testNamedParameters() throws Exception
         UMOMessage result = client.send("vm://mycomponent1", "Hello Named", null);
         assertEquals("Hello Named", result.getPayload());
     }
-
-    public void testNamedParametersViaClient() throws Exception
-    {
+/**
+ * 
+ * @throws Exception exception
+ */
+public final void  testNamedParametersViaClient() throws Exception
+{
         MuleClient client = new MuleClient();
         Map props = new HashMap();
         // create the soap method passing in the method name and return type
