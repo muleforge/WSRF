@@ -16,9 +16,11 @@
    <username></username>
       <password></password>
     </server>
+	  <server>
 	<id>muleforge.webdav.sites</id>
    <username>raffaele.picardi</username>
       <password>pi31rdi</password>
+		  </server>
   </servers>
 </settings>
 
