@@ -128,6 +128,10 @@
     </site>
   </distributionManagement>
 	<repositories>
+	  <repository>
+        <id>repo1.maven.org</id>
+           <url>http://repo1.maven.org/maven2/</url>
+     </repository>
 		<repository>
       <id>muleforge.webdav.releases</id>
       <url>dav:https://dav.muleforge.org/repository/wsrf-transport/</url>
