@@ -11,11 +11,6 @@
    <username>raffaele.picardi</username>
       <password>pi31rdi</password>
     </server>
-    <server>
-      <id>repo1.maven.org</id>
-   <username></username>
-      <password></password>
-    </server>
 	  <server>
 	<id>muleforge.webdav.sites</id>
    <username>raffaele.picardi</username>
