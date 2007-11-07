@@ -9,9 +9,9 @@
  */
 package org.mule.providers.soap.axis.wsdl.wsrf;
 
-import org.mule.extras.client.MuleClient;
+//import org.mule.extras.client.MuleClient;
 import org.mule.tck.AbstractMuleTestCase;
-import org.mule.umo.UMOMessage;
+//import org.mule.umo.UMOMessage;
 
 
 /*import org.mule.config.MuleProperties;
@@ -53,13 +53,13 @@ protected final String getConfigResources()
  */
 public final void  testCall() throws Exception
     {
-        MuleClient client = new MuleClient();
+    /*    MuleClient client = new MuleClient();
         // The component itself will throw an exception if the parameters in the
         // request SOAP message are not named
         UMOMessage result = client.send("vm://mycomponent1", null, null);
         assertNotNull(result);
         assertNotNull(result.getPayload());
-        System.out.println(result.getPayload());
+        System.out.println(result.getPayload());*/
     }
 }
 
