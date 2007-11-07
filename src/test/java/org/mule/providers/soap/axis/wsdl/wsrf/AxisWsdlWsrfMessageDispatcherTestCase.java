@@ -43,7 +43,7 @@ public class AxisWsdlWsrfMessageDispatcherTestCase extends AbstractMuleTestCase
      */
 protected final String getConfigResources()
     {
-        return "axis-named-param-mule-config.xml";
+        return "axis-wsdl-wsrf-globus-grid-service-mule-config.xml";
     }
 /**
  * 
