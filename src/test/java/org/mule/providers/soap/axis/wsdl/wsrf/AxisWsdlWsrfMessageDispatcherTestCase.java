@@ -56,7 +56,7 @@ public final void  testCall() throws Exception
         MuleClient client = new MuleClient();
         // The component itself will throw an exception if the parameters in the
         // request SOAP message are not named
-        UMOMessage result = client.send("vm://mycomponent1",null, null);
+        UMOMessage result = client.send("vm://mycomponent1", null, null);
         assertNotNull(result);
         assertNotNull(result.getPayload());
         System.out.println(result.getPayload());
