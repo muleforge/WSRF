@@ -9,7 +9,9 @@
  */
 package org.mule.providers.soap.axis.wsdl.wsrf;
 
+import org.mule.extras.client.MuleClient;
 import org.mule.tck.AbstractMuleTestCase;
+import org.mule.umo.UMOMessage;
 
 
 /*import org.mule.config.MuleProperties;
@@ -49,33 +51,15 @@ protected final String getConfigResources()
  * 
  * @throws Exception exception
  */
-public final void  testNamedParameters() throws Exception
+public final void  testCall() throws Exception
     {
-       /* MuleClient client = new MuleClient();
+        MuleClient client = new MuleClient();
         // The component itself will throw an exception if the parameters in the
         // request SOAP message are not named
-        UMOMessage result = client.send("vm://mycomponent1", "Hello Named", null);
-        assertEquals("Hello Named", result.getPayload());*/
-    }
-/**
- * 
- * @throws Exception exception
- */
-public final void  testNamedParametersViaClient() throws Exception
-{
-        /*MuleClient client = new MuleClient();
-        Map props = new HashMap();
-        // create the soap method passing in the method name and return type
-        SoapMethod soapMethod = new SoapMethod(new QName("echo"), NamedParameter.XSD_STRING);
-        // add one or more parameters
-        soapMethod.addNamedParameter(new QName("value"), NamedParameter.XSD_STRING, ParameterMode.IN);
-        // set the soap method as a property and pass the properties
-        // when making the call
-        props.put(MuleProperties.MULE_SOAP_METHOD, soapMethod);
-
-        UMOMessage result = client.send("wsrf-wsdl-axis:http://localhost:62111/mule/mycomponent2?method=echo",
-            "Hello Named", props);
-        assertEquals("Hello Named", result.getPayload());*/
+        UMOMessage result = client.send("vm://mycomponent1",null, null);
+        assertNotNull(result);
+        assertNotNull(result.getPayload());
+        System.out.println(result.getPayload());
     }
 }
 
