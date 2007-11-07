@@ -1,34 +1,28 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mule-configuration PUBLIC "-//MuleSource //DTD mule-configuration XML V1.0//EN"
                                 "http://mule.mulesource.org/dtds/mule-configuration.dtd">
-
-<mule-configuration id="axis_test" version="1.0">
-
-    <model name="test">
-        <mule-descriptor name="mycomponent1"
-            implementation="org.mule.components.simple.EchoComponent">
-            <inbound-router>
-                <endpoint address="vm://mycomponent1"/>
-            </inbound-router>
-            <outbound-router>
-                <router className="org.mule.routing.outbound.OutboundPassThroughRouter">
-                <endpoint address="axis:http://localhost:62111/mule/mycomponent2?method=echo" synchronous="true">
-                    <properties>
-                        <map name="soapMethods">
-                            <property name="echo" value="value:string:in,return:string"/>
-                        </map>
-                    </properties>
-                </endpoint>
-                    </router>
-            </outbound-router>
-        </mule-descriptor>
-        <mule-descriptor name="mycomponent2"
-            implementation="org.mule.tck.testmodels.services.TestServiceComponent">
-            <inbound-router>
-                <endpoint address="axis:http://localhost:62111/mule" synchronous="true">
-                </endpoint>
-            </inbound-router>
-        </mule-descriptor>
-    </model>
+<!--  This is a blank configuration file for the TestGridService project -->
+<mule-configuration id="TestGridService-config" version="1.0">
+	<description>
+        Configuration for the the "TestGridService" project    </description>
+	<transformers>
+		<transformer name="StringToObjectArray" className="org.mule.transformers.simple.StringToObjectArray">
+			<properties>
+				<property name="delimiter" value=","/>
+			</properties>
+		</transformer>
+	</transformers>
+	<model name="TestGridService">
+		<mule-descriptor name="PassComponent" implementation="org.mule.components.simple.BridgeComponent">
+			<inbound-router>
+				<endpoint address="stream://System.in?promptMessage=Enter from and to currency symbols, separated by a comma:" transformers="StringToObjectArray"/>
+			</inbound-router>
+			<outbound-router>
+				<router className="org.mule.routing.outbound.ChainingRouter">
+					<endpoint address="wsrf-wsdl-axis:http://127.0.0.1:8080/wsrf/services/Version?method=getVersion"/>
+					<endpoint address="stream://System.out"/>
+				</router>
+			</outbound-router>
+		</mule-descriptor>
+	</model>
 </mule-configuration>
