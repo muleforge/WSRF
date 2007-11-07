@@ -15,7 +15,7 @@
 	<model name="TestGridService">
 		<mule-descriptor name="mycomponent1" implementation="org.mule.components.simple.BridgeComponent">
 			<inbound-router>
-				<endpoint address="vm://mycomponent1" transformers="StringToObjectArray"/>
+				<endpoint address="vm://in1" transformers="StringToObjectArray"/>
 			</inbound-router>
 			<outbound-router>
 				<router className="org.mule.routing.outbound.ChainingRouter">
