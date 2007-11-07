@@ -13,7 +13,7 @@
 		</transformer>
 	</transformers>
 	<model name="TestGridService">
-		<mule-descriptor name="PassComponent" implementation="org.mule.components.simple.BridgeComponent">
+		<mule-descriptor name="mycomponent1" implementation="org.mule.components.simple.BridgeComponent">
 			<inbound-router>
 				<endpoint address="stream://System.in?promptMessage=Enter from and to currency symbols, separated by a comma:" transformers="StringToObjectArray"/>
 			</inbound-router>
