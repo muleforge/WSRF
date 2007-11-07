@@ -11,11 +11,13 @@
 				<property name="delimiter" value=","/>
 			</properties>
 		</transformer>
+		 <transformer name="StringToNameString" className="org.mule.samples.hello.StringToNameString"/>
 	</transformers>
 	<model name="TestGridService">
+	
 		<mule-descriptor name="mycomponent1" implementation="org.mule.components.simple.BridgeComponent">
 			<inbound-router>
-				<endpoint address="vm://in1" transformers="StringToObjectArray"/>
+				<endpoint address="vm://greeter" transformers="StringToNameString"/>
 			</inbound-router>
 			<outbound-router>
 				<router className="org.mule.routing.outbound.ChainingRouter">
