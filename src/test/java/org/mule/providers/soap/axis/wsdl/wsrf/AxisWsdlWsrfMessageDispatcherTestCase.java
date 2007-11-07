@@ -9,8 +9,10 @@
  */
 package org.mule.providers.soap.axis.wsdl.wsrf;
 
+import org.mule.tck.AbstractMuleTestCase;
 
-import org.mule.config.MuleProperties;
+
+/*import org.mule.config.MuleProperties;
 import org.mule.extras.client.MuleClient;
 import org.mule.providers.soap.NamedParameter;
 import org.mule.providers.soap.SoapMethod;
@@ -25,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.namespace.QName;
-import javax.xml.rpc.ParameterMode;
+import javax.xml.rpc.ParameterMode;*/
 
 
 /**
@@ -49,11 +51,11 @@ protected final String getConfigResources()
  */
 public final void  testNamedParameters() throws Exception
     {
-        MuleClient client = new MuleClient();
+       /* MuleClient client = new MuleClient();
         // The component itself will throw an exception if the parameters in the
         // request SOAP message are not named
         UMOMessage result = client.send("vm://mycomponent1", "Hello Named", null);
-        assertEquals("Hello Named", result.getPayload());
+        assertEquals("Hello Named", result.getPayload());*/
     }
 /**
  * 
@@ -61,7 +63,7 @@ public final void  testNamedParameters() throws Exception
  */
 public final void  testNamedParametersViaClient() throws Exception
 {
-        MuleClient client = new MuleClient();
+        /*MuleClient client = new MuleClient();
         Map props = new HashMap();
         // create the soap method passing in the method name and return type
         SoapMethod soapMethod = new SoapMethod(new QName("echo"), NamedParameter.XSD_STRING);
@@ -71,9 +73,9 @@ public final void  testNamedParametersViaClient() throws Exception
         // when making the call
         props.put(MuleProperties.MULE_SOAP_METHOD, soapMethod);
 
-        UMOMessage result = client.send("axis:http://localhost:62111/mule/mycomponent2?method=echo",
+        UMOMessage result = client.send("wsrf-wsdl-axis:http://localhost:62111/mule/mycomponent2?method=echo",
             "Hello Named", props);
-        assertEquals("Hello Named", result.getPayload());
+        assertEquals("Hello Named", result.getPayload());*/
     }
 }
 
