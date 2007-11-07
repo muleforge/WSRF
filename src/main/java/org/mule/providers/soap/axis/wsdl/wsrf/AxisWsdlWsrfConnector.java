@@ -24,6 +24,7 @@ class AxisWsdlWsrfConnector extends AxisWsdlConnector
  */
 public final String getProtocol()
 {
+    
 return "wsrf-wsdl-axis";
 }
 }
