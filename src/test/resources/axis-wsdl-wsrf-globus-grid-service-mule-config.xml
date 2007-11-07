@@ -5,19 +5,12 @@
 <mule-configuration id="TestGridService-config" version="1.0">
 	<description>
         Configuration for the the "TestGridService" project    </description>
-	<transformers>
-		<transformer name="StringToObjectArray" className="org.mule.transformers.simple.StringToObjectArray">
-			<properties>
-				<property name="delimiter" value=","/>
-			</properties>
-		</transformer>
-		 <transformer name="StringToNameString" className="org.mule.samples.hello.StringToNameString"/>
-	</transformers>
+	
 	<model name="TestGridService">
 	
-		<mule-descriptor name="mycomponent1" implementation="org.mule.components.simple.BridgeComponent">
+		<mule-descriptor name="proxy" implementation="org.mule.components.simple.BridgeComponent">
 			<inbound-router>
-				<endpoint address="vm://greeter" transformers="StringToNameString"/>
+				<endpoint address="vm://proxy"/>
 			</inbound-router>
 			<outbound-router>
 				<router className="org.mule.routing.outbound.ChainingRouter">
