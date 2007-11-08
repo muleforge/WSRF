@@ -5,10 +5,11 @@
 <mule-configuration id="TestGridService-config" version="1.0">
 	<description>
         Configuration for the the "TestGridService" project    </description>
-	
+
 	<model name="TestGridService">
-	
-		<mule-descriptor name="proxy" implementation="org.mule.components.simple.BridgeComponent">
+
+
+		<mule-descriptor name="ProxyC" implementation="org.mule.components.simple.BridgeComponent">
 			<inbound-router>
 				<endpoint address="vm://proxy"/>
 			</inbound-router>
