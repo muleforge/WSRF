@@ -14,6 +14,7 @@ import org.mule.tck.AbstractMuleTestCase;
 import org.mule.umo.UMOMessage;
 
 
+
 /*import org.mule.config.MuleProperties;
 import org.mule.extras.client.MuleClient;
 import org.mule.providers.soap.NamedParameter;
@@ -54,7 +55,9 @@ protected final String getConfigResources()
 public final void  testCall() throws Exception
     {
         MuleClient client = new MuleClient();
-        UMOMessage result = client.send("vm://proxy", new Object[] {"test"}, null);
+        //UMOMessage result = client.send("vm://proxy", new Object[] {"test"}, null);
+        UMOMessage result = client.sendDirect("ProxyC", null, new String[] {"test"}, null);
+
         assertNotNull(result);
         assertNotNull(result.getPayload());
         System.out.println(result.getPayload());
