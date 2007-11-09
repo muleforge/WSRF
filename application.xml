@@ -16,15 +16,24 @@
 		http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.1.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
-<bean id="extendCallTarget" class="org.mule.providers.soap.axis.wsdl.wsrf.AxisWsdlWsrfMessageDispatcher"/>
+<bean id="extendCallTarget" class="org.mule.providers.soap.axis.wsdl.wsrf.ExtenderCall"/>
 <bean id="wsAddressingAdvice" class="org.mule.providers.soap.axis.wsdl.wsrf.aspect.WsAddressingAdvice"/>
-<bean id="extendCall" class="org.springframework.aop.framework.ProxyFactoryBean">
+<bean id="extendCallsPointcutAdvisor"
+class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+<property name="mappedName">
+<value>extendCall</value>
+</property>
+<property name="advice">
+<ref bean="wsAddressingAdvice"/>
+</property>
+</bean>
+	<bean id="extendCall" class="org.springframework.aop.framework.ProxyFactoryBean">
 <property name="proxyInterfaces">
 <value>org.mule.providers.soap.axis.wsdl.wsrf.IExtendCall</value>
 </property>
 <property name="interceptorNames">
 <list>
-<value>wsAddressingAdvice</value>
+<value>extendCallsPointcutAdvisor</value>
 </list>
 </property>
 <property name="target">
