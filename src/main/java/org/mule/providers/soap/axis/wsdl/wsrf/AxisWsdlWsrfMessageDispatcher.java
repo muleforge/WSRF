@@ -32,9 +32,9 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher imp
  * @param endpoint endpoint
  */
 public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
-    {
-    super(endpoint);
-    }
+{
+  super(endpoint);
+}
 /**
  * @param event event
  * @throws Exception exception
@@ -42,6 +42,7 @@ public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
  */
 protected UMOMessage doSend(UMOEvent event) throws Exception
 {
+extendCall(null,event);
 return super.doSend(event);
 }
 
