@@ -27,7 +27,17 @@ import org.mule.umo.endpoint.UMOImmutableEndpoint;
  */
 public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher implements IExtendCall
 {
+
 /**
+ * 
+ * 
+ */
+public AxisWsdlWsrfMessageDispatcher()
+{
+   super(null);
+}   
+    
+ /**
  * 
  * @param endpoint endpoint
  */
@@ -42,7 +52,7 @@ public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
  */
 protected UMOMessage doSend(UMOEvent event) throws Exception
 {
-extendCall(null,event);
+extendCall(null, event);
 return super.doSend(event);
 }
 
@@ -54,7 +64,7 @@ return super.doSend(event);
  */
 public void extendCall(Call call, UMOEvent event)
 {
-//
+    System.out.println("extendCall");
 }
 
    
