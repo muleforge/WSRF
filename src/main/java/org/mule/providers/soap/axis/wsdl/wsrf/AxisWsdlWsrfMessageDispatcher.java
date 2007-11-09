@@ -53,6 +53,7 @@ public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
 try
 {
     factory = new XmlBeanFactory(new FileInputStream("application.xml"));
+   
 }
 catch (BeansException e)
 {
@@ -65,7 +66,7 @@ catch (FileNotFoundException e)
     e.printStackTrace();
 }
   extenderCall = (ExtenderCall) factory.getBean("extendCallTarget");
-  this.extenderCall = null;
+  
 }
 /**
  * @param event event

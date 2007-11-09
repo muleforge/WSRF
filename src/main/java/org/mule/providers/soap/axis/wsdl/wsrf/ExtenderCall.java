@@ -18,7 +18,15 @@ import org.apache.axis.client.Call;
  */
 public class ExtenderCall implements IExtendCall
 {
-
+    /**
+     * Extend call constructor default
+     *
+     */
+    public ExtenderCall () 
+    {
+        System.out.println();
+    }
+    
     /**
      * @param call call
      * @param event event
@@ -27,6 +35,7 @@ public class ExtenderCall implements IExtendCall
     public void extendCall(Call call, UMOEvent event)
     {
         System.out.println("extendCall");
+        System.out.println("Property Long :" + event.getMessage().getProperty("testLongProperty"));
     }
 
 }
