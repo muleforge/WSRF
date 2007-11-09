@@ -6,40 +6,37 @@
   <name>org.mule.transports.mule-transport-wsrf</name>
   <version>1.0</version>
   <description>The aim of this Project is to extend WSDL SOAP mule transport in order to integrate Grid Globus Service (GT4 Globus Alliance org) on Mule.</description>
-	<issueManagement>
-      <system>JIRA</system>
-      <url>http://wsrf-transport.muleforge.org/</url>
-   </issueManagement>   
-	 <ciManagement>
-      <system>bamboo</system>
-      <url>http://bamboo.muleforge.org/browse/WSRF</url>
-      <notifiers>
-         <notifier>
-            <type>mail</type>
-            <address>raffaele.picardi@gmail.com</address>
-         </notifier>
-      </notifiers>
-   </ciManagement>
-	 <developers>
-      <developer>
-         <id>raffaele.picardi</id>
-         <name>Raffaele Picardi</name>
-         <email>raffaele.picardi@gmail.com</email>
-         <roles>
-			 <role>Developer</role>
-			 <role>Architect</role>
- 			 <role>Project Manager</role>
-          </roles>
-      </developer>  
-   </developers>
- <scm>
-      <connection>svn://svn.wsrf-transport.muleforge.org/wsrf-transport/</connection>
-      <developerConnection>https://svn.muleforge.org/wsrf-transport/</developerConnection>
-      <url>http://svn.muleforge.org/wsrf-transport/</url>
-   </scm> 
-
-
- <build>
+  <issueManagement>
+    <system>JIRA</system>
+    <url>http://wsrf-transport.muleforge.org/</url>
+  </issueManagement>
+  <ciManagement>
+    <system>bamboo</system>
+    <url>http://bamboo.muleforge.org/browse/WSRF</url>
+    <notifiers>
+      <notifier>
+        <address>raffaele.picardi@gmail.com</address>
+      </notifier>
+    </notifiers>
+  </ciManagement>
+  <developers>
+    <developer>
+      <id>raffaele.picardi</id>
+      <name>Raffaele Picardi</name>
+      <email>raffaele.picardi@gmail.com</email>
+      <roles>
+        <role>Developer</role>
+        <role>Architect</role>
+        <role>Project Manager</role>
+      </roles>
+    </developer>
+  </developers>
+  <scm>
+    <connection>svn://svn.wsrf-transport.muleforge.org/wsrf-transport/</connection>
+    <developerConnection>https://svn.muleforge.org/wsrf-transport/</developerConnection>
+    <url>http://svn.muleforge.org/wsrf-transport/</url>
+  </scm>
+  <build>
     <extensions>
       <extension>
         <groupId>org.apache.maven.wagon</groupId>
@@ -60,6 +57,16 @@
       </plugin>
     </plugins>
   </build>
+  <repositories>
+    <repository>
+      <id>repo1.maven.org</id>
+      <url>http://repo1.maven.org/maven2/</url>
+    </repository>
+    <repository>
+      <id>muleforge.webdav.releases</id>
+      <url>dav:https://dav.muleforge.org/repository/wsrf-transport/</url>
+    </repository>
+  </repositories>
   <dependencies>
     <dependency>
       <groupId>org.mule.transports</groupId>
@@ -87,20 +94,10 @@
       <version>${muleVersion}</version>
     </dependency>
     <dependency>
-      <groupId>org.mule</groupId>
-      <artifactId>mule-core</artifactId>
-      <version>${muleVersion}</version>
-	 </dependency>
-    <dependency>
       <groupId>org.mule.tests</groupId>
       <artifactId>mule-tests-functional</artifactId>
       <version>${muleVersion}</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mule.transports</groupId>
-      <artifactId>mule-transport-axis</artifactId>
-      <version>2.0-M1</version>
     </dependency>
     <dependency>
       <groupId>wsrf</groupId>
@@ -111,6 +108,16 @@
       <groupId>org.apache.axis</groupId>
       <artifactId>axis</artifactId>
       <version>1.4</version>
+    </dependency>
+	 <dependency>
+      <groupId>org.mule</groupId>
+      <artifactId>mule-core</artifactId>
+   <version>${muleVersion}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mule.transports</groupId>
+      <artifactId>mule-transport-axis</artifactId>
+      <version>2.0-M1</version>
     </dependency>
   </dependencies>
   <distributionManagement>
@@ -127,16 +134,6 @@
       <url>dav:https://dav.muleforge.org/wsrf-transport/</url>
     </site>
   </distributionManagement>
-	<repositories>
-	  <repository>
-        <id>repo1.maven.org</id>
-           <url>http://repo1.maven.org/maven2/</url>
-     </repository>
-		<repository>
-      <id>muleforge.webdav.releases</id>
-      <url>dav:https://dav.muleforge.org/repository/wsrf-transport/</url>
-    </repository>
-	</repositories>
   <properties>
     <muleVersion>1.4.1</muleVersion>
   </properties>
