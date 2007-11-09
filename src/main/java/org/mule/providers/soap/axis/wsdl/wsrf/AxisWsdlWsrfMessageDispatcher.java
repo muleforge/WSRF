@@ -40,7 +40,7 @@ public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
  * @throws Exception exception
  * @return UMOMessage
  */
-protected final UMOMessage doSend(UMOEvent event) throws Exception
+protected UMOMessage doSend(UMOEvent event) throws Exception
 {
 return super.doSend(event);
 }
