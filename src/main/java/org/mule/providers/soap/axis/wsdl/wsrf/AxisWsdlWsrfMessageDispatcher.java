@@ -14,7 +14,6 @@ package org.mule.providers.soap.axis.wsdl.wsrf;
 
 
 
-import org.apache.axis.client.Call;
 
 import org.mule.providers.soap.axis.wsdl.AxisWsdlMessageDispatcher;
 import org.mule.umo.UMOEvent;
@@ -25,18 +24,16 @@ import org.mule.umo.endpoint.UMOImmutableEndpoint;
  * Creates and Axis client services from WSDL and invokes it.
  * @author raffaele.picardi
  */
-public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher implements IExtendCall
+public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
 {
-
+    
 /**
  * 
- * 
+ * extenderCall to use AOP Spring Framework in order to manage WSRF SOAP Extension
  */
-public AxisWsdlWsrfMessageDispatcher()
-{
-   super(null);
-}   
-    
+private ExtenderCall extenderCall = null;
+
+
  /**
  * 
  * @param endpoint endpoint
@@ -44,6 +41,9 @@ public AxisWsdlWsrfMessageDispatcher()
 public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
 {
   super(endpoint);
+  //TODO MULE-XXXX: Using SPRING AOP 
+
+  this.extenderCall = null;
 }
 /**
  * @param event event
@@ -52,20 +52,8 @@ public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
  */
 protected UMOMessage doSend(UMOEvent event) throws Exception
 {
-extendCall(null, event);
+this.extenderCall.extendCall(null, event);
 return super.doSend(event);
 }
 
-
-/**
- * @param call call
- * @param event event
- * 
- */
-public void extendCall(Call call, UMOEvent event)
-{
-    System.out.println("extendCall");
-}
-
-   
 }
