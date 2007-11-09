@@ -5,17 +5,21 @@
 <mule-configuration id="TestGridService-config" version="1.0">
 	<description>
         Configuration for the the "TestGridService" project    </description>
-
+	<transformers>
+		<transformer name="StringToObjectArray" className="org.mule.transformers.simple.StringToObjectArray">
+			<properties>
+				<property name="delimiter" value=","/>
+			</properties>
+		</transformer>
+	</transformers>
 	<model name="TestGridService">
-
-
-		<mule-descriptor name="ProxyC" implementation="org.mule.components.simple.BridgeComponent">
+		<mule-descriptor name="PassC" implementation="org.mule.components.simple.BridgeComponent">
 			<inbound-router>
-				<endpoint address="vm://proxy"/>
+				<endpoint address="vm://vmQueue" transformers="StringToObjectArray" />
 			</inbound-router>
 			<outbound-router>
 				<router className="org.mule.routing.outbound.ChainingRouter">
-					<endpoint address="wsrf-wsdl-axis:http://127.0.0.1:8080/wsrf/services/Version?method=getVersion"/>
+					<endpoint address="wsrf-wsdl-axis:http://127.0.0.1:8080/wsrf/services/Version?method=getVersion" />
 					<endpoint address="stream://System.out"/>
 				</router>
 			</outbound-router>
