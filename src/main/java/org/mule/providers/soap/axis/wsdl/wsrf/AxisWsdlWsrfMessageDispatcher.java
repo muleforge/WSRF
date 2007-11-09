@@ -41,7 +41,7 @@ private ExtenderCall extenderCall = null;
 public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
 {
   super(endpoint);
-  //TODO MULE-XXXX: Using SPRING AOP 
+  //TODO MULE-WSRF-5: Using SPRING AOP 
 
   this.extenderCall = null;
 }
