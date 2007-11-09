@@ -10,7 +10,7 @@
 package org.mule.providers.soap.axis.wsdl.wsrf;
 
 import org.mule.extras.client.MuleClient;
-import org.mule.tck.AbstractMuleTestCase;
+import org.mule.tck.FunctionalTestCase;
 import org.mule.umo.UMOMessage;
 
 
@@ -38,8 +38,17 @@ import javax.xml.rpc.ParameterMode;*/
  * @author raffaele.picardi
  *
  */
-public class AxisWsdlWsrfMessageDispatcherTestCase extends AbstractMuleTestCase
+public class AxisWsdlWsrfMessageDispatcherTestCase extends FunctionalTestCase
 {
+    /**
+     * Constructor
+     *
+     */
+    public AxisWsdlWsrfMessageDispatcherTestCase () 
+    {
+        System.out.println("starting...");
+        
+    }
     /**
      * 
      * @return string
@@ -55,8 +64,9 @@ protected final String getConfigResources()
 public final void  testCall() throws Exception
     {
         MuleClient client = new MuleClient();
-        //UMOMessage result = client.send("vm://proxy", new Object[] {"test"}, null);
-        UMOMessage result = client.sendDirect("ProxyC", null, new String[] {"test"}, null);
+
+        UMOMessage result = client.send("vm://vmQueue", "ok", null);
+       
 
         assertNotNull(result);
         assertNotNull(result.getPayload());
