@@ -40,7 +40,7 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
  * 
  * extenderCall to use AOP Spring Framework in order to manage WSRF SOAP Extension
  */
-private ExtenderCall extenderCall = null;
+private IExtendCall extenderCall = null;
 /**
  * Factory bean
  */
@@ -67,7 +67,8 @@ public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
         }
         if (aopSpringContext != null) 
         {
-            extenderCall = (ExtenderCall) aopSpringContext.getBean("extendCallTarget");
+            //extenderCall = (ExtenderCall) aopSpringContext.getBean("extendCallTarget");
+            extenderCall = (IExtendCall) aopSpringContext.getBean("extendCallProxyBean");
             System.out.println(extenderCall);
         }
         else
