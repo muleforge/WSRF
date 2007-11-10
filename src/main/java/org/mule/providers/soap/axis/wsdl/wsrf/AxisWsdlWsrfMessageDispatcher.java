@@ -67,7 +67,6 @@ public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
         }
         if (aopSpringContext != null) 
         {
-            //extenderCall = (ExtenderCall) aopSpringContext.getBean("extendCallTarget");
             extenderCall = (IExtendCall) aopSpringContext.getBean("extendCallProxyBean");
             System.out.println(extenderCall);
         }
