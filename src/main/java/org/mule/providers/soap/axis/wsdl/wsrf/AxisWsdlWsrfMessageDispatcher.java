@@ -39,7 +39,10 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
  * extenderCall to use AOP Spring Framework in order to manage WSRF SOAP Extension
  */
 private ExtenderCall extenderCall = null;
-
+/**
+ * Factory bean
+ */
+private  BeanFactory factory = null;
 
  /**
  * 
@@ -48,24 +51,31 @@ private ExtenderCall extenderCall = null;
 public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
 {
   super(endpoint);
-  //TODO MULE-WSRF-5: Using SPRING AOP 
-  BeanFactory factory = null;
-try
-{
-    factory = new XmlBeanFactory(new FileInputStream("application.xml"));
-   
-}
-catch (BeansException e)
-{
-    // TODO Auto-generated catch block
-    e.printStackTrace();
-}
-catch (FileNotFoundException e)
-{
-    // TODO Auto-generated catch block
-    e.printStackTrace();
-}
-  extenderCall = (ExtenderCall) factory.getBean("extendCallTarget");
+        // TODO MULE-WSRF-5: Using SPRING AOP
+       
+        try
+        {
+            factory = new XmlBeanFactory(new FileInputStream("application.xml"));
+
+        }
+        catch (BeansException e)
+        {
+            e.printStackTrace();
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        if (factory != null) 
+        {
+            extenderCall = (ExtenderCall) factory.getBean("extendCallTarget");
+            System.out.println(extenderCall);
+        }
+        else
+        {
+            System.out.println("factory is null!");
+        }
+        
   
 }
 /**

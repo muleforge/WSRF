@@ -22,6 +22,16 @@ import org.springframework.aop.MethodBeforeAdvice;
 public class WsAddressingAdvice implements MethodBeforeAdvice
 {
     /**
+     * Default Constructor
+     *
+     */
+    public WsAddressingAdvice()
+    {
+        //Default Constructor
+        System.out.println("init WsAddressingAdvice");
+    }
+    
+    /**
      * 
      * @param arg0 .
      * @param arg1 .
@@ -32,7 +42,6 @@ public class WsAddressingAdvice implements MethodBeforeAdvice
     {
         ((UMOEvent) arg1[1]).getMessage().setProperty("testLongProperty", new Integer(1));
         System.out.println("first to extendCall...event message payload: " + ((UMOEvent) arg1[1]).getMessage().getPayloadAsString());
-
     }
 
 }

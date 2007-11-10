@@ -13,6 +13,7 @@ package org.mule.providers.soap.axis.wsdl.wsrf;
 import org.mule.umo.UMOEvent;
 
 import org.apache.axis.client.Call;
+
 /**
  * Class to use AOP Spring Framework in order to manage WSRF soap extension
  */
@@ -24,7 +25,8 @@ public class ExtenderCall implements IExtendCall
      */
     public ExtenderCall () 
     {
-        System.out.println();
+        System.out.println("init...Extender Call");
+        
     }
     
     /**
