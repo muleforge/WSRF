@@ -15,7 +15,7 @@ class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
 <ref bean="wsAddressingAdvice"/>
 </property>
 </bean>
-	<bean id="extendCall" class="org.springframework.aop.framework.ProxyFactoryBean">
+	<bean id="extendCallProxyBean" class="org.springframework.aop.framework.ProxyFactoryBean">
 <property name="proxyInterfaces">
 <value>org.mule.providers.soap.axis.wsdl.wsrf.IExtendCall</value>
 </property>
