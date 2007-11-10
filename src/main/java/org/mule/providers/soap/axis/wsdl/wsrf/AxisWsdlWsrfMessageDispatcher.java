@@ -23,9 +23,11 @@ import org.mule.umo.endpoint.UMOImmutableEndpoint;
 
 
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 /**
  * Creates and Axis client services from WSDL and invokes it.
@@ -42,7 +44,7 @@ private ExtenderCall extenderCall = null;
 /**
  * Factory bean
  */
-private  BeanFactory factory = null;
+private  ApplicationContext aopSpringContext = null;
 
  /**
  * 
@@ -56,16 +58,16 @@ public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
         try
         {
             //factory = new XmlBeanFactory(new FileInputStream("application.xml"));
-            factory = new ClassPathXmlApplicationContext(new String []{"org/mule/providers/soap/axis/wsrf/wsdl/application.xml"});
+            aopSpringContext = new FileSystemXmlApplicationContext("application.xml"); 
 
         }
         catch (BeansException e)
         {
             e.printStackTrace();
         }
-        if (factory != null) 
+        if (aopSpringContext != null) 
         {
-            extenderCall = (ExtenderCall) factory.getBean("extendCallTarget");
+            extenderCall = (ExtenderCall) aopSpringContext.getBean("extendCallTarget");
             System.out.println(extenderCall);
         }
         else
