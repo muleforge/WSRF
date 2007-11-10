@@ -20,12 +20,12 @@ import org.mule.umo.UMOEvent;
 import org.mule.umo.UMOMessage;
 import org.mule.umo.endpoint.UMOImmutableEndpoint;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Creates and Axis client services from WSDL and invokes it.
@@ -55,14 +55,11 @@ public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
        
         try
         {
-            factory = new XmlBeanFactory(new FileInputStream("application.xml"));
+            //factory = new XmlBeanFactory(new FileInputStream("application.xml"));
+            factory = new ClassPathXmlApplicationContext(new String []{"application.xml"});
 
         }
         catch (BeansException e)
-        {
-            e.printStackTrace();
-        }
-        catch (FileNotFoundException e)
         {
             e.printStackTrace();
         }
