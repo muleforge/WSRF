@@ -56,7 +56,7 @@ public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
         try
         {
             //factory = new XmlBeanFactory(new FileInputStream("application.xml"));
-            factory = new ClassPathXmlApplicationContext(new String []{"application.xml"});
+            factory = new ClassPathXmlApplicationContext(new String []{"org/mule/providers/soap/axis/wsrf/wsdl/application.xml"});
 
         }
         catch (BeansException e)
