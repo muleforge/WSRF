@@ -130,11 +130,6 @@
       <version>1.4</version>
     </dependency>
     <dependency>
-      <groupId>aopalliance</groupId>
-      <artifactId>aopalliance</artifactId>
-      <version>1.0</version>
-    </dependency>
-    <dependency>
       <groupId>spring</groupId>
       <artifactId>spring</artifactId>
       <version>1.0.2</version>
@@ -143,6 +138,21 @@
       <groupId>spring</groupId>
       <artifactId>spring-aop</artifactId>
       <version>1.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>spring</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>1.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>spring</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>1.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>aopalliance</groupId>
+      <artifactId>aopalliance</artifactId>
+      <version>1.0</version>
     </dependency>
   </dependencies>
   <distributionManagement>
