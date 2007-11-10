@@ -40,8 +40,9 @@ public class WsAddressingAdvice implements MethodBeforeAdvice
      */
     public void before(Method arg0, Object[] arg1, Object arg2) throws Throwable
     {
-        ((UMOEvent) arg1[1]).getMessage().setProperty("testLongProperty", new Integer(1));
+        ((UMOEvent) arg1[1]).getMessage().setProperty("testLongProperty", new Long(1));
         System.out.println("first to extendCall...event message payload: " + ((UMOEvent) arg1[1]).getMessage().getPayloadAsString());
+        
     }
 
 }
