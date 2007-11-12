@@ -10,25 +10,29 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
+
 import org.mule.umo.UMOEvent;
 
 import java.lang.reflect.Method;
 
 import org.springframework.aop.MethodBeforeAdvice;
 
+
+
 /**
  * WsAddressing Aspect to inject Ws-Addressing information in SOAP - Header
  */
-public class WsAddressingAdvice implements MethodBeforeAdvice
+public class WsMainAdvice implements MethodBeforeAdvice
 {
     /**
      * Default Constructor
      *
      */
-    public WsAddressingAdvice()
+    public WsMainAdvice()
     {
         //Default Constructor
-        System.out.println("init WsAddressingAdvice");
+        System.out.println("init WsMainAdvice..");
+    
     }
     
     /**

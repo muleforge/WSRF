@@ -8,84 +8,75 @@
  * LICENSE.txt file.
  */
 
-
 package org.mule.providers.soap.axis.wsdl.wsrf;
-
-
-
-
 
 import org.mule.providers.soap.axis.wsdl.AxisWsdlMessageDispatcher;
 import org.mule.umo.UMOEvent;
 import org.mule.umo.UMOMessage;
 import org.mule.umo.endpoint.UMOImmutableEndpoint;
 
-
-
 import org.springframework.beans.BeansException;
-
-
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 /**
- * Creates and Axis client services from WSDL and invokes it.
+ * Dispatch  WSRF WSDL Soap Axis request
+ * 
  * @author raffaele.picardi
  */
 public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
 {
-    
-/**
- * 
- * extenderCall to use AOP Spring Framework in order to manage WSRF SOAP Extension
- */
-private IExtendCall extenderCall = null;
-/**
- * Factory bean
- */
-private  ApplicationContext aopSpringContext = null;
 
- /**
- * 
- * @param endpoint endpoint
- */
-public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
-{
-  super(endpoint);
+    /**
+     * extenderCall to use AOP Spring Framework in order to manage WSRF SOAP
+     * Extension
+     */
+    private IExtendCall extenderCall = null;
+    /**
+     * Factory bean
+     */
+    private ApplicationContext aopSpringContext = null;
+
+    /**
+     * @param endpoint endpoint
+     */
+    public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
+    {
+        super(endpoint);
         // TODO MULE-WSRF-5: Using SPRING AOP
-       
+
         try
         {
-            //factory = new XmlBeanFactory(new FileInputStream("application.xml"));
-            aopSpringContext = new FileSystemXmlApplicationContext("application.xml"); 
-
+            aopSpringContext = new FileSystemXmlApplicationContext("application.xml");
+           
         }
         catch (BeansException e)
         {
             e.printStackTrace();
         }
-        if (aopSpringContext != null) 
+        if (aopSpringContext != null)
         {
             extenderCall = (IExtendCall) aopSpringContext.getBean("extendCallProxyBean");
-            System.out.println(extenderCall);
+            extenderCall.addAdvice();
+
         }
         else
         {
             System.out.println("factory is null!");
         }
-        
-  
-}
-/**
- * @param event event
- * @throws Exception exception
- * @return UMOMessage
- */
-protected UMOMessage doSend(UMOEvent event) throws Exception
-{
-this.extenderCall.extendCall(null, event);
-return super.doSend(event);
-}
+
+    }
+
+    /**
+     * @param event event
+     * @throws Exception exception
+     * @return UMOMessage
+     */
+    protected UMOMessage doSend(UMOEvent event) throws Exception
+    {
+        this.extenderCall.extendCall(null, event);
+        return super.doSend(event);
+    }
 
 }
