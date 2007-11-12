@@ -11,6 +11,7 @@
 package org.mule.providers.soap.axis.wsdl.wsrf;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.ListIterator;
 
 import org.aopalliance.aop.Advice;
 import org.springframework.aop.Advisor;
-import org.springframework.aop.framework.ProxyFactoryBean;
+import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.NameMatchMethodPointcut;
 import org.springframework.aop.support.NameMatchMethodPointcutAdvisor;
 
@@ -49,16 +50,20 @@ public final class AdviceAdderHelper
     /**
      * addAdvisors to ProxyfactoryBean given using reflection to find Advices class end with "Advice" suffix.
      * All advisors are mapped on "extend*" pattern string method refer to Target bean.
-     * @param pfb ProxyfactoryBean 
+     * @param targetImpl Target Object 
+     * @return new Proxy
      */
-    public static void addAdvisorsTo(ProxyFactoryBean pfb)
+    public static IExtendCall addAdvisorsTo(IExtendCall targetImpl)
     {
+       ProxyFactory factory = new ProxyFactory(targetImpl);
+   
         List l = getListAdvisorClass();
         ListIterator li = l.listIterator();
         while (li.hasNext()) 
         {
-            pfb.addAdvisor((Advisor) li.next());
+               factory.addAdvisor((Advisor) li.next());
         }
+        return (IExtendCall) factory.getProxy();
     }
 
     /**
@@ -117,8 +122,11 @@ public final class AdviceAdderHelper
         File directory = null;
         try
         {
-            directory = new File(Thread.currentThread().getContextClassLoader().getResource(
-                '/' + pckgname.replace('.', '/')).getFile());
+            URL str = Thread.currentThread().getContextClassLoader().getResource(pckgname.replace('.', '/'));
+            System.out.println("instance advice..." + new File(str.getFile()).getName());
+            directory = new File(str.getFile());
+            
+            
         }
         catch (NullPointerException x)
         {

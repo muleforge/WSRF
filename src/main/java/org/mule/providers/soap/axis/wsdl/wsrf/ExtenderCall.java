@@ -13,8 +13,7 @@ package org.mule.providers.soap.axis.wsdl.wsrf;
 import org.mule.umo.UMOEvent;
 
 import org.apache.axis.client.Call;
-import org.springframework.aop.framework.AopContext;
-import org.springframework.aop.framework.ProxyFactoryBean;
+
 
 
 /**
@@ -32,15 +31,7 @@ public class ExtenderCall implements IExtendCall
              
     }
     
-    /**
-     * Add dinamically advices class localized into .aspect package
-     *
-     */
-    public void addAdvice()
-    {
-        AdviceAdderHelper.addAdvisorsTo((ProxyFactoryBean) AopContext.currentProxy());
-        
-    }
+
     /**
      * @param call call
      * @param event event

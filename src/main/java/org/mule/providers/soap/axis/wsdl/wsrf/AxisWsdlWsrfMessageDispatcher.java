@@ -29,10 +29,17 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
 {
 
     /**
-     * extenderCall to use AOP Spring Framework in order to manage WSRF SOAP
+     * target : extenderCall to use AOP Spring Framework in order to manage WSRF SOAP
      * Extension
      */
     private IExtendCall extenderCall = null;
+    
+    /**
+     * proxy : extenderProxyCall to use AOP Spring Framework in order to manage WSRF SOAP
+     * Extension
+     */
+    private IExtendCall extenderProxyCall = null;
+    
     /**
      * Factory bean
      */
@@ -49,7 +56,7 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
         try
         {
             aopSpringContext = new FileSystemXmlApplicationContext("application.xml");
-           
+            
         }
         catch (BeansException e)
         {
@@ -57,9 +64,9 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
         }
         if (aopSpringContext != null)
         {
-            extenderCall = (IExtendCall) aopSpringContext.getBean("extendCallProxyBean");
-            extenderCall.addAdvice();
-
+           extenderCall = (IExtendCall) aopSpringContext.getBean("extendCallTarget");
+           extenderProxyCall = AdviceAdderHelper.addAdvisorsTo(extenderCall);
+          
         }
         else
         {
@@ -76,7 +83,7 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
     protected UMOMessage doSend(UMOEvent event) throws Exception
     {
         // TODO MULE-WSRF-5: Using SPRING AOP and how to manage Call axis object used by  super.doSend() method
-        this.extenderCall.extendCall(null, event);
+        this.extenderProxyCall.extendCall(null, event);
         return super.doSend(event);
     }
 

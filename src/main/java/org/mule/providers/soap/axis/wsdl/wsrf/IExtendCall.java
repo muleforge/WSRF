@@ -26,10 +26,5 @@ public interface IExtendCall
  */
 void extendCall(Call call , UMOEvent event);
 
-/**
- * Add dinamically advice
- *
- */
-void addAdvice();
 
 }
