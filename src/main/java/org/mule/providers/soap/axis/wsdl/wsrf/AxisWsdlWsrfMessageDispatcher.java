@@ -75,6 +75,7 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
      */
     protected UMOMessage doSend(UMOEvent event) throws Exception
     {
+        // TODO MULE-WSRF-5: Using SPRING AOP and how to manage Call axis object used by  super.doSend() method
         this.extenderCall.extendCall(null, event);
         return super.doSend(event);
     }
