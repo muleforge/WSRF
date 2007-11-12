@@ -15,6 +15,7 @@ import org.mule.umo.UMOEvent;
 import org.mule.umo.UMOMessage;
 import org.mule.umo.endpoint.UMOImmutableEndpoint;
 
+import org.apache.axis.client.Call;
 import org.springframework.beans.BeansException;
 
 import org.springframework.context.ApplicationContext;
@@ -83,8 +84,22 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
     protected UMOMessage doSend(UMOEvent event) throws Exception
     {
         // TODO MULE-WSRF-5: Using SPRING AOP and how to manage Call axis object used by  super.doSend() method
-        this.extenderProxyCall.extendCall(null, event);
         return super.doSend(event);
     }
 
+    /**
+     * Override Call method of Axis Provider in order to inject Aspects using target object extendCall (that is adviced)
+     * @param arg0 event see axis getCall method
+     * @param arg1 see axis getCall method
+     * @return Call call axis object created
+     * @throws Exception general
+     */
+    protected Call getCall(UMOEvent arg0, Object[] arg1) throws Exception
+    {
+       Call call = super.getCall(arg0, arg1);
+       this.extenderProxyCall.extendCall(call, arg0);
+       return call;
+    }
+    
+     
 }
