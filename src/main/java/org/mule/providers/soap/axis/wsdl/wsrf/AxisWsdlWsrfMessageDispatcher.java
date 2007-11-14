@@ -56,6 +56,7 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
 
         try
         {
+            // TODO raffaele.picardi : move application.xml into meta_inf dir
             aopSpringContext = new FileSystemXmlApplicationContext("application.xml");
             
         }
