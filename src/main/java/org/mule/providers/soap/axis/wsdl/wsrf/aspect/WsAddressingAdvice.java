@@ -14,8 +14,15 @@ package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
 import java.lang.reflect.Method;
+import java.net.URL;
+
+import javax.xml.namespace.QName;
 
 import org.apache.axis.client.Call;
+import org.apache.axis.message.addressing.AddressingHeaders;
+import org.apache.axis.message.addressing.Constants;
+import org.apache.axis.message.addressing.ReferencePropertiesType;
+import org.apache.axis.message.addressing.To;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.aop.MethodBeforeAdvice;
@@ -47,7 +54,30 @@ public class WsAddressingAdvice implements MethodBeforeAdvice
     {
         Logger.getLogger(this.getClass()).log(Level.INFO,  this.getClass().getName() + " : advice method started.");
         Call call = (Call) arg1[0];
+
+        String url =  call.getTargetEndpointAddress();
+
+        AddressingHeaders headers = new AddressingHeaders();
+        //create a reference property
+        QName keyName = new QName("http://axis.org", "VersionKey");
+        String keyValue = "123";
+         
+        SimpleResourceKey key = new SimpleResourceKey(keyName, keyValue);
+
+        ReferencePropertiesType props = new ReferencePropertiesType();
+
+        //convert to SOAPElement and add to the list
+        props.add(key.toSOAPElement());
+        headers.setTo(new To(url));
+        headers.setReferenceProperties(props);
+        Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : addressing header set to: " + url);
+
+        //pass the addressing info to the addressing handler
+        call.setProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS, headers);
         
+        call.setTargetEndpointAddress(new URL(url));
+        call.setOperationName(new QName(url, "getVersion")); // url here is just a namespace
+       
     }
 
 }

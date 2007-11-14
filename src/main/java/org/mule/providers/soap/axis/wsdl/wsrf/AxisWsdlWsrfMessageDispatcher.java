@@ -16,6 +16,8 @@ import org.mule.umo.UMOMessage;
 import org.mule.umo.endpoint.UMOImmutableEndpoint;
 
 import org.apache.axis.client.Call;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 
 import org.springframework.context.ApplicationContext;
@@ -72,7 +74,8 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
         }
         else
         {
-            System.out.println("factory is null!");
+            Logger.getLogger(this.getClass()).log(Level.ERROR, this.getClass().getName() + " : factory spring is null.");
+
         }
 
     }
