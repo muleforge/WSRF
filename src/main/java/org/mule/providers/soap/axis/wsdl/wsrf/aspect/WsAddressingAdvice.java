@@ -15,6 +15,9 @@ package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 import java.lang.reflect.Method;
 
+import org.apache.axis.client.Call;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.springframework.aop.MethodBeforeAdvice;
 
 
@@ -30,9 +33,7 @@ public class WsAddressingAdvice implements MethodBeforeAdvice
      */
     public WsAddressingAdvice()
     {
-        //Default Constructor
-        System.out.println("init WsAddressingAdvice..");
-    
+        Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : started.");
     }
     
     /**
@@ -44,8 +45,8 @@ public class WsAddressingAdvice implements MethodBeforeAdvice
      */
     public void before(Method arg0, Object[] arg1, Object arg2) throws Throwable
     {
-        System.out.println("i'm into aspect WsAddressingAdvice");
-           
+        Logger.getLogger(this.getClass()).log(Level.INFO,  this.getClass().getName() + " : advice method started.");
+        Call call = (Call) arg1[0];
     }
 
 }

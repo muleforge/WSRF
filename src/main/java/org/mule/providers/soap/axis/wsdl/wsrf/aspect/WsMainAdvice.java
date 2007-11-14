@@ -11,10 +11,10 @@
 package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
-import org.mule.umo.UMOEvent;
-
 import java.lang.reflect.Method;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.springframework.aop.MethodBeforeAdvice;
 
 
@@ -30,9 +30,7 @@ public class WsMainAdvice implements MethodBeforeAdvice
      */
     public WsMainAdvice()
     {
-        //Default Constructor
-        System.out.println("init WsMainAdvice..");
-    
+        Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : started.");
     }
     
     /**
@@ -44,11 +42,7 @@ public class WsMainAdvice implements MethodBeforeAdvice
      */
     public void before(Method arg0, Object[] arg1, Object arg2) throws Throwable
     {
-        System.out.println("i'm into aspect");
-        System.out.println("first to extendCall...event message payload: " + ((UMOEvent) arg1[1]).getMessage().getPayloadAsString());
-        ((UMOEvent) arg1[1]).getMessage().setProperty("testLongProperty", new Long(1));
-        
-        
+        Logger.getLogger(this.getClass()).log(Level.INFO,  this.getClass().getName() + " : advice method started.");
     }
 
 }

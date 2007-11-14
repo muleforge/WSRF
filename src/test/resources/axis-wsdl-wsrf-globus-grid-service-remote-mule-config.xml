@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mule-configuration PUBLIC "-//MuleSource //DTD mule-configuration XML V1.0//EN"
+                                "http://mule.mulesource.org/dtds/mule-configuration.dtd">
+<!--  This is a blank configuration file for the TestGridService project -->
+<mule-configuration id="TestGridService-remote-config" version="1.0">
+	<description>
+        Configuration for the the "TestGridService remote" project    </description>
+ <connector name="myHttpsConnector" className="org.mule.providers.http.HttpsConnector">
+        <properties>
+            <property name="keyStore" value="serverKeystore"/>
+            <property name="storePassword" value="mulepassword" />
+            <property name="keyPassword" value="mulepassword" /> 
+            <property name="trustStorePassword" value="mulepassword" /> 
+            <property name="trustStore" value="trustStore"/> 
+            <property name="requireClientAuthentication" value="false" /> 
+        </properties>
+    </connector>
+		<transformers>
+		<transformer name="StringToObjectArray" className="org.mule.transformers.simple.StringToObjectArray">
+			<properties>
+				<property name="delimiter" value=","/>
+			</properties>
+		</transformer>
+	</transformers>
+	<model name="TestGridService">
+		<mule-descriptor name="PassC" implementation="org.mule.components.simple.BridgeComponent">
+			<inbound-router>
+				<endpoint address="vm://vmQueue" transformers="StringToObjectArray" />
+			</inbound-router>
+			<outbound-router>
+				<router className="org.mule.routing.outbound.ChainingRouter">
+					<endpoint address="wsrf-wsdl-axis:https://192.168.4.150:8443/wsrf/services/Version?method=getVersion" />
+					<endpoint address="stream://System.out"/>
+				</router>
+			</outbound-router>
+		</mule-descriptor>
+	</model>
+</mule-configuration>
