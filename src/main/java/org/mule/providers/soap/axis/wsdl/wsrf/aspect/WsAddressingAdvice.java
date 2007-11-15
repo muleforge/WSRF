@@ -8,6 +8,7 @@
  * LICENSE.txt file.
  */
 
+
 package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
@@ -17,6 +18,9 @@ import java.lang.reflect.Method;
 import java.net.URL;
 
 import javax.xml.namespace.QName;
+import javax.xml.soap.SOAPElement;
+
+
 
 import org.apache.axis.client.Call;
 import org.apache.axis.message.addressing.AddressingHeaders;
@@ -67,18 +71,19 @@ public class WsAddressingAdvice implements MethodBeforeAdvice
         SimpleResourceKey key = new SimpleResourceKey(keyName, keyValue);
 
         ReferencePropertiesType props = new ReferencePropertiesType();
-
+        
         //convert to SOAPElement and add to the list
-        try
-        {
-            props.add(key.toSOAPElement());
-         }
-        
-        
-        catch (SerializationException e)
-        {
-               e.printStackTrace();
-        }
+        SOAPElement key2 = null;
+            try
+            {
+                key2 = key.toSOAPElement();
+                props.add(key2);
+            }
+            catch (SerializationException ex)
+            {
+             ex.printStackTrace();
+            }
+      
         headers.setTo(new To(url));
         headers.setReferenceProperties(props);
         Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : addressing header set to: " + url);
@@ -87,8 +92,7 @@ public class WsAddressingAdvice implements MethodBeforeAdvice
         call.setProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS, headers);
         
         call.setTargetEndpointAddress(new URL(url));
-        call.setOperationName(new QName(url, "getVersion")); // url here is just a namespace
-       
+            
     }
 
 }
