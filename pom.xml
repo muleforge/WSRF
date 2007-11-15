@@ -104,6 +104,11 @@
       <artifactId>addressing</artifactId>
       <version>1.0</version>
     </dependency>
+	      <dependency>
+      <groupId>wsrf</groupId>
+      <artifactId>wsrfcore</artifactId>
+      <version>1.0</version>
+    </dependency>
     <dependency>
       <groupId>org.apache.axis</groupId>
       <artifactId>axis</artifactId>
