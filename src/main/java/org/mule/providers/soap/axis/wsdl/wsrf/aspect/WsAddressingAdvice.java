@@ -25,6 +25,8 @@ import org.apache.axis.message.addressing.ReferencePropertiesType;
 import org.apache.axis.message.addressing.To;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.globus.wsrf.encoding.SerializationException;
+import org.globus.wsrf.impl.SimpleResourceKey;
 import org.springframework.aop.MethodBeforeAdvice;
 
 
@@ -67,7 +69,16 @@ public class WsAddressingAdvice implements MethodBeforeAdvice
         ReferencePropertiesType props = new ReferencePropertiesType();
 
         //convert to SOAPElement and add to the list
-        props.add(key.toSOAPElement());
+        try
+        {
+            props.add(key.toSOAPElement());
+         }
+        
+        
+        catch (SerializationException e)
+        {
+               e.printStackTrace();
+        }
         headers.setTo(new To(url));
         headers.setReferenceProperties(props);
         Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : addressing header set to: " + url);
