@@ -2,7 +2,7 @@
 <!DOCTYPE mule-configuration PUBLIC "-//MuleSource //DTD mule-configuration XML V1.0//EN"
                                 "http://mule.mulesource.org/dtds/mule-configuration.dtd">
 <!--  This is a blank configuration file for the test WsAddressingAdvice project -->
-<mule-configuration id="TestGridService-config" version="1.0">
+<mule-configuration id="TestGridAddressingService-config" version="1.0">
 	<description>
         This is a blank configuration file for the test WsAddressingAdvice project   </description>
 	<transformers>
@@ -12,14 +12,14 @@
 			</properties>
 		</transformer>
 	</transformers>
-	<model name="TestGridService">
+	<model name="TestGridAddressingService">
 		<mule-descriptor name="PassC" implementation="org.mule.components.simple.BridgeComponent">
 			<inbound-router>
 				<endpoint address="vm://vmQueue" transformers="StringToObjectArray" />
 			</inbound-router>
 			<outbound-router>
 				<router className="org.mule.routing.outbound.ChainingRouter">
-					<endpoint address="wsrf-wsdl-axis:http://127.0.0.1:8080/wsrf/services/examples/core/first/MathService?method=add" />
+					<endpoint address="wsrf-wsdl-axis:http://127.0.0.1:8080/wsrf/services/examples/core/first/MathService" />
 					<endpoint address="stream://System.out"/>
 				</router>
 			</outbound-router>
