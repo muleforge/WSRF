@@ -104,20 +104,10 @@
       <artifactId>addressing</artifactId>
       <version>1.0</version>
     </dependency>
-	      <dependency>
-      <groupId>wsrf</groupId>
-      <artifactId>wsrfcore</artifactId>
-      <version>1.0</version>
-    </dependency>
     <dependency>
       <groupId>org.apache.axis</groupId>
       <artifactId>axis</artifactId>
       <version>1.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.mule</groupId>
-      <artifactId>mule-core</artifactId>
-      <version>${muleVersion}</version>
     </dependency>
     <dependency>
       <groupId>org.mule.transports</groupId>
@@ -157,6 +147,26 @@
     <dependency>
       <groupId>aopalliance</groupId>
       <artifactId>aopalliance</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>wsrf</groupId>
+      <artifactId>wsrfcore</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>wsrf</groupId>
+      <artifactId>wsdl4j</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>wsrf</groupId>
+      <artifactId>wsrf_core_stubs</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>wsrf</groupId>
+      <artifactId>cog-jglobus</artifactId>
       <version>1.0</version>
     </dependency>
   </dependencies>
