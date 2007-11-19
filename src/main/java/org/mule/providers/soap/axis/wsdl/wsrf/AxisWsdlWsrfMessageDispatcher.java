@@ -88,9 +88,9 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
     protected UMOMessage doSend(UMOEvent event) throws Exception
     {
         // TODO MULE-WSRF-5: Using SPRING AOP and how to manage Call axis object used by  super.doSend() method
+        // TODO MULE-WSRF-10: WSDL2JAVA extension ?
         return super.doSend(event);
     }
-
     /**
      * Override Call method of Axis Provider in order to inject Aspects using target object extendCall (that is adviced)
      * @param arg0 event see axis getCall method

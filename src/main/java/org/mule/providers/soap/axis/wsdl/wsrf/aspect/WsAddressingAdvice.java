@@ -62,16 +62,15 @@ public class WsAddressingAdvice implements MethodBeforeAdvice
         Call call = (Call) arg1[0];
 
         String url =  call.getTargetEndpointAddress();
-
+        
         AddressingHeaders headers = new AddressingHeaders();
         //create a reference property
         QName keyName = new QName("http://axis.org", "VersionKey");
         String keyValue = "123";
          
         SimpleResourceKey key = new SimpleResourceKey(keyName, keyValue);
-
         ReferencePropertiesType props = new ReferencePropertiesType();
-        
+
         //convert to SOAPElement and add to the list
         SOAPElement key2 = null;
             try
