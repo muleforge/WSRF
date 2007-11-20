@@ -58,7 +58,7 @@ public class WsAddressingAdvice implements MethodBeforeAdvice
      */
     public void before(Method arg0, Object[] arg1, Object arg2) throws Throwable
     {
-        Logger.getLogger(this.getClass()).log(Level.INFO,  this.getClass().getName() + " : advice method started.");
+        /*Logger.getLogger(this.getClass()).log(Level.INFO,  this.getClass().getName() + " : advice method started.");
         Call call = (Call) arg1[0];
 
         String url =  call.getTargetEndpointAddress();
@@ -67,7 +67,7 @@ public class WsAddressingAdvice implements MethodBeforeAdvice
         //create a reference property
         QName keyName = new QName("http://axis.org", "VersionKey");
         String keyValue = "123";
-         
+        
         SimpleResourceKey key = new SimpleResourceKey(keyName, keyValue);
         ReferencePropertiesType props = new ReferencePropertiesType();
 
@@ -91,7 +91,7 @@ public class WsAddressingAdvice implements MethodBeforeAdvice
         call.setProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS, headers);
         
         call.setTargetEndpointAddress(new URL(url));
-            
+          */  
     }
 
 }
