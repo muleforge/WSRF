@@ -15,22 +15,14 @@ package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
 import java.lang.reflect.Method;
-import java.net.URL;
-
-import javax.xml.namespace.QName;
-import javax.xml.soap.SOAPElement;
 
 
 
-import org.apache.axis.client.Call;
-import org.apache.axis.message.addressing.AddressingHeaders;
-import org.apache.axis.message.addressing.Constants;
-import org.apache.axis.message.addressing.ReferencePropertiesType;
-import org.apache.axis.message.addressing.To;
+
+
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.globus.wsrf.encoding.SerializationException;
-import org.globus.wsrf.impl.SimpleResourceKey;
+
 import org.springframework.aop.MethodBeforeAdvice;
 
 
