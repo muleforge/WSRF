@@ -65,7 +65,7 @@ public final void  testCall() throws Exception
     {
         MuleClient client = new MuleClient();
 
-        UMOMessage result = client.send("vm://vmQueue", "", null);
+        UMOMessage result = client.send("vm://vmQueue", "5", null);
        
 
         assertNotNull(result);
