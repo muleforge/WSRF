@@ -6,7 +6,10 @@
 	<description>
         Configuration for the the "Test Grid Service from remote Client" project    </description>
 	<transformers>
-		<transformer name="StringToObjectArray" className="org.mule.transformers.simple.StringToObjectArray">
+			<transformer name="ByteArrayToString" className="org.mule.transformers.simple.ByteArrayToString" />
+
+
+				<transformer name="StringToObjectArray" className="org.mule.transformers.simple.StringToObjectArray">
 			<properties>
 				<property name="delimiter" value=","/>
 			</properties>
@@ -15,7 +18,7 @@
 	<model name="TestGridService">
 		<mule-descriptor name="PassC" implementation="org.mule.components.simple.BridgeComponent">
 			<inbound-router>
-				<endpoint address="vm://vmQueue" transformers="StringToObjectArray" />
+				<endpoint address="vm://vmQueue" transformers="ByteArrayToString,StringToObjectArray" />
 			</inbound-router>
 			<outbound-router>
 				<router className="org.mule.routing.outbound.ChainingRouter">
