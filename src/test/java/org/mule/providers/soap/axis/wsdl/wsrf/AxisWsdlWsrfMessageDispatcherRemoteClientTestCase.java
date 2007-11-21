@@ -14,7 +14,6 @@ import org.mule.tck.FunctionalTestCase;
 
 
 
-
 /*import org.mule.config.MuleProperties;
 import org.mule.extras.client.MuleClient;
 import org.mule.providers.soap.NamedParameter;
