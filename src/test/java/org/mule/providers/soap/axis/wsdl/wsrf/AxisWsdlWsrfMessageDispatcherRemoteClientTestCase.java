@@ -9,9 +9,9 @@
  */
 package org.mule.providers.soap.axis.wsdl.wsrf;
 
-import org.mule.extras.client.MuleClient;
+
 import org.mule.tck.FunctionalTestCase;
-import org.mule.umo.UMOMessage;
+
 
 
 
@@ -63,14 +63,8 @@ protected final String getConfigResources()
  */
 public final void  testCall() throws Exception
     {
-        MuleClient client = new MuleClient();
-
-        UMOMessage result = client.send("vm://vmQueue", "", null);
-       
-
-        assertNotNull(result);
-        assertNotNull(result.getPayload());
-        System.out.println(result.getPayload());
+        Monitor.waitOn();
+        
     }
 }
 
