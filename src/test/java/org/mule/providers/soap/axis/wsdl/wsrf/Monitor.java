@@ -14,6 +14,9 @@ package org.mule.providers.soap.axis.wsdl.wsrf;
  */
 public final class Monitor
 {
+    /**
+     * Test live time
+     */
     private static final long TEST_LIVE_TIME = 500000;
     /**
      * Private constructor
