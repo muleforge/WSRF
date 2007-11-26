@@ -49,6 +49,26 @@ public final class Monitor
             e.printStackTrace();
         }
     }
+    
+    /**
+     * Lock Invoker on lock object of  its static instance
+     * @param time time to wait
+     */
+    public static void waitOn(long time) 
+    {
+        try
+        {
+           synchronized (monitor) 
+           { 
+            monitor.wait(time);
+           }
+        }
+        catch (InterruptedException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 }
 
 
