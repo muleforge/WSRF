@@ -20,10 +20,9 @@
 				<endpoint address="vm://vmQueue" transformers="ByteArrayToString StringToObjectArray" />
 			</inbound-router>
 			<outbound-router>
-				<router className="org.mule.routing.outbound.ChainingRouter">
+				<router className="org.mule.routing.outbound.OutboundPassThroughRouter">
 					<endpoint address="wsrf-wsdl-axis:http://127.0.0.1:8080/wsrf/services/Version?method=getVersion" />
-					<endpoint address="stream://System.out"/>
-				</router>
+			</router>
 			</outbound-router>
 		</mule-descriptor>
 	</model>
