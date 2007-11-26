@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mule-configuration PUBLIC "-//MuleSource //DTD mule-configuration XML V1.0//EN"
+                                "http://mule.mulesource.org/dtds/mule-configuration.dtd">
+
+<mule-configuration id="TestGridService-config" version="1.0">
+	<description>
+        Configuration for the the "Test Grid Service from remote Client" project sending Object array payload    </description>
+		<transformers>
+<transformer name="ByteArrayToString" className="org.mule.transformers.simple.ByteArrayToString" />
+							<transformer name="StringToObjectArray" className="org.mule.transformers.simple.StringToObjectArray">
+
+									<properties>
+				<property name="delimiter" value=","/>
+			</properties>
+		</transformer>
+	</transformers>
+	<model name="TestGridService">
+		<mule-descriptor name="PassC" implementation="org.mule.components.simple.BridgeComponent">
+			<inbound-router>
+				<endpoint address="vm://vmQueueObjectArray" />
+			</inbound-router>
+			<outbound-router>
+				<router className="org.mule.routing.outbound.OutboundPassThroughRouter">
+					<endpoint address="wsrf-wsdl-axis:http://127.0.0.1:8080/wsrf/services/Version?method=getVersion" />
+			</router>
+			</outbound-router>
+		</mule-descriptor>
+	</model>
+	<model name="TestGridService2">
+		<mule-descriptor name="PassC2" implementation="org.mule.components.simple.BridgeComponent">
+			<inbound-router>
+				<endpoint address="vm://vmQueue" transformers="ByteArrayToString StringToObjectArray" />
+			</inbound-router>
+			<outbound-router>
+				<router className="org.mule.routing.outbound.OutboundPassThroughRouter">
+					<endpoint address="wsrf-wsdl-axis:http://127.0.0.1:8080/wsrf/services/Version?method=getVersion" />
+			</router>
+			</outbound-router>
+		</mule-descriptor>
+	</model>
+</mule-configuration>
