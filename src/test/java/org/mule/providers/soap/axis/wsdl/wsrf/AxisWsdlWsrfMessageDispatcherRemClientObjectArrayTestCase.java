@@ -12,6 +12,8 @@ package org.mule.providers.soap.axis.wsdl.wsrf;
 
 import org.mule.tck.FunctionalTestCase;
 
+import org.apache.log4j.Logger;
+
 
 
 /*import org.mule.config.MuleProperties;
@@ -68,8 +70,8 @@ public final void  testCall() throws Exception
          * RemoteDispatcher rd = client.getRemoteDispatcher("tcp://192.168.4.64:60504");
          * result = rd.sendRemote("vm://vmQueue",new Object[] {"string1","strin2"}, null);
          */
-    
-        Monitor.waitOn();
+        Logger.getLogger(this.getClass()).info("waiting for Remote message...");
+        Monitor.waitOn(999999);
         
     }
 }
