@@ -42,6 +42,10 @@ import javax.xml.rpc.ParameterMode;*/
 public class AxisWsdlWsrfMessageDispatcherRemClientObjectArrayTestCase extends FunctionalTestCase
 {
     /**
+     * server time live
+     */
+    private static final int WAIT = 999999;
+    /**
      * Constructor
      *
      */
@@ -56,10 +60,10 @@ public class AxisWsdlWsrfMessageDispatcherRemClientObjectArrayTestCase extends F
      */
 protected final String getConfigResources()
     {
-        return "axis-wsdl-wsrf-globus-grid-service-remote-client-mule-config.xml";
+        return "axis-wsdl-wsrf-globus-grid-service-remclient-objectarray-mule-config.xml";
     }
 /**
- * Use MuleClient to test Remote Server by RemoteDispatcher  tcp://ip:port on vm://vmQueue sending an Object Array 
+ * Use MuleClient to test Remote Server by RemoteDispatcher  tcp://ip:port on vm://vmQueueObjectArray 
  *   
  * @throws Exception exception
  */
@@ -71,7 +75,7 @@ public final void  testCall() throws Exception
          * result = rd.sendRemote("vm://vmQueue",new Object[] {"string1","strin2"}, null);
          */
         Logger.getLogger(this.getClass()).info("waiting for Remote message...");
-        Monitor.waitOn(999999);
+        Monitor.waitOn(WAIT);
         
     }
 }
