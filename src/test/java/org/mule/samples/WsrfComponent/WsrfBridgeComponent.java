@@ -9,10 +9,17 @@
  */
 
 package org.mule.samples.WsrfComponent;
+
+import org.mule.umo.UMOEventContext;
+import org.mule.umo.lifecycle.Callable;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 /**
  * 
  */
-public class WsrfBridgeComponent
+public class WsrfBridgeComponent implements Callable
 {
     /**
      * 
@@ -21,5 +28,18 @@ public class WsrfBridgeComponent
     public WsrfBridgeComponent()
     {
         System.out.println("");
+    }
+    
+    /**
+     * Log event and dispatch it without changes 
+     * @param arg0 event received
+     * @return event dispatched
+     * @throws exception possibile exception
+     */
+    public Object onCall(UMOEventContext arg0) throws Exception
+    {
+        Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : payload class name:"+ arg0.getMessage().getPayload().getClass().getName());
+
+        return arg0;
     }
 }
