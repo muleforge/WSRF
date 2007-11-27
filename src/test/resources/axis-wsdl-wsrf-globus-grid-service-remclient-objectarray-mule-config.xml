@@ -3,39 +3,40 @@
                                 "http://mule.mulesource.org/dtds/mule-configuration.dtd">
 
 <mule-configuration id="TestGridService-config" version="1.0">
+
 	<description>
         Configuration for the the "Test Grid Service from remote Client" project sending Object array payload    </description>
+<mule-environment-properties synchronous="true" enableMessageEvents="true" />
+
+	<connector name="tcp" className=
+"org.mule.providers.tcp.TcpConnector">
+<connection-strategy className=
+"org.mule.providers.SimpleRetryConnectionStrategy">
+<properties>
+<property name="retryCount" value="3" />
+	<property name="frequency" value="2000" />
+</properties>
+</connection-strategy></connector>
 		<transformers>
 <transformer name="ByteArrayToString" className="org.mule.transformers.simple.ByteArrayToString" />
 							<transformer name="StringToObjectArray" className="org.mule.transformers.simple.StringToObjectArray">
-
-									<properties>
+<properties>
 				<property name="delimiter" value=","/>
 			</properties>
 		</transformer>
+		 
 	</transformers>
 	<model name="TestGridService">
-		<mule-descriptor name="PassC" implementation="org.mule.components.simple.BridgeComponent">
+		<mule-descriptor  name="PassC" implementation="org.mule.components.simple.BridgeComponent" >
 			<inbound-router>
-				<endpoint address="vm://vmQueueObjectArray" />
+				<endpoint address="vm://vmQueueObjectArray" transformers="StringToObjectArray"   synchronous="true" />
 			</inbound-router>
 			<outbound-router>
 				<router className="org.mule.routing.outbound.OutboundPassThroughRouter">
-					<endpoint address="wsrf-wsdl-axis:http://127.0.0.1:8080/wsrf/services/Version?method=getVersion" />
-			</router>
+					<endpoint address="wsrf-wsdl-axis:http://127.0.0.1:8080/wsrf/services/Version?method=getVersion"    synchronous="true"  />
+				</router>
 			</outbound-router>
 		</mule-descriptor>
-	</model>
-	<model name="TestGridService2">
-		<mule-descriptor name="PassC2" implementation="org.mule.components.simple.BridgeComponent">
-			<inbound-router>
-				<endpoint address="vm://vmQueue" transformers="ByteArrayToString StringToObjectArray" />
-			</inbound-router>
-			<outbound-router>
-				<router className="org.mule.routing.outbound.OutboundPassThroughRouter">
-					<endpoint address="wsrf-wsdl-axis:http://127.0.0.1:8080/wsrf/services/Version?method=getVersion" />
-			</router>
-			</outbound-router>
-		</mule-descriptor>
+	
 	</model>
 </mule-configuration>
