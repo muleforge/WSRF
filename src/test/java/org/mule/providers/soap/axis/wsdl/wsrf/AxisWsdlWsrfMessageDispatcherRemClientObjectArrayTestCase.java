@@ -44,7 +44,7 @@ public class AxisWsdlWsrfMessageDispatcherRemClientObjectArrayTestCase extends F
     /**
      * server time live
      */
-    private static final int WAIT = 999999;
+    private static final int WAIT = 300000;
     /**
      * Constructor
      *
@@ -69,12 +69,12 @@ protected final String getConfigResources()
  */
 public final void  testCall() throws Exception
     {
-        /* remote client code:
-         * client = new MuleClient(true);
-         * RemoteDispatcher rd = client.getRemoteDispatcher("tcp://192.168.4.64:60504");
-         * result = rd.sendRemote("vm://vmQueue",new Object[] {"string1","strin2"}, null);
-         */
+       
         Logger.getLogger(this.getClass()).info("waiting for Remote message...");
+        
+        Logger.getLogger(this.getClass()).info("press enter to shutdown server");
+    
+        
         Monitor.waitOn(WAIT);
         
     }

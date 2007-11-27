@@ -27,19 +27,19 @@ public class WsrfBridgeComponent implements Callable
      */
     public WsrfBridgeComponent()
     {
-        System.out.println("");
+        Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " created.");
+        
     }
     
     /**
      * Log event and dispatch it without changes 
      * @param arg0 event received
      * @return event dispatched
-     * @throws exception possibile exception
+     * @throws Exception possibile exception
      */
     public Object onCall(UMOEventContext arg0) throws Exception
     {
-        Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : payload class name:"+ arg0.getMessage().getPayload().getClass().getName());
-
+        Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : payload class name:" + arg0.getMessage().getPayload().getClass().getName());
         return arg0;
     }
 }
