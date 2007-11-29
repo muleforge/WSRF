@@ -90,9 +90,11 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
         // TODO MULE-WSRF-5: Using SPRING AOP and how to manage Call axis object used by  super.doSend() method
         // TODO MULE-WSRF-10: WSDL2JAVA extension ?
         return super.doSend(event);
+        // TODO MULE-WSRF-14: how to append response frow WSRF Stub Aspects ?
     }
     /**
      * Override Call method of Axis Provider in order to inject Aspects using target object extendCall (that is adviced)
+     * WSRF information are indipendently processed by some Aspect (using Stub gnerated from Wsdl2Java at runtime)
      * @param arg0 event see axis getCall method
      * @param arg1 see axis getCall method
      * @return Call call axis object created

@@ -14,6 +14,8 @@ package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
 
+import org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice;
+
 import java.lang.reflect.Method;
 
 
@@ -28,9 +30,9 @@ import org.springframework.aop.MethodBeforeAdvice;
 
 
 /**
- * WsAddressing Aspect to inject Ws-Addressing information in SOAP - Header
+ * WsAddressing Aspect to inject Ws-Addressing information in SOAP - Header and/or manage WSDL Stub
  */
-public class WsAddressingAdvice implements MethodBeforeAdvice
+public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBeforeAdvice
 {
     /**
      * Default Constructor
@@ -50,40 +52,7 @@ public class WsAddressingAdvice implements MethodBeforeAdvice
      */
     public void before(Method arg0, Object[] arg1, Object arg2) throws Throwable
     {
-        /*Logger.getLogger(this.getClass()).log(Level.INFO,  this.getClass().getName() + " : advice method started.");
-        Call call = (Call) arg1[0];
-
-        String url =  call.getTargetEndpointAddress();
-        
-        AddressingHeaders headers = new AddressingHeaders();
-        //create a reference property
-        QName keyName = new QName("http://axis.org", "VersionKey");
-        String keyValue = "123";
-        
-        SimpleResourceKey key = new SimpleResourceKey(keyName, keyValue);
-        ReferencePropertiesType props = new ReferencePropertiesType();
-
-        //convert to SOAPElement and add to the list
-        SOAPElement key2 = null;
-            try
-            {
-                key2 = key.toSOAPElement();
-                props.add(key2);
-            }
-            catch (SerializationException ex)
-            {
-             ex.printStackTrace();
-            }
-      
-        headers.setTo(new To(url));
-        headers.setReferenceProperties(props);
-        Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : addressing header set to: " + url);
-
-        //pass the addressing info to the addressing handler
-        call.setProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS, headers);
-        
-        call.setTargetEndpointAddress(new URL(url));
-          */  
+       //
     }
 
 }

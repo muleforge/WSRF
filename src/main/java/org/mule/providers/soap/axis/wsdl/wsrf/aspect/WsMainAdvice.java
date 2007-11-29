@@ -11,6 +11,9 @@
 package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
+import org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice;
+
+
 import java.lang.reflect.Method;
 
 import org.apache.log4j.Level;
@@ -20,9 +23,9 @@ import org.springframework.aop.MethodBeforeAdvice;
 
 
 /**
- * WsAddressing Aspect to inject Ws-Addressing information in SOAP - Header
+ * Main Advice in order to perform Log operations and other ...
  */
-public class WsMainAdvice implements MethodBeforeAdvice
+public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvice
 {
     /**
      * Default Constructor

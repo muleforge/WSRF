@@ -60,9 +60,19 @@ public final class AdviceAdderHelper
    
         List l = getListAdvisorClass();
         ListIterator li = l.listIterator();
+        Advisor advisor = null;
+        
         while (li.hasNext()) 
         {
-               factory.addAdvisor((Advisor) li.next());
+            advisor = (Advisor) li.next();
+            if (advisor.getAdvice() instanceof IPriorityAdvice)
+            { 
+                factory.addAdvisor(((IPriorityAdvice) advisor.getAdvice()).getPriority() , advisor);
+            }
+            else
+            {
+                factory.addAdvisor(BasePriorityAdvice.DEFAULT_PRIORITY , advisor);
+            }
         }
         return (IExtendCall) factory.getProxy();
     }
@@ -98,6 +108,7 @@ public final class AdviceAdderHelper
                 {
                 ( (NameMatchMethodPointcut) advisor).setMappedName(MAPPED_NAME);
                 advisors.add(advisor);
+                
                 }
                 
             }
