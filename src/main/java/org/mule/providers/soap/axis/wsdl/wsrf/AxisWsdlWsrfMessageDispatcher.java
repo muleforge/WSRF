@@ -11,6 +11,7 @@
 package org.mule.providers.soap.axis.wsdl.wsrf;
 
 import org.mule.providers.soap.axis.wsdl.AxisWsdlMessageDispatcher;
+import org.mule.providers.soap.axis.wsdl.wsrf.util.AdviceAdderHelper;
 import org.mule.umo.UMOEvent;
 import org.mule.umo.UMOMessage;
 import org.mule.umo.endpoint.UMOImmutableEndpoint;
