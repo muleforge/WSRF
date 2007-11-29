@@ -11,7 +11,7 @@
 package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
-import org.mule.providers.soap.axis.wsdl.wsrf.StubPriorityAdvice;
+import org.mule.providers.soap.axis.wsdl.wsrf.util.StubPriorityAdvice;
 
 import java.lang.reflect.Method;
 
