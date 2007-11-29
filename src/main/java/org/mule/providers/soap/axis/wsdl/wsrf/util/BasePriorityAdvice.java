@@ -9,6 +9,10 @@
  */
 
 package org.mule.providers.soap.axis.wsdl.wsrf.util;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 /**
  * Base Priority Advice Class contains Priority Constant Value used from AdviceAdderHelper in order to create an ordered list of Advice
  */
@@ -38,6 +42,7 @@ public class BasePriorityAdvice implements org.aopalliance.aop.Advice, IPriority
     public  BasePriorityAdvice (int priority )
     {
         this.priorityCode = priority;
+        Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : started.");    
     }
   
     /**
@@ -47,6 +52,7 @@ public class BasePriorityAdvice implements org.aopalliance.aop.Advice, IPriority
     public  BasePriorityAdvice ()
     {
         this.priorityCode = DEFAULT_PRIORITY;
+        Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : started.");    
     }
     /**
      * return priority code

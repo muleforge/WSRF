@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.aopalliance.aop.Advice;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.NameMatchMethodPointcut;
@@ -40,6 +42,11 @@ public final class AdviceAdderHelper
      * TODO MULE-WSRF-6: Discuss about externalize string
      */
     private static final String MAPPED_NAME = "extend*";
+    
+    /**
+     * Counter advice
+     */
+    private static int countAdvice = 0;
     
     /**
      * 
@@ -63,20 +70,37 @@ public final class AdviceAdderHelper
         List l = getListAdvisorClass();
         ListIterator li = l.listIterator();
         Advisor advisor = null;
-        
+        int index;
         while (li.hasNext()) 
         {
             advisor = (Advisor) li.next();
             if (advisor.getAdvice() instanceof IPriorityAdvice)
             { 
-                factory.addAdvisor(((IPriorityAdvice) advisor.getAdvice()).getPriority() , advisor);
+               index = getOrderIndexFromPriority (((IPriorityAdvice) advisor.getAdvice()).getPriority() );
+                factory.addAdvisor(index, advisor);
+                Logger.getLogger(factory.getClass()).log(Level.DEBUG,  factory.getClass().getName() + " : added " + advisor.getAdvice().getClass().getName() + " at index position " + index);
             }
             else
             {
-                factory.addAdvisor(BasePriorityAdvice.DEFAULT_PRIORITY , advisor);
+                index = getOrderIndexFromPriority (BasePriorityAdvice.DEFAULT_PRIORITY );
+                factory.addAdvisor(index , advisor);
+                Logger.getLogger(factory.getClass()).log(Level.DEBUG,  factory.getClass().getName() + " : added " + advisor.getAdvice().getClass().getName() + " at index position " + index);
+                
             }
         }
         return (IExtendCall) factory.getProxy();
+    }
+    
+    /**
+     * method map list index to priority.
+     * @param priority priority
+     * @return index position
+     */
+    private static int getOrderIndexFromPriority(int priority)
+    {
+        // TODO Auto-generated method stub
+     
+        return countAdvice++;
     }
 
     /**

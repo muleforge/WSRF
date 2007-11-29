@@ -17,15 +17,12 @@ import java.lang.reflect.Method;
 
 import org.springframework.aop.MethodBeforeAdvice;
 /**
- * This Stub Advice perform Wsrp request using WSDL2JAVA stub
+ * This Stub Advice perform WS Service Group request using WSDL2JAVA stub
  */
-public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAdvice
+public class WssgStubAdvice extends StubPriorityAdvice implements MethodBeforeAdvice
 {
-   
-    
-    
-    /**
-    * Extend Call object intercept injecting WSRP information in order to prepare invocation
+   /**
+    * Extend Call object intercept injecting WS Service Group information in order to prepare invocation
     * @param arg0 method name
     * @param arg1 args
     * @param arg2 target object
