@@ -22,8 +22,6 @@ import org.springframework.aop.MethodBeforeAdvice;
 public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAdvice
 {
    
-    
-    
     /**
     * Extend Call object intercept injecting WSRP information in order to prepare invocation
     * @param arg0 method name
