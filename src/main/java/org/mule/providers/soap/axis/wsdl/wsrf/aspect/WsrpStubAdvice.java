@@ -21,7 +21,13 @@ import org.springframework.aop.MethodBeforeAdvice;
  */
 public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAdvice
 {
-
+   /**
+    * Extend Call object intercept injecting WSRP information in order to prepare invocation
+    * @param arg0 method name
+    * @param arg1 args
+    * @param arg2 target object
+    * @throws Throwable exception
+    */
     public void before(Method arg0, Object[] arg1, Object arg2) throws Throwable
     {
         // TODO Auto-generated method stub
