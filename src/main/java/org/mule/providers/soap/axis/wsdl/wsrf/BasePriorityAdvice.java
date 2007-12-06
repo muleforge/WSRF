@@ -8,7 +8,7 @@
  * LICENSE.txt file.
  */
 
-package org.mule.providers.soap.axis.wsdl.wsrf.util;
+package org.mule.providers.soap.axis.wsdl.wsrf;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;

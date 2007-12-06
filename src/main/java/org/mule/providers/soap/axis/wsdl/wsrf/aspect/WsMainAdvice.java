@@ -11,7 +11,7 @@
 package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
-import org.mule.providers.soap.axis.wsdl.wsrf.util.BasePriorityAdvice;
+import org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice;
 
 
 import java.lang.reflect.Method;

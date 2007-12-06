@@ -8,7 +8,7 @@
  * LICENSE.txt file.
  */
 
-package org.mule.providers.soap.axis.wsdl.wsrf.util;
+package org.mule.providers.soap.axis.wsdl.wsrf;
 /**
  * Marker interface
  * Advice that implements this interface informs AdviceAdderHelper about their Priority code
