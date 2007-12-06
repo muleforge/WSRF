@@ -71,6 +71,7 @@ public final class AdviceAdderHelper
         ListIterator li = l.listIterator();
         Advisor advisor = null;
         int index;
+        // TODO raffaele.picardi: order list using priority
         while (li.hasNext()) 
         {
             advisor = (Advisor) li.next();
@@ -98,7 +99,7 @@ public final class AdviceAdderHelper
      */
     private static int getOrderIndexFromPriority(int priority)
     {
-        // TODO Auto-generated method stub
+        
      
         return countAdvice++;
     }

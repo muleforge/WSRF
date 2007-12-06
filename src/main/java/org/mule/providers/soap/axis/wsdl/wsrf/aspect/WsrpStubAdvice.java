@@ -31,7 +31,7 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
     */
     public void before(Method arg0, Object[] arg1, Object arg2) throws Throwable
     {
-        // TODO Auto-generated method stub
+        // TODO raffaele.picardi: implement advice Wsrp
         
     }
 
