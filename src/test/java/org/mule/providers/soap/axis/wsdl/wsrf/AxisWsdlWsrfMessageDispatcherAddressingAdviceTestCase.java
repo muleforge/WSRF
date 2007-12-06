@@ -10,8 +10,15 @@
 package org.mule.providers.soap.axis.wsdl.wsrf;
 
 import org.mule.extras.client.MuleClient;
+import org.mule.providers.soap.NamedParameter;
+import org.mule.providers.soap.SoapMethod;
 import org.mule.tck.FunctionalTestCase;
 import org.mule.umo.UMOMessage;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.xml.namespace.QName;
 
 
 
@@ -64,13 +71,31 @@ protected final String getConfigResources()
 public final void  testCall() throws Exception
     {
         MuleClient client = new MuleClient();
+        SoapMethod method = new SoapMethod(new QName("", "add"));
+        method.addNamedParameter(new QName("","add"), NamedParameter.XSD_INT, "in");
 
-        UMOMessage result = client.send("vm://vmQueue", "5", null);
+        Map props = new HashMap();
+        props.put("style", "wrapped");
+        props.put("use", "literal"); 
+        props.put("method", method);
+
+        
+        UMOMessage result = client.send("vm://vmQueue", new Integer(2), props);
        
 
         assertNotNull(result);
         assertNotNull(result.getPayload());
         System.out.println(result.getPayload());
+        
+        /*
+       result = client.send("vm://vmQueue", new Integer(22), props);
+        
+
+        assertNotNull(result);
+        assertNotNull(result.getPayload());
+        System.out.println(result.getPayload());
+        */
+        
     }
 }
 
