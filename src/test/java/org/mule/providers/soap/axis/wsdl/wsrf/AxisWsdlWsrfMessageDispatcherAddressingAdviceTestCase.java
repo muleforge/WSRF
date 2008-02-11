@@ -70,9 +70,10 @@ protected final String getConfigResources()
  */
 public final void  testCall() throws Exception
     {
+        //TODO raffaele.picardi: fix code to invowe grid service
         MuleClient client = new MuleClient();
         SoapMethod method = new SoapMethod(new QName("", "add"));
-        method.addNamedParameter(new QName("","add"), NamedParameter.XSD_INT, "in");
+        method.addNamedParameter(new QName("add"), NamedParameter.XSD_INT, "in");
 
         Map props = new HashMap();
         props.put("style", "wrapped");
