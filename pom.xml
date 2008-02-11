@@ -55,6 +55,16 @@
           <appendAssemblyId>false</appendAssemblyId>
         </configuration>
       </plugin>
+		<plugin>
+       <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+             <configuration>
+                <configLocation>
+                  http://www.muleforge.org/download/checkstyle.xml?version=1
+                </configLocation>
+             </configuration>
+    </plugin>
+
     </plugins>
   </build>
   <repositories>
