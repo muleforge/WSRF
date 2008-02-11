@@ -15,11 +15,11 @@
 	<model name="TestGridAddressingService">
 		<mule-descriptor name="PassC" implementation="org.mule.components.simple.BridgeComponent">
 			<inbound-router>
-				<endpoint address="vm://vmQueue" transformers="StringToObjectArray" />
+				<endpoint address="vm://vmQueue" />
 			</inbound-router>
 			<outbound-router>
 				<router className="org.mule.routing.outbound.ChainingRouter">
-					<endpoint address="wsrf-wsdl-axis:http://127.0.0.1:8080/wsrf/services/examples/core/first/MathService?add" />
+					<endpoint address="wsrf-wsdl-axis:http://127.0.0.1:8080/wsrf/services/examples/core/first/MathService?method=add" />
 					<endpoint address="stream://System.out"/>
 				</router>
 			</outbound-router>
