@@ -46,6 +46,7 @@ public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvi
     public void before(Method arg0, Object[] arg1, Object arg2) throws Throwable
     {
         Logger.getLogger(this.getClass()).log(Level.INFO,  this.getClass().getName() + " : advice method started.");
+        
     }
 
 }
