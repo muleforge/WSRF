@@ -70,7 +70,7 @@ protected final String getConfigResources()
  */
 public final void  testCall() throws Exception
     {
-        //TODO raffaele.picardi: fix code to invowe grid service
+        //TODO raffaele.picardi: fix code to invoke grid service
         MuleClient client = new MuleClient();
         SoapMethod method = new SoapMethod(new QName("", "add"));
         method.addNamedParameter(new QName("add"), NamedParameter.XSD_INT, "in");
