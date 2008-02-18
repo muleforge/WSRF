@@ -29,7 +29,7 @@
 			</inbound-router>
 			<outbound-router>
 				<router className="org.mule.routing.outbound.ChainingRouter">
-					<endpoint address="wsrf-wsdl-axis:https://192.168.4.150:8443/wsrf/services/Version?method=getVersion" />
+					<endpoint address="wsrf-wsdl-axis:https://127.0.0.1:8443/wsrf/services/Version?method=getVersion" />
 					<endpoint address="stream://System.out"/>
 				</router>
 			</outbound-router>
