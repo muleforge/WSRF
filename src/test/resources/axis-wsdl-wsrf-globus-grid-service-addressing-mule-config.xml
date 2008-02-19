@@ -19,7 +19,7 @@
 			</inbound-router>
 			<outbound-router>
 				<router className="org.mule.routing.outbound.ChainingRouter">
-					<endpoint address="wsrf-wsdl-axis:http://192.168.4.51:8080/wsrf/services/examples/core/first/MathService?method=add" />
+					<endpoint address="wsrf-wsdl-axis:http://127.0.0.1:8080/wsrf/services/examples/core/first/MathService?method=add" />
 					<endpoint address="stream://System.out"/>
 				</router>
 			</outbound-router>
