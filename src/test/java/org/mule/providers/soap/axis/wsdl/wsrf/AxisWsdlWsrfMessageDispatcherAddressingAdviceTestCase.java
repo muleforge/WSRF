@@ -22,22 +22,20 @@ import javax.xml.namespace.QName;
 
 
 
-/*import org.mule.config.MuleProperties;
+/*
+
+import org.mule.config.MuleProperties;
 import org.mule.extras.client.MuleClient;
 import org.mule.providers.soap.NamedParameter;
 import org.mule.providers.soap.SoapMethod;
 import org.mule.tck.AbstractMuleTestCase;
-
-
-
 import org.mule.umo.UMOMessage;
-
-
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.xml.namespace.QName;
-import javax.xml.rpc.ParameterMode;*/
+import javax.xml.rpc.ParameterMode;
+
+*/
 
 
 /**
@@ -81,13 +79,12 @@ public final void  testCall() throws Exception
         props.put("method", method);
 
         
-        UMOMessage result = client.send("vm://vmQueue", new Integer(2), props);
+       UMOMessage result = client.send("vm://vmQueue", new Integer(2), props);
        
 
-      result = client.send("vm://vmQueue", new Integer(2), props);
-        
        result = client.send("vm://vmQueue", new Integer(2), props);
         
+       
 
         assertNotNull(result);
         assertNotNull(result.getPayload());

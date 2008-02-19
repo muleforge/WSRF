@@ -20,6 +20,7 @@ import org.mule.tck.FunctionalTestCase;
 
 import org.apache.axis.message.addressing.Address;
 import org.apache.axis.message.addressing.EndpointReferenceType;
+import org.apache.log4j.Logger;
 
 
 
@@ -79,7 +80,7 @@ public final void  testCall() throws Exception
     
     try 
     {
-        String factoryURI = "http://192.168.4.51:8080/wsrf/services/examples/core/factory/MathFactoryService";
+        String factoryURI = "http://127.0.0.1:8080/wsrf/services/examples/core/factory/MathFactoryService";
         EndpointReferenceType factoryEPR, instanceEPR;
         FactoryPortType mathFactory;
         //MathPortType math;
@@ -94,9 +95,12 @@ public final void  testCall() throws Exception
         CreateResourceResponse createResponse = mathFactory
                 .createResource(new CreateResource());
         instanceEPR = createResponse.getEndpointReference();
-    
-        assertNotNull(instanceEPR);
         
+       
+        assertNotNull(instanceEPR);
+
+        Logger.getLogger(this.getClass()).info("instance EPR: " + instanceEPR  + '\n');
+
     } 
     catch (Exception e) 
     {
