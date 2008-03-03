@@ -71,14 +71,11 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
         {
            extenderCall = (IExtendCall) aopSpringContext.getBean("extendCallTarget");
            extenderProxyCall = AdviceAdderHelper.addAdvisorsTo(extenderCall);
-          
-        }
+         }
         else
         {
             Logger.getLogger(this.getClass()).log(Level.ERROR, this.getClass().getName() + " : factory spring is null.");
-
         }
-
     }
 
     /**
@@ -107,7 +104,6 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
        Call call = super.getCall(arg0, arg1);
        this.extenderProxyCall.extendCall(call, arg0);
        return call;
-      
     }
     
      
