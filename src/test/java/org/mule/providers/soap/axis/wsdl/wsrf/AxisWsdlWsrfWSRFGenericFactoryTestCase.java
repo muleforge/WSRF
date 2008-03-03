@@ -14,6 +14,8 @@ import org.mule.providers.soap.axis.wsdl.wsrf.factory.CreateResource;
 import org.mule.providers.soap.axis.wsdl.wsrf.factory.CreateResourceResponse;
 import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryPortType;
 import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryServiceAddressingLocator;
+import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortType;
+import org.mule.providers.soap.wsdl.wsrf.instance.GenericServiceAddressingLocator;
 
 import org.mule.tck.FunctionalTestCase;
 
@@ -43,7 +45,7 @@ import javax.xml.rpc.ParameterMode;*/
 
 
 /**
- * Test Message Dispatcher synchr for Wsdl Wsrf Web Service
+ * Test Message Dispatcher synchr for Wsdl Wsrf Web Service (use this code into message dispatcher)
  * @author raffaele.picardi
  *
  */
@@ -77,7 +79,7 @@ public final void  testCall() throws Exception
     //MathServiceAddressingLocator instanceLocator = new MathServiceAddressingLocator();
     //GetResourcePropertyResponse valueRP;
 
-    
+
     try 
     {
         String factoryURI = "http://127.0.0.1:8080/wsrf/services/examples/core/factory/MathFactoryService";
@@ -96,15 +98,27 @@ public final void  testCall() throws Exception
                 .createResource(new CreateResource());
         instanceEPR = createResponse.getEndpointReference();
         
+        createResponse = mathFactory
+        .createResource(new CreateResource());
+        createResponse = mathFactory
+        .createResource(new CreateResource());
        
         assertNotNull(instanceEPR);
 
         Logger.getLogger(this.getClass()).info("instance EPR: " + instanceEPR  + '\n');
-
+        
+        GenericServiceAddressingLocator instanceLocator = new GenericServiceAddressingLocator();
+        GenericPortType serviceInstance = instanceLocator.getMathPortTypePort(instanceEPR);
+        assertNotNull(serviceInstance);
+        Object o = serviceInstance.add(5);
+        
+        assertNotNull(o);
+        Logger.getLogger(this.getClass()).info("response of operation : " + o  + '\n');
     } 
     catch (Exception e) 
     {
         e.printStackTrace();
+        fail("Should not have been thrown"); 
     }
 }
 }

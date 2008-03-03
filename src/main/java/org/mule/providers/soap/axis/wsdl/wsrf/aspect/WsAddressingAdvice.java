@@ -15,15 +15,27 @@ package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
 import org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice;
+import org.mule.providers.soap.wsdl.wsrf.instance.Response;
+import org.mule.umo.UMOEvent;
 
 import java.lang.reflect.Method;
 
+import javax.xml.namespace.QName;
 
 
 
 
+
+import org.apache.axis.client.Call;
+import org.apache.axis.description.OperationDesc;
+import org.apache.axis.message.addressing.AddressingHeaders;
+import org.apache.axis.message.addressing.Constants;
+import org.apache.axis.message.addressing.ReferencePropertiesType;
+import org.apache.axis.message.addressing.To;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.globus.wsrf.encoding.SerializationException;
+import org.globus.wsrf.impl.SimpleResourceKey;
 
 import org.springframework.aop.MethodBeforeAdvice;
 
@@ -52,7 +64,111 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
      */
     public void before(Method arg0, Object[] arg1, Object arg2) throws Throwable
     {
-       //
+       Call call = (Call) arg1[0];
+       UMOEvent event = (UMOEvent) arg1[1];
+       setOperationsDesc(call , event);
+       call.setUseSOAPAction(true);
+       call.setSOAPActionURI("http://www.globus.org/namespaces/examples/core/MathService_instance/MathPortType/addRequest");
+       call.setEncodingStyle(null);
+       call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
+       call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
+       call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+       setHeader(call , event);
+    }
+    
+    
+    /**
+     * set Operations Desc
+     * @param call call
+     * @param event event
+     */
+    private void setOperationsDesc(Call call , UMOEvent event)
+    {
+        OperationDesc oper;
+        if (call.getOperation()  != null)
+        {
+            oper = call.getOperation();
+        }
+        else 
+        {
+            
+           oper = new org.apache.axis.description.OperationDesc();
+        
+        }
+        //TODO raffaele.picardi: generic process from Mule Message properties
+        oper.setName("add");
+        oper.addParameter(new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", "add"), new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"), int.class, org.apache.axis.description.ParameterDesc.IN, false, false);
+        oper.setReturnType(new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", ">addResponse"));
+        oper.setReturnType(new javax.xml.namespace.QName(
+            "http://www.globus.org/namespaces/examples/core/MathService_instance", ">addResponse"));
+        
+        oper.setReturnClass(Response.class);
+        oper.setReturnQName(new javax.xml.namespace.QName(
+            "http://www.globus.org/namespaces/examples/core/MathService_instance", "addResponse"));
+        oper.setStyle(org.apache.axis.constants.Style.DOCUMENT);
+        oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        call.setOperation(oper);
+        Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " OperationDesc :  injected..");
+        
+    }
+
+    /**
+     * set header Informations
+     * @param call call
+     * @param event event
+     */
+    private void setHeader(Call call , UMOEvent event)
+    {
+        AddressingHeaders headers;
+        if (call.getProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS) == null )
+        {
+            headers = new AddressingHeaders();
+        }
+        else 
+        {
+            headers = (AddressingHeaders) call.getProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS);
+        }
+        
+        setReferenceProperties(headers , event);
+        
+
+        
+        call.setProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS, headers);
+        Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " ENV_ADDRESSING_REQUEST_HEADERS :  injected..");
+        
+    }
+
+ 
+    /**
+     * set Reference Properties
+     * @param headers headers
+     * @param event event
+     */
+    private void setReferenceProperties(AddressingHeaders headers , UMOEvent event)
+    {
+        //TODO raffaele.picardi: extract Resource Key from Mule Message Property data model
+        //18093512
+        QName keyName = new QName("http://www.globus.org/namespaces/examples/core/MathService_instance", "MathResourceKey");
+        String keyValue = "18093512";
+         
+        SimpleResourceKey key = new SimpleResourceKey(keyName, keyValue);
+
+        ReferencePropertiesType props = headers.getReferenceProperties();
+        
+        if (props == null ) 
+        {
+            props = new ReferencePropertiesType();
+        }
+        try
+        {
+            props.add(key.toSOAPElement());
+        }
+        catch (SerializationException e)
+        {
+            e.printStackTrace();
+        } 
+        Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : ReferencesProperties injected..");
+        headers.setReferenceProperties(props);
     }
 
 }
