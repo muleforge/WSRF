@@ -82,7 +82,7 @@ public final void  testCall() throws Exception
        UMOMessage result = client.send("vm://vmQueue", new Integer(2), props);
        
 
-       result = client.send("vm://vmQueue", new Integer(2), props);
+      // result = client.send("vm://vmQueue", new Integer(2), props);
         
        
 
