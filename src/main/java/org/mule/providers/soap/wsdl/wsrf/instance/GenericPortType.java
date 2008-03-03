@@ -16,18 +16,24 @@ package org.mule.providers.soap.wsdl.wsrf.instance;
 public interface GenericPortType extends java.rmi.Remote
 {
         
-         
         /**
-         * Adds the.
-         * 
+         * Generic Operation 
+         * @param operationName
+         * @param params
+         * @return Response response
+         * @throws java.rmi.RemoteException
+         */
+        Response genericOperation(String operationName , Object[] params) throws java.rmi.RemoteException;
+    
+        /**
+         * Adds the.TO DELETE
          * @param parameters the parameters
          * @return the response
          */
         Response add(int parameters) throws java.rmi.RemoteException;
         
         /**
-         * Subtract.
-         * 
+         * Subtract. TO DELETE
          * @param parameters the parameters
          * @return the response
         */

@@ -10,6 +10,9 @@
 
 package org.mule.providers.soap.wsdl.wsrf.instance;
 
+import java.rmi.RemoteException;
+
+
 /**
  * The Class GenericPortTypeSoapBindingsStub.
  */
@@ -51,6 +54,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
             org.apache.axis.description.ParameterDesc.IN, false, false);
         oper.setReturnType(new javax.xml.namespace.QName(
             "http://www.globus.org/namespaces/examples/core/MathService_instance", ">addResponse"));
+        
         oper.setReturnClass(Response.class);
         oper.setReturnQName(new javax.xml.namespace.QName(
             "http://www.globus.org/namespaces/examples/core/MathService_instance", "addResponse"));
@@ -140,7 +144,6 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
      * 
      * @param endpointURL the endpoint url
      * @param service the service
-
      */
     public GenericPortTypeSoapBindingsStub(java.net.URL endpointURL, javax.xml.rpc.Service service)
         throws org.apache.axis.AxisFault
@@ -153,7 +156,6 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
      * Instantiates a new generic port type soap bindings stub.
      * 
      * @param service the service
-
      */
     public GenericPortTypeSoapBindingsStub(javax.xml.rpc.Service service) throws org.apache.axis.AxisFault
     {
@@ -595,6 +597,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
      * 
      * @param parameters the parameters
      * @return the response
+     * @throws RemoteException the remote exception
      * @see org.mule.providers.soap.wsdl.wsrf.instance.GenenericPortType#add(int)
      */
     public Response add(int parameters) throws java.rmi.RemoteException
@@ -626,11 +629,13 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
             extractAttachments(call);
             try
             {
+                //TODO raffaele.picardi: render generic  this code via Mule Message Properties
+                ((Response) resp).setTypeDescXmlType("http://www.globus.org/namespaces/examples/core/MathService_instance" , ">addResponse");
                 return (Response) resp;
             }
             catch (java.lang.Exception exception)
             {
-                return (Response) org.apache.axis.utils.JavaUtils.convert(resp, Response.class);
+                return (Response) org.apache.axis.utils.JavaUtils.convert(resp, resp.getClass());
             }
         }
     }
@@ -726,6 +731,21 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
                     resp, org.oasis.wsrf.properties.GetResourcePropertyResponse.class);
             }
         }
+    }
+
+    /**
+     * Generic operation.
+     * 
+     * @param name the name
+     * @param params the params
+     * @return the response
+     * @see org.mule.providers.soap.wsdl.wsrf.instance.GenericPortType#genericOperation(java.lang.String,
+     *      java.lang.Object[])
+     */
+    public Response genericOperation(String name, Object[] params) throws RemoteException
+    {
+        // TODO raffaele.picardi:setTypeDescXmlType
+        return null;
     }
 
 }

@@ -16,19 +16,30 @@ package org.mule.providers.soap.wsdl.wsrf.instance;
  */
 public class Response implements java.io.Serializable
 {
-    
+
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
     // TODO raffaele.picardi: design Response Class
     /**
-     * Instantiates a new response.
+     * Instantiates a new response. eg:
      */
     public Response()
     {
-        // empty constructor
+        //Empty Constructor
     }
-
+    
+    /**
+     * set Type Desc Xml Type
+     * @param serviceNamespaceURI
+     * @param localPart
+     */
+    public void setTypeDescXmlType(String serviceNamespaceURI , String localPart) 
+    {
+        typeDesc = new org.apache.axis.description.TypeDesc(Response.class, true);
+        typeDesc.setXmlType(new javax.xml.namespace.QName(serviceNamespaceURI , localPart));
+    }
+    
     /** The equals calc. */
     private java.lang.Object equalsCalc = null;
 
@@ -88,21 +99,17 @@ public class Response implements java.io.Serializable
 
     // Type metadata
     /** The type desc. */
-    private static org.apache.axis.description.TypeDesc typeDesc = new org.apache.axis.description.TypeDesc(
-        Response.class, true);
-
-    static
-    {
-        typeDesc.setXmlType(new javax.xml.namespace.QName(
-            "http://www.globus.org/namespaces/examples/core/MathService_instance", ">addResponse"));
-    }
+    private org.apache.axis.description.TypeDesc typeDesc;
+    
+    
+  
 
     /**
      * Return type metadata object.
      * 
      * @return the type desc
      */
-    public static org.apache.axis.description.TypeDesc getTypeDesc()
+    public org.apache.axis.description.TypeDesc getTypeDesc()
     {
         return typeDesc;
     }
@@ -115,7 +122,7 @@ public class Response implements java.io.Serializable
      * @param xmlType the xml type
      * @return the serializer
      */
-    public static org.apache.axis.encoding.Serializer getSerializer(java.lang.String mechType,
+    public org.apache.axis.encoding.Serializer getSerializer(java.lang.String mechType,
                                                                     java.lang.Class javaType,
                                                                     javax.xml.namespace.QName xmlType)
     {
@@ -130,11 +137,13 @@ public class Response implements java.io.Serializable
      * @param xmlType the xml type
      * @return the deserializer
      */
-    public static org.apache.axis.encoding.Deserializer getDeserializer(java.lang.String mechType,
+    public org.apache.axis.encoding.Deserializer getDeserializer(java.lang.String mechType,
                                                                         java.lang.Class javaType,
                                                                         javax.xml.namespace.QName xmlType)
     {
         return new org.apache.axis.encoding.ser.BeanDeserializer(javaType, xmlType, typeDesc);
     }
+
+
 
 }
