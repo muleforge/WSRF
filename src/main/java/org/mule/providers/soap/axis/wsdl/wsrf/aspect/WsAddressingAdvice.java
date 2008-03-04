@@ -14,6 +14,7 @@ package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
 
+
 import org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice;
 import org.mule.providers.soap.wsdl.wsrf.instance.Response;
 import org.mule.umo.UMOEvent;
@@ -31,7 +32,6 @@ import org.apache.axis.description.OperationDesc;
 import org.apache.axis.message.addressing.AddressingHeaders;
 import org.apache.axis.message.addressing.Constants;
 import org.apache.axis.message.addressing.ReferencePropertiesType;
-import org.apache.axis.message.addressing.To;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.globus.wsrf.encoding.SerializationException;
@@ -97,16 +97,15 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
         }
         //TODO raffaele.picardi: generic process from Mule Message properties
         oper.setName("add");
-        oper.addParameter(new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", "add"), new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"), int.class, org.apache.axis.description.ParameterDesc.IN, false, false);
         oper.setReturnType(new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", ">addResponse"));
-        oper.setReturnType(new javax.xml.namespace.QName(
-            "http://www.globus.org/namespaces/examples/core/MathService_instance", ">addResponse"));
+        oper.setReturnQName(new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", "addResponse"));
+        
         
         oper.setReturnClass(Response.class);
-        oper.setReturnQName(new javax.xml.namespace.QName(
-            "http://www.globus.org/namespaces/examples/core/MathService_instance", "addResponse"));
+     
         oper.setStyle(org.apache.axis.constants.Style.DOCUMENT);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        oper.getParameter(0).setName("add");
         call.setOperation(oper);
         Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " OperationDesc :  injected..");
         
@@ -134,6 +133,7 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
 
         
         call.setProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS, headers);
+       
         Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " ENV_ADDRESSING_REQUEST_HEADERS :  injected..");
         
     }
@@ -149,7 +149,7 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
         //TODO raffaele.picardi: extract Resource Key from Mule Message Property data model
         //18093512
         QName keyName = new QName("http://www.globus.org/namespaces/examples/core/MathService_instance", "MathResourceKey");
-        String keyValue = "18093512";
+        String keyValue = "1646156";
          
         SimpleResourceKey key = new SimpleResourceKey(keyName, keyValue);
 
