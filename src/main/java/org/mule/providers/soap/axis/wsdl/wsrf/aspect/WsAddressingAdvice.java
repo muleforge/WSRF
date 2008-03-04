@@ -16,17 +16,20 @@ package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
 import org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice;
+import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortTypeSoapBindingsStub;
 import org.mule.providers.soap.wsdl.wsrf.instance.Response;
 import org.mule.umo.UMOEvent;
 
 import java.lang.reflect.Method;
 
 import javax.xml.namespace.QName;
+import javax.xml.rpc.ServiceException;
 
 
 
 
 
+import org.apache.axis.AxisFault;
 import org.apache.axis.client.Call;
 import org.apache.axis.description.OperationDesc;
 import org.apache.axis.message.addressing.AddressingHeaders;
@@ -65,6 +68,7 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
     public void before(Method arg0, Object[] arg1, Object arg2) throws Throwable
     {
        Call call = (Call) arg1[0];
+       setSerializableClasses(call);
        UMOEvent event = (UMOEvent) arg1[1];
        setOperationsDesc(call , event);
        call.setUseSOAPAction(true);
@@ -74,9 +78,17 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
        call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
        call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
        setHeader(call , event);
+       //  TODO raffaele.picardi: setAttachments(call);
     }
     
     
+    private void setSerializableClasses(Call call) throws AxisFault, ServiceException
+    {
+        GenericPortTypeSoapBindingsStub stub = new GenericPortTypeSoapBindingsStub(call.getService());
+        stub._createCall();
+        
+    }
+
     /**
      * set Operations Desc
      * @param call call
@@ -149,7 +161,7 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
         //TODO raffaele.picardi: extract Resource Key from Mule Message Property data model
         //18093512
         QName keyName = new QName("http://www.globus.org/namespaces/examples/core/MathService_instance", "MathResourceKey");
-        String keyValue = "1646156";
+        String keyValue = "1541717";
          
         SimpleResourceKey key = new SimpleResourceKey(keyName, keyValue);
 
