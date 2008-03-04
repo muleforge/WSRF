@@ -12,6 +12,11 @@ package org.mule.providers.soap.wsdl.wsrf.instance;
 
 import java.rmi.RemoteException;
 
+import javax.xml.rpc.ServiceException;
+
+import org.apache.axis.client.Call;
+
+
 
 /**
  * The Class GenericPortTypeSoapBindingsStub.
@@ -144,6 +149,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
      * 
      * @param endpointURL the endpoint url
      * @param service the service
+
      */
     public GenericPortTypeSoapBindingsStub(java.net.URL endpointURL, javax.xml.rpc.Service service)
         throws org.apache.axis.AxisFault
@@ -512,17 +518,41 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         cachedDeserFactories.add(enumdf);
 
     }
-
+    
     /**
      * Creates the call.
      * 
-     * @return the org.apache.axis.client. call
+     * @return the call
+     * 
      */
-    protected org.apache.axis.client.Call createCall() throws java.rmi.RemoteException
+    public Call  createCall() throws java.rmi.RemoteException
+    {
+        org.apache.axis.client.Call call = null;
+        try
+        {
+            call = (org.apache.axis.client.Call) super.service.createCall();
+        }
+        catch (ServiceException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        configureCall(call);
+        return call;
+        
+    }
+
+    /**
+     * Configure call.
+     * 
+     * @param call the call
+     * @throws RemoteException the remote exception
+     */
+    protected void configureCall(Call call) throws java.rmi.RemoteException
     {
         try
         {
-            org.apache.axis.client.Call call = (org.apache.axis.client.Call) super.service.createCall();
+           
             if (super.maintainSessionSet)
             {
                 call.setMaintainSession(super.maintainSession);
@@ -584,7 +614,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
                     }
                 }
             }
-            return call;
+    
         }
         catch (java.lang.Throwable t)
         {
@@ -645,6 +675,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
      * 
      * @param parameters the parameters
      * @return the response
+     * @throws RemoteException the remote exception
      * @see org.mule.providers.soap.wsdl.wsrf.instance.GenenericPortType#subtract(int)
      */
     public Response subtract(int parameters) throws java.rmi.RemoteException
@@ -691,6 +722,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
      * @param getResourcePropertyRequest the get resource property request
      * @return org.oasis.wsrf.properties.GetResourcePropertyResponse Get Resource
      *         Property Response
+     * @throws RemoteException the remote exception
      * @see org.mule.providers.soap.wsdl.wsrf.instance.GenenericPortType#getResourceProperty(javax.xml.namespace.QName)
      */
     public org.oasis.wsrf.properties.GetResourcePropertyResponse getResourceProperty(javax.xml.namespace.QName getResourcePropertyRequest)
@@ -739,6 +771,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
      * @param name the name
      * @param params the params
      * @return the response
+     * @throws RemoteException the remote exception
      * @see org.mule.providers.soap.wsdl.wsrf.instance.GenericPortType#genericOperation(java.lang.String,
      *      java.lang.Object[])
      */
