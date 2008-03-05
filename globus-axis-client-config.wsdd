@@ -52,6 +52,9 @@
   </requestFlow>
  </transport>
  <transport name="local" pivot="java:org.apache.axis.transport.local.LocalSender"/>
+
+
+
  <typeMapping deserializer="org.apache.axis.encoding.ser.SimpleDeserializerFactory" encodingStyle="" qname="ns1:ServiceNameType" serializer="org.apache.axis.encoding.ser.SimpleSerializerFactory" type="java:org.apache.axis.message.addressing.ServiceNameType" xmlns:ns1="http://schemas.xmlsoap.org/ws/2004/03/addressing"/>
  <typeMapping deserializer="org.apache.axis.encoding.ser.SimpleDeserializerFactory" encodingStyle="" qname="ns2:BinaryExchangeType" serializer="org.apache.axis.encoding.ser.SimpleSerializerFactory" type="java:org.globus.ws.trust.BinaryExchangeType" xmlns:ns2="http://schemas.xmlsoap.org/ws/2004/04/trust"/>
  <typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns3:BaseFaultType" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:org.oasis.wsrf.faults.BaseFaultType" xmlns:ns3="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-BaseFaults-1.2-draft-01.xsd"/>
@@ -65,3 +68,7 @@
  <typeMapping deserializer="org.apache.axis.encoding.ser.SimpleDeserializerFactory" encodingStyle="" qname="ns11:QueryExpressionDialect" serializer="org.apache.axis.encoding.ser.SimpleSerializerFactory" type="java:java.lang.String" xmlns:ns11="http://www.globus.org/foobar"/>
  <typeMapping deserializer="org.globus.wsrf.encoding.QueryExpressionDeserializerFactory" encodingStyle="" qname="ns12:QueryExpressionType" serializer="org.globus.wsrf.encoding.QueryExpressionSerializerFactory" type="java:org.oasis.wsrf.properties.QueryExpressionType" xmlns:ns12="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd"/>
 </deployment>
+
+
+
+    
