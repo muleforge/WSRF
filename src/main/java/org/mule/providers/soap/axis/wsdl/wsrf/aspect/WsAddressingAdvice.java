@@ -109,11 +109,11 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
         }
         //TODO raffaele.picardi: generic process from Mule Message properties
         oper.setName("add");
-        oper.setReturnType(new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", ">addResponse"));
-        oper.setReturnQName(new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", "addResponse"));
+     //   oper.setReturnType(new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", ">addResponse"));
+     //   oper.setReturnQName(new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", "addResponse"));
         
         
-        oper.setReturnClass(Response.class);
+       // oper.setReturnClass(Response.class);
      
         oper.setStyle(org.apache.axis.constants.Style.DOCUMENT);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
@@ -161,7 +161,7 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
         //TODO raffaele.picardi: extract Resource Key from Mule Message Property data model
         //18093512
         QName keyName = new QName("http://www.globus.org/namespaces/examples/core/MathService_instance", "MathResourceKey");
-        String keyValue = "1541717";
+        String keyValue = "13829853";
          
         SimpleResourceKey key = new SimpleResourceKey(keyName, keyValue);
 
