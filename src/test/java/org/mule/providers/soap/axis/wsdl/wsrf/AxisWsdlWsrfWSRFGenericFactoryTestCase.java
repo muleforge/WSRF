@@ -19,6 +19,8 @@ import org.mule.providers.soap.wsdl.wsrf.instance.GenericServiceAddressingLocato
 
 import org.mule.tck.FunctionalTestCase;
 
+import javax.xml.namespace.QName;
+
 
 import org.apache.axis.message.addressing.Address;
 import org.apache.axis.message.addressing.EndpointReferenceType;
@@ -74,7 +76,7 @@ protected final String getConfigResources()
  */
 public final void  testCall() throws Exception
     {
-    //TODO raffaele.picardi: complete test with instance locator service
+    //TODO raffaele.picardi: complete test with Mule Message as AddressingAdvice and Factory Property
     FactoryServiceAddressingLocator factoryLocator = new FactoryServiceAddressingLocator();
     //MathServiceAddressingLocator instanceLocator = new MathServiceAddressingLocator();
     //GetResourcePropertyResponse valueRP;
@@ -110,10 +112,11 @@ public final void  testCall() throws Exception
         GenericServiceAddressingLocator instanceLocator = new GenericServiceAddressingLocator();
         GenericPortType serviceInstance = instanceLocator.getMathPortTypePort(instanceEPR);
         assertNotNull(serviceInstance);
-        Object o = serviceInstance.add(5);
+       
         
-        assertNotNull(o);
-        Logger.getLogger(this.getClass()).info("response of operation : " + o  + '\n');
+        assertNotNull(serviceInstance);
+        String NS = "http://www.globus.org/namespaces/examples/core/MathService_instance";
+        Logger.getLogger(this.getClass()).info("response of getResourceProperty(value) operation : " + serviceInstance.getResourceProperty(new QName(NS, "Value"))  + '\n');
     } 
     catch (Exception e) 
     {

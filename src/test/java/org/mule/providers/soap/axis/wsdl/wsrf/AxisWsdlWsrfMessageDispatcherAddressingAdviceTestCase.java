@@ -12,6 +12,9 @@ package org.mule.providers.soap.axis.wsdl.wsrf;
 import org.mule.extras.client.MuleClient;
 import org.mule.providers.soap.NamedParameter;
 import org.mule.providers.soap.SoapMethod;
+import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
+import org.mule.providers.soap.wsdl.wsrf.instance.Response;
+
 import org.mule.tck.FunctionalTestCase;
 import org.mule.umo.UMOMessage;
 
@@ -72,24 +75,29 @@ public final void  testCall() throws Exception
         //TODO raffaele.picardi: fix code to invoke grid service
         MuleClient client = new MuleClient();
         SoapMethod method = new SoapMethod(new QName("", "add"));
-        method.addNamedParameter(new QName("add"), NamedParameter.XSD_INT, "in");
-        method.addNamedParameter(new QName("addResponse"), NamedParameter.XSD_STRING, "out");
-
+        method.addNamedParameter(new QName("add"),new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", "addResponse"), "in");
+        method.setReturnType( new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", ">addResponse"));
+        method.setReturnClass(Response.class);
+     
         Map props = new HashMap();
-        props.put("style", "wrapped");
-        props.put("use", "literal"); 
-        props.put("method", method);
-
-        
+       props.put("style", "wrapped");
+       props.put("use", "literal"); 
+       props.put("method", method);
+       props.put("resourceKey", "1690651");
+       props.put(WSRFParameter.SERVICE_NAMESPACE , "http://www.globus.org/namespaces/examples/core/MathService_instance");
+       props.put(WSRFParameter.RESOURCEKEY_NAME , "MathResourceKey");
+       props.put(WSRFParameter.RETURNQNAME, "addResponse");
+       
        UMOMessage result = client.send("vm://vmQueue", new Integer(2), props);
        
+
 
       // result = client.send("vm://vmQueue", new Integer(2), props);
         
        
 
         assertNotNull(result);
-        assertNotNull(result.getPayload());
+        assertNotNull(result.getPayload()); //return class object 
         System.out.println(result.getPayload());
         
         /*
