@@ -5,6 +5,8 @@
 <mule-configuration id="TestGridAddressingService-config" version="1.0">
 	<description>
         This is a blank configuration file for the test WsAddressingAdvice project   </description>
+	
+
 	<transformers>
 		<transformer name="StringToObjectArray" className="org.mule.transformers.simple.StringToObjectArray">
 			<properties>
