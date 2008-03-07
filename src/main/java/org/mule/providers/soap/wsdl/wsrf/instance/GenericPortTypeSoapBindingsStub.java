@@ -622,99 +622,8 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         }
     }
 
-    /**
-     * Adds the.
-     * 
-     * @param parameters the parameters
-     * @return the response
-     * @throws RemoteException the remote exception
-     * @see org.mule.providers.soap.wsdl.wsrf.instance.GenenericPortType#add(int)
-     */
-    public Response add(int parameters) throws java.rmi.RemoteException
-    {
-        if (super.cachedEndpoint == null)
-        {
-            throw new org.apache.axis.NoEndPointException();
-        }
-        org.apache.axis.client.Call call = createCall();
-        call.setOperation(operations[0]);
-        call.setUseSOAPAction(true);
-        call.setSOAPActionURI("http://www.globus.org/namespaces/examples/core/MathService_instance/MathPortType/addRequest");
-        call.setEncodingStyle(null);
-        call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
-        call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        call.setOperationName(new javax.xml.namespace.QName("", "add"));
-
-        setRequestHeaders(call);
-        setAttachments(call);
-        java.lang.Object resp = call.invoke(new java.lang.Object[]{new java.lang.Integer(parameters)});
-
-        if (resp instanceof java.rmi.RemoteException)
-        {
-            throw (java.rmi.RemoteException) resp;
-        }
-        else
-        {
-            extractAttachments(call);
-            try
-            {
-                //TODO raffaele.picardi: render generic  this code via Mule Message Properties
-                ((Response) resp).setTypeDescXmlType("http://www.globus.org/namespaces/examples/core/MathService_instance" , ">addResponse");
-                return (Response) resp;
-            }
-            catch (java.lang.Exception exception)
-            {
-                return (Response) org.apache.axis.utils.JavaUtils.convert(resp, resp.getClass());
-            }
-        }
-    }
-
-    /**
-     * Subtract.
-     * 
-     * @param parameters the parameters
-     * @return the response
-     * @throws RemoteException the remote exception
-     * @see org.mule.providers.soap.wsdl.wsrf.instance.GenenericPortType#subtract(int)
-     */
-    public Response subtract(int parameters) throws java.rmi.RemoteException
-    {
-        if (super.cachedEndpoint == null)
-        {
-            throw new org.apache.axis.NoEndPointException();
-        }
-        org.apache.axis.client.Call call = createCall();
-        call.setOperation(operations[1]);
-        call.setUseSOAPAction(true);
-        call.setSOAPActionURI("http://www.globus.org/namespaces/examples/core/MathService_instance/MathPortType/subtractRequest");
-        call.setEncodingStyle(null);
-        call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
-        call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
-        call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        call.setOperationName(new javax.xml.namespace.QName("", "subtract"));
-
-        setRequestHeaders(call);
-        setAttachments(call);
-        java.lang.Object resp = call.invoke(new java.lang.Object[]{new java.lang.Integer(parameters)});
-
-        if (resp instanceof java.rmi.RemoteException)
-        {
-            throw (java.rmi.RemoteException) resp;
-        }
-        else
-        {
-            extractAttachments(call);
-            try
-            {
-                return (Response) resp;
-            }
-            catch (java.lang.Exception exception)
-            {
-                return (Response) org.apache.axis.utils.JavaUtils.convert(resp, Response.class);
-            }
-        }
-    }
+   
+   
 
     /**
      * Gets the resource property.
@@ -765,20 +674,6 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         }
     }
 
-    /**
-     * Generic operation.
-     * 
-     * @param name the name
-     * @param params the params
-     * @return the response
-     * @throws RemoteException the remote exception
-     * @see org.mule.providers.soap.wsdl.wsrf.instance.GenericPortType#genericOperation(java.lang.String,
-     *      java.lang.Object[])
-     */
-    public Response genericOperation(String name, Object[] params) throws RemoteException
-    {
-        // TODO raffaele.picardi:setTypeDescXmlType
-        return null;
-    }
+   
 
 }

@@ -16,29 +16,9 @@ package org.mule.providers.soap.wsdl.wsrf.instance;
 public interface GenericPortType extends java.rmi.Remote
 {
         
-        /**
-         * Generic Operation 
-         * @param operationName
-         * @param params
-         * @return Response response
-         * @throws java.rmi.RemoteException
-         */
-        Response genericOperation(String operationName , Object[] params) throws java.rmi.RemoteException;
+       
     
-        /**
-         * Adds the.TO DELETE
-         * @param parameters the parameters
-         * @return the response
-         */
-        Response add(int parameters) throws java.rmi.RemoteException;
-        
-        /**
-         * Subtract. TO DELETE
-         * @param parameters the parameters
-         * @return the response
-        */
-        Response subtract(int parameters) throws java.rmi.RemoteException;
-        
+          
               
         /**
          * Gets the resource property.
@@ -48,7 +28,8 @@ public interface GenericPortType extends java.rmi.Remote
          */
         org.oasis.wsrf.properties.GetResourcePropertyResponse getResourceProperty(javax.xml.namespace.QName getResourcePropertyRequest) throws java.rmi.RemoteException;
         //TODO raffaele.picardi: add other standard WSRF operations as setResourceProperty or setMultipleResourceProperty
-
+        
+        
 }
 
 
