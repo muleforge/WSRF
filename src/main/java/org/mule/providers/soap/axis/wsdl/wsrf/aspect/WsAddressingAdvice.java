@@ -15,12 +15,16 @@ package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
 
+import org.mule.config.MuleProperties;
+import org.mule.providers.soap.SoapMethod;
 import org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice;
+import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortTypeSoapBindingsStub;
 import org.mule.providers.soap.wsdl.wsrf.instance.Response;
 import org.mule.umo.UMOEvent;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
 import javax.xml.namespace.QName;
 import javax.xml.rpc.ServiceException;
@@ -59,7 +63,7 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
     }
     
     /**
-     * 
+     * Inject call informations 
      * @param arg0 .
      * @param arg1 .
      * @param arg2 .
@@ -78,15 +82,19 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
        call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
        call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
        setHeader(call , event);
-       //  TODO raffaele.picardi: setAttachments(call);
+       //TODO raffaele.picardi: setAttachments(call);
     }
     
-    
+    /**
+     * set Serializable Classes
+     * @param call call
+     * @throws AxisFault exception on axis fault
+     * @throws ServiceException service exception
+     */
     private void setSerializableClasses(Call call) throws AxisFault, ServiceException
     {
         GenericPortTypeSoapBindingsStub stub = new GenericPortTypeSoapBindingsStub(call.getService());
         stub._createCall();
-        
     }
 
     /**
@@ -103,24 +111,23 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
         }
         else 
         {
-            
-           oper = new org.apache.axis.description.OperationDesc();
-        
+            oper = new org.apache.axis.description.OperationDesc();
         }
-        //TODO raffaele.picardi: generic process from Mule Message properties
-        oper.setName("add");
-     //   oper.setReturnType(new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", ">addResponse"));
-     //   oper.setReturnQName(new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", "addResponse"));
+        //TODO raffaele.picardi: check getting SoapMethod Map watching AxisMessageDispatcher
+        SoapMethod soapMethod = (SoapMethod) event.getMessage().getProperty(MuleProperties.MULE_METHOD_PROPERTY);
+        oper.setName(soapMethod.getName().getLocalPart());
+        oper.setReturnType(soapMethod.getReturnType());
+ 
+        String serviceNamespace = (String) event.getMessage().getProperty(WSRFParameter.SERVICE_NAMESPACE);
+        String returnQName = (String) event.getMessage().getProperty(WSRFParameter.RETURNQNAME);
+        oper.setReturnQName(new javax.xml.namespace.QName(serviceNamespace, returnQName));
         
-        
-       // oper.setReturnClass(Response.class);
-     
         oper.setStyle(org.apache.axis.constants.Style.DOCUMENT);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        //TODO raffaele.picardi: copy all paramter ino operDesc ?
         oper.getParameter(0).setName("add");
         call.setOperation(oper);
         Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " OperationDesc :  injected..");
-        
     }
 
     /**
@@ -139,15 +146,9 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
         {
             headers = (AddressingHeaders) call.getProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS);
         }
-        
         setReferenceProperties(headers , event);
-        
-
-        
         call.setProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS, headers);
-       
         Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " ENV_ADDRESSING_REQUEST_HEADERS :  injected..");
-        
     }
 
  
@@ -158,15 +159,12 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
      */
     private void setReferenceProperties(AddressingHeaders headers , UMOEvent event)
     {
-        //TODO raffaele.picardi: extract Resource Key from Mule Message Property data model
-        //18093512
-        QName keyName = new QName("http://www.globus.org/namespaces/examples/core/MathService_instance", "MathResourceKey");
-        String keyValue = "13829853";
-         
+        String serviceNamespace = (String) event.getMessage().getProperty(WSRFParameter.SERVICE_NAMESPACE);
+        String resourceKeyName =  (String) event.getMessage().getProperty(WSRFParameter.RESOURCEKEY_NAME);
+        QName keyName = new QName(serviceNamespace , resourceKeyName);
+        String keyValue = (String) event.getMessage().getProperty(WSRFParameter.RESOURCEKEY);
         SimpleResourceKey key = new SimpleResourceKey(keyName, keyValue);
-
         ReferencePropertiesType props = headers.getReferenceProperties();
-        
         if (props == null ) 
         {
             props = new ReferencePropertiesType();
@@ -182,7 +180,6 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
         Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : ReferencesProperties injected..");
         headers.setReferenceProperties(props);
     }
-
 }
 
 
