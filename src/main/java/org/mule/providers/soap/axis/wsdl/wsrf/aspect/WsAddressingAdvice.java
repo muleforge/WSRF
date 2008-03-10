@@ -130,7 +130,7 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
         oper.setName((String) event.getMessage().getProperty(WSRFParameter.METHOD));
         oper.setReturnType((QName) event.getMessage().getProperty(WSRFParameter.RETURN_QTYPE));
  
-       
+       oper.setReturnClass((Class) event.getMessage().getProperty(WSRFParameter.RETURN_CLASS));
         
        
  
