@@ -23,8 +23,9 @@ public interface IExtendCall
  * 
  * @param call call
  * @param event event
+ * @param dispatcher dispatcher
  */
-void extendCall(Call call , UMOEvent event);
+void extendCall(Call call , UMOEvent event, AxisWsdlWsrfMessageDispatcher dispatcher);
 
 
 }

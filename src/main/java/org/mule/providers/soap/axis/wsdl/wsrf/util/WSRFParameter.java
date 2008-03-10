@@ -21,15 +21,23 @@ public class WSRFParameter
     public static final String SERVICE_NAMESPACE = "serviceNamespace";
     
     /** The Constant RESOURCEKEY_NAME. */
-    public static final String RESOURCEKEY_NAME = "resourceKeyName";
+    public static final String RESOURCE_KEY_NAME = "resourceKeyName";
 
     
     /** The Constant RESOURCEKEY. */
-    public static final String RESOURCEKEY = "resourceKey";
+    public static final String RESOURCE_KEY = "resourceKey";
 
 
     /** The Constant RETURNQNAME. */
-    public static final String RETURNQNAME = "returnQName";
+    public static final String RETURN_QNAME = "returnQName";
+
+    /** The Constant SOAP_METHODS. */
+    public static final String SOAP_METHODS = "soapMethods";
+    /** The Constant RETURNQTYPE. */
+    public static final String RETURN_QTYPE = "returnQType";
+
+    /** The Constant RETURNQTYPE. */
+    public static final String METHOD = "method";
 
 }
 

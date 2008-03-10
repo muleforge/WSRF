@@ -13,17 +13,20 @@ package org.mule.providers.soap.axis.wsdl.wsrf;
 import org.mule.umo.UMOEvent;
 
 import org.apache.axis.client.Call;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 
 
 
 /**
- * Class to use AOP Spring Framework in order to manage WSRF soap extension
+ * Class to use AOP Spring Framework in order to manage WSRF soap extension.
  */
 public class ExtenderCall implements IExtendCall
 {
+    
     /**
-     * Extend call constructor default
-     *
+     * Extend call constructor default.
      */
     public ExtenderCall () 
     {
@@ -32,16 +35,17 @@ public class ExtenderCall implements IExtendCall
     }
     
 
-    /**
-     * @param call call
-     * @param event event
-     * 
-     */
-    public void extendCall(Call call, UMOEvent event)
+   /**
+    * extendCall
+    * @param call call
+    * @param event event
+    * @param dispatcher dispatcher
+    */
+    public void extendCall(Call call, UMOEvent event, AxisWsdlWsrfMessageDispatcher dispatcher)
     {
+        Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " extend call...");
         
-        System.out.println("extendCall");
-        System.out.println("Property Long :" + event.getMessage().getProperty("testLongProperty"));
+        
     }
 
 }

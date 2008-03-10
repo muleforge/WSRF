@@ -15,6 +15,7 @@ import org.mule.providers.soap.axis.wsdl.wsrf.util.AdviceAdderHelper;
 import org.mule.umo.UMOEvent;
 import org.mule.umo.UMOMessage;
 import org.mule.umo.endpoint.UMOImmutableEndpoint;
+import org.mule.umo.provider.DispatchException;
 
 import org.apache.axis.client.Call;
 import org.apache.log4j.Level;
@@ -24,8 +25,9 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+// TODO: Auto-generated Javadoc
 /**
- * Dispatch  WSRF WSDL Soap Axis request
+ * Dispatch WSRF WSDL Soap Axis request.
  * 
  * @author raffaele.picardi
  */
@@ -34,22 +36,22 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
 
     /**
      * target : extenderCall to use AOP Spring Framework in order to manage WSRF SOAP
-     * Extension
+     * Extension.
      */
     private IExtendCall extenderCall = null;
     
     /**
-     * proxy : extenderProxyCall to use AOP Spring Framework in order to manage WSRF SOAP
-     * Extension
+     * proxy : extenderProxyCall to use AOP Spring Framework in order to manage WSRF
+     * SOAP Extension.
      */
     private IExtendCall extenderProxyCall = null;
     
-    /**
-     * Factory bean
-     */
+    /** Factory bean. */
     private ApplicationContext aopSpringContext = null;
 
     /**
+     * The Constructor.
+     * 
      * @param endpoint endpoint
      */
     public AxisWsdlWsrfMessageDispatcher(UMOImmutableEndpoint endpoint)
@@ -79,9 +81,11 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
     }
 
     /**
+     * Do send.
+     * 
      * @param event event
-     * @throws Exception exception
      * @return UMOMessage
+     * @throws Exception exception
      */
     protected UMOMessage doSend(UMOEvent event) throws Exception
     {
@@ -91,9 +95,12 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
         return super.doSend(event);
         // TODO MULE-WSRF-14: how to append response frow WSRF Stub Aspects ?
     }
+    
     /**
-     * Override Call method of Axis Provider in order to inject Aspects using target object extendCall (that is adviced)
-     * WSRF information are indipendently processed by some Aspect (using Stub gnerated from Wsdl2Java at runtime)
+     * Override Call method of Axis Provider in order to inject Aspects using target
+     * object extendCall (that is adviced) WSRF information are indipendently
+     * processed by some Aspect (using Stub gnerated from Wsdl2Java at runtime).
+     * 
      * @param arg0 event see axis getCall method
      * @param arg1 see axis getCall method
      * @return Call call axis object created
@@ -102,8 +109,17 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
     protected Call getCall(UMOEvent arg0, Object[] arg1) throws Exception
     {
        Call call = super.getCall(arg0, arg1);
-       this.extenderProxyCall.extendCall(call, arg0);
+       this.extenderProxyCall.extendCall(call, arg0, this);
        return call;
+    }
+
+    /* (non-Javadoc)
+     * @see org.mule.providers.soap.axis.AxisMessageDispatcher#getInitialMethod(org.mule.umo.UMOEvent)
+     */
+    public Object getInitialMethod(UMOEvent arg0) throws DispatchException
+    {
+        // TODO Auto-generated method stub
+        return super.getInitialMethod(arg0);
     }
     
      
