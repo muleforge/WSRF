@@ -9,6 +9,7 @@
  */
 package org.mule.providers.soap.axis.wsdl.wsrf;
 
+import org.mule.config.MuleProperties;
 import org.mule.extras.client.MuleClient;
 import org.mule.providers.soap.NamedParameter;
 import org.mule.providers.soap.SoapMethod;
@@ -75,20 +76,21 @@ public final void  testCall() throws Exception
         //TODO raffaele.picardi: fix code to invoke grid service
         MuleClient client = new MuleClient();
         SoapMethod method = new SoapMethod(new QName("", "add"));
-        method.addNamedParameter(new QName("add"),new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", "addResponse"), "in");
+        method.addNamedParameter(new QName("add"), new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", "addResponse"), "in");
         method.setReturnType( new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", ">addResponse"));
         method.setReturnClass(Response.class);
-     
+        
         Map props = new HashMap();
-       props.put("style", "wrapped");
-       props.put("use", "literal"); 
-       props.put("method", method);
-       props.put("resourceKey", "1690651");
-       props.put(WSRFParameter.SERVICE_NAMESPACE , "http://www.globus.org/namespaces/examples/core/MathService_instance");
-       props.put(WSRFParameter.RESOURCEKEY_NAME , "MathResourceKey");
-       props.put(WSRFParameter.RETURNQNAME, "addResponse");
-       
-       UMOMessage result = client.send("vm://vmQueue", new Integer(2), props);
+        props.put("style", "wrapped");
+        props.put("use", "literal"); 
+        props.put(MuleProperties.MULE_SOAP_METHOD, method);
+        props.put("resourceKey", "13829853");
+        props.put(WSRFParameter.SERVICE_NAMESPACE , "http://www.globus.org/namespaces/examples/core/MathService_instance");
+        props.put(WSRFParameter.RESOURCE_KEY_NAME , "MathResourceKey");
+        props.put(WSRFParameter.RETURN_QNAME, "addResponse");
+        props.put(WSRFParameter.RETURN_QTYPE,  new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", ">addResponse"));
+        
+        UMOMessage result = client.send("vm://vmQueue", new Integer(2), props);
        
 
 
