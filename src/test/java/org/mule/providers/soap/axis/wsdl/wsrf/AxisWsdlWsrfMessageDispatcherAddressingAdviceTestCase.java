@@ -54,7 +54,7 @@ public class AxisWsdlWsrfMessageDispatcherAddressingAdviceTestCase extends Funct
      */
     public AxisWsdlWsrfMessageDispatcherAddressingAdviceTestCase () 
     {
-        System.out.println("starting...");
+        System.out.println("start...");
         
     }
     /**
@@ -89,7 +89,8 @@ public final void  testCall() throws Exception
         props.put(WSRFParameter.RESOURCE_KEY_NAME , "MathResourceKey");
         props.put(WSRFParameter.RETURN_QNAME, "addResponse");
         props.put(WSRFParameter.RETURN_QTYPE,  new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", ">addResponse"));
-        
+        props.put(WSRFParameter.RETURN_CLASS, Response.class);
+        props.put(WSRFParameter.SOAP_ACTION_URI,"http://www.globus.org/namespaces/examples/core/MathService_instance/MathPortType/addRequest");
         UMOMessage result = client.send("vm://vmQueue", new Integer(2), props);
        
 
