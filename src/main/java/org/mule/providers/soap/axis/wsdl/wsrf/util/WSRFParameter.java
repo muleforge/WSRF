@@ -9,8 +9,11 @@
  */
 
 package org.mule.providers.soap.axis.wsdl.wsrf.util;
+// TODO: Auto-generated Javadoc
+
 /**
- * Constants Message Mule Class in order to use/manage Message WSRF Mule Provider Specifications
+ * Constants Message Mule Class in order to use/manage Message WSRF Mule Provider
+ * Specifications.
  */
 public class WSRFParameter
 {
@@ -33,11 +36,18 @@ public class WSRFParameter
 
     /** The Constant SOAP_METHODS. */
     public static final String SOAP_METHODS = "soapMethods";
+    
     /** The Constant RETURNQTYPE. */
     public static final String RETURN_QTYPE = "returnQType";
 
     /** The Constant RETURNQTYPE. */
     public static final String METHOD = "method";
+
+    /** The Constant RETURN_CLASS. */
+    public static final String RETURN_CLASS = "returnClass";
+
+    /** The Constant SOAP_ACTION_URI. */
+    public static final String SOAP_ACTION_URI = "soapActionURI";
 
 }
 
