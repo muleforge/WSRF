@@ -284,6 +284,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         cachedSerFactories.add(beansf);
         cachedDeserFactories.add(beandf);
 
+        // TODO raffaele.picardi: ResourceProperties auto serialize
         qName = new javax.xml.namespace.QName(
             "http://www.globus.org/namespaces/examples/core/MathService_instance", ">MathResourceProperties");
         cachedSerQNames.add(qName);
@@ -306,14 +307,6 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
             "UpdateType");
         cachedSerQNames.add(qName);
         cls = org.oasis.wsrf.properties.UpdateType.class;
-        cachedSerClasses.add(cls);
-        cachedSerFactories.add(beansf);
-        cachedDeserFactories.add(beandf);
-
-        qName = new javax.xml.namespace.QName(
-            "http://www.globus.org/namespaces/examples/core/MathService_instance", ">subtractResponse");
-        cachedSerQNames.add(qName);
-        cls = Response.class;
         cachedSerClasses.add(cls);
         cachedSerFactories.add(beansf);
         cachedDeserFactories.add(beandf);
@@ -387,6 +380,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         cachedSerFactories.add(simplesf);
         cachedDeserFactories.add(simpledf);
 
+        //TODO raffaele.picardi: addResponse
         qName = new javax.xml.namespace.QName(
             "http://www.globus.org/namespaces/examples/core/MathService_instance", ">addResponse");
         cachedSerQNames.add(qName);
