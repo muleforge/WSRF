@@ -83,7 +83,8 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
        UMOEvent event = (UMOEvent) arg1[1];
        setOperationsDesc(call , event);
        call.setUseSOAPAction(true);
-       call.setSOAPActionURI("http://www.globus.org/namespaces/examples/core/MathService_instance/MathPortType/addRequest");
+       call.setSOAPActionURI((String) event.getMessage().getProperty(WSRFParameter.SOAP_ACTION_URI));
+         
        call.setEncodingStyle(null);
        call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
        call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
@@ -122,25 +123,15 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
         {
             oper = new org.apache.axis.description.OperationDesc();
         }
-        //TODO raffaele.picardi: check getting SoapMethod Map watching AxisMessageDispatcher
         
-      
-
-       
         oper.setName((String) event.getMessage().getProperty(WSRFParameter.METHOD));
         oper.setReturnType((QName) event.getMessage().getProperty(WSRFParameter.RETURN_QTYPE));
- 
-       oper.setReturnClass((Class) event.getMessage().getProperty(WSRFParameter.RETURN_CLASS));
-        
-       
- 
+        oper.setReturnClass((Class) event.getMessage().getProperty(WSRFParameter.RETURN_CLASS));
         String serviceNamespace = (String) event.getMessage().getProperty(WSRFParameter.SERVICE_NAMESPACE);
         String returnQName = (String) event.getMessage().getProperty(WSRFParameter.RETURN_QNAME);
         oper.setReturnQName(new javax.xml.namespace.QName(serviceNamespace, returnQName));
-        
         oper.setStyle(org.apache.axis.constants.Style.DOCUMENT);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        //TODO raffaele.picardi: copy all paramter ino operDesc ?
         oper.getParameter(0).setName((String) event.getMessage().getProperty(WSRFParameter.METHOD));
         call.setOperation(oper);
         Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " OperationDesc :  injected..");
