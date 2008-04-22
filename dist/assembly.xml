@@ -16,7 +16,6 @@ Assembly descriptor for the full distribution.
               <exclude>README</exclude>
               <exclude>.project</exclude>
               <exclude>.classpath</exclude>
-			   <exclude>src/test/resources/**</exclude>
           </excludes>
     </fileSet>
     <fileSet>

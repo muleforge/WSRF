@@ -58,7 +58,7 @@
 					<execution>
 						<phase>package</phase>
 						<goals>
-							<goal>attached</goal>
+							<goal>assembly</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -72,9 +72,7 @@
 					<snapshotRepositoryId>muleforge.webdav.snapshots</snapshotRepositoryId>
 				</configuration>
 			</plugin>
-			<plugin>
 
-			</plugin>
 		</plugins>
 		<extensions>
 			<extension>
@@ -83,6 +81,6 @@
 				<version>1.0-beta-2-SNAPSHOT</version>
 			</extension>
 		</extensions>
-		
+			
 	</build>
 </project>
