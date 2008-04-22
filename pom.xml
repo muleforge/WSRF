@@ -45,6 +45,15 @@
       </extension>
     </extensions>
     <plugins>
+		<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+        <excludes>
+            <exclude>**/*IntegrationTestCase.java</exclude>
+        </excludes>
+        </configuration>
+      </plugin>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
@@ -61,6 +70,7 @@
           <configLocation>http://www.muleforge.org/download/checkstyle.xml?version=1</configLocation>
         </configuration>
       </plugin>
+      
     </plugins>
   </build>
   <repositories>
