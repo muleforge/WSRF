@@ -47,6 +47,7 @@
 				-->
 				<!-- version>2.2</version -->
 				<configuration>
+					
 					<finalName>${artifactId}-${version}</finalName>
 					<descriptors>
 						<descriptor>dist/assembly.xml</descriptor>
