@@ -528,7 +528,6 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         }
         catch (ServiceException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         configureCall(call);
