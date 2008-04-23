@@ -10,23 +10,33 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.factory;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.MissingResourceException;
 
 /**
  * The Class Messages.
  */
 public final class Messages
 {
-    //TODO raffaele.picardi: change bundle_name value after package migrating
-    
+   
     /** The Constant BUNDLE_NAME. */
-    private static final String BUNDLE_NAME = "org.mule.providers.soap.axis.wsdl.wsrf.factory.messages_stub"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "META-INF/messages_stub.properties"; //$NON-NLS-1$
 
-    /** The Constant RESOURCE_BUNDLE. */
-    private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
+
+
+    /** The t. */
+    private static InputStream t = Messages.class.getClassLoader().getResourceAsStream(BUNDLE_NAME);
+    
+    /** The props. */
+    private static java.util.Properties props = new java.util.Properties();
+    
+    /** The is load. */
+    private static boolean isLoad = false;
+    
     /**
      * Instantiates a new messages.
      */
@@ -40,16 +50,31 @@ public final class Messages
      * 
      * @param key the key
      * @return the string
+     * @throws IOException 
      */
-    public static String getString(String key)
+    public static String getString(String key) 
     {
+        if (!isLoad)
+        {
+            isLoad = true;
+            try
+            {
+                props.load(t);
+            }
+            catch (IOException e)
+            {
+                
+                e.printStackTrace();
+            }
+        }
         try
         {
-            return RESOURCE_BUNDLE.getString(key);
+            return props.getProperty(key);
         }
         catch (MissingResourceException e)
         {
             return '!' + key + '!';
         }
+     
     }
 }

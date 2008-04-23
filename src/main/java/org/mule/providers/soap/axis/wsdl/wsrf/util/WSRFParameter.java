@@ -9,7 +9,6 @@
  */
 
 package org.mule.providers.soap.axis.wsdl.wsrf.util;
-// TODO: Auto-generated Javadoc
 
 /**
  * Constants Message Mule Class in order to use/manage Message WSRF Mule Provider

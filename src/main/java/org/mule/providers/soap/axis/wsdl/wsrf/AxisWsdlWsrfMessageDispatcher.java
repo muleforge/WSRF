@@ -11,11 +11,13 @@
 package org.mule.providers.soap.axis.wsdl.wsrf;
 
 import org.mule.providers.soap.axis.wsdl.AxisWsdlMessageDispatcher;
+import org.mule.providers.soap.axis.wsdl.wsrf.factory.Messages;
 import org.mule.providers.soap.axis.wsdl.wsrf.util.AdviceAdderHelper;
 import org.mule.umo.UMOEvent;
 import org.mule.umo.UMOMessage;
 import org.mule.umo.endpoint.UMOImmutableEndpoint;
 import org.mule.umo.provider.DispatchException;
+
 
 import org.apache.axis.client.Call;
 import org.apache.log4j.Level;
@@ -23,9 +25,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * Dispatch WSRF WSDL Soap Axis request.
  * 
@@ -62,8 +64,10 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
         try
         {
             // TODO raffaele.picardi : move application.xml into meta_inf dir
-            aopSpringContext = new FileSystemXmlApplicationContext("application.xml");
+
             
+            aopSpringContext = new ClassPathXmlApplicationContext(Messages.getString("AxisWsdlWsrfMessageDispatcher.APPLICATION_CONTEXT_PATH"));
+
         }
         catch (BeansException e)
         {
@@ -71,12 +75,12 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
         }
         if (aopSpringContext != null)
         {
-           extenderCall = (IExtendCall) aopSpringContext.getBean("extendCallTarget");
+           extenderCall = (IExtendCall) aopSpringContext.getBean(Messages.getString("AxisWsdlWsrfMessageDispatcher.BEAN_SPRING_EXTENDER_TARGET"));
            extenderProxyCall = AdviceAdderHelper.addAdvisorsTo(extenderCall);
          }
         else
         {
-            Logger.getLogger(this.getClass()).log(Level.ERROR, this.getClass().getName() + " : factory spring is null.");
+            Logger.getLogger(this.getClass()).log(Level.ERROR, this.getClass().getName() + " : factory spring context is null.");
         }
     }
 
@@ -89,9 +93,6 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
      */
     protected UMOMessage doSend(UMOEvent event) throws Exception
     {
-        // TODO MULE-WSRF-5: Using SPRING AOP and how to manage Call axis object used by  super.doSend() method
-        // TODO MULE-WSRF-10: WSDL2JAVA extension ?
-   
         return super.doSend(event);
         // TODO MULE-WSRF-14: how to append response frow WSRF Stub Aspects ?
     }
@@ -113,12 +114,10 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
        return call;
     }
 
-    /* (non-Javadoc)
-     * @see org.mule.providers.soap.axis.AxisMessageDispatcher#getInitialMethod(org.mule.umo.UMOEvent)
+    /* getInitialMethod
      */
     public Object getInitialMethod(UMOEvent arg0) throws DispatchException
     {
-        // TODO Auto-generated method stub
         return super.getInitialMethod(arg0);
     }
     

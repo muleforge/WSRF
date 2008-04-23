@@ -16,7 +16,7 @@ package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
 
-import org.mule.providers.soap.axis.wsdl.wsrf.AxisWsdlWsrfMessageDispatcher;
+
 import org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice;
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortTypeSoapBindingsStub;
@@ -161,7 +161,7 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
 
  
     /**
-     * set Reference Properties.
+     * set Reference Properties. injecting Resource Key Ws-Addressing information
      * 
      * @param headers headers
      * @param event event
