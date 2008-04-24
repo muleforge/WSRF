@@ -168,6 +168,7 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
      */
     private void setReferenceProperties(AddressingHeaders headers , UMOEvent event)
     {
+        //TODO raffaele.picardi: check if event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY_NAME) does not exist
         String serviceNamespace = (String) event.getMessage().getProperty(WSRFParameter.SERVICE_NAMESPACE);
         String resourceKeyName =  (String) event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY_NAME);
         QName keyName = new QName(serviceNamespace , resourceKeyName);
@@ -189,6 +190,8 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
         Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : ReferencesProperties injected..");
         headers.setReferenceProperties(props);
     }
+
+
 }
 
 

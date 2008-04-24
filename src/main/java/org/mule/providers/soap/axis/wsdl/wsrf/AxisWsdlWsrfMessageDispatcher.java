@@ -13,10 +13,15 @@ package org.mule.providers.soap.axis.wsdl.wsrf;
 import org.mule.providers.soap.axis.wsdl.AxisWsdlMessageDispatcher;
 import org.mule.providers.soap.axis.wsdl.wsrf.factory.Messages;
 import org.mule.providers.soap.axis.wsdl.wsrf.util.AdviceAdderHelper;
+import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 import org.mule.umo.UMOEvent;
 import org.mule.umo.UMOMessage;
 import org.mule.umo.endpoint.UMOImmutableEndpoint;
 import org.mule.umo.provider.DispatchException;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 
 import org.apache.axis.client.Call;
@@ -93,8 +98,31 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
      */
     protected UMOMessage doSend(UMOEvent event) throws Exception
     {
-        return super.doSend(event);
-        // TODO MULE-WSRF-14: how to append response frow WSRF Stub Aspects ?
+        UMOMessage messageResponse = super.doSend(event);
+
+        try
+        {
+            Map map = (Map) event.getMessage().getProperty(WSRFParameter.WSRF_EXTRA_RESPONSE_MAP);
+            Set keySet = map.keySet();
+            Iterator it = keySet.iterator();
+            String propertyName = "";
+
+            while (it.hasNext())
+            {
+                propertyName = (String) it.next();
+                messageResponse.setProperty(propertyName, map.get(propertyName));
+            }
+
+        }
+        catch (Exception e)
+        {
+            Logger.getLogger(this.getClass()).log(
+                Level.DEBUG,
+                this.getClass().getName() + " : " + WSRFParameter.WSRF_EXTRA_RESPONSE_MAP
+                                + " property is null. IGNORED Advice extra reponse properties");
+        }
+        return messageResponse;
+
     }
     
     /**
@@ -109,9 +137,9 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
      */
     protected Call getCall(UMOEvent arg0, Object[] arg1) throws Exception
     {
-       Call call = super.getCall(arg0, arg1);
-       this.extenderProxyCall.extendCall(call, arg0, this);
-       return call;
+        Call call = super.getCall(arg0, arg1);
+        this.extenderProxyCall.extendCall(call, arg0, this);
+        return call;
     }
 
     /* getInitialMethod

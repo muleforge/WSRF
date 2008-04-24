@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.util.MissingResourceException;
 
 /**
- * The Class Messages.
+ * The Class Messages. Retrieve properties from META-INF/messages_stub.properties
  */
 public final class Messages
 {
@@ -49,7 +49,7 @@ public final class Messages
      * Gets the string.
      * 
      * @param key the key
-     * @return the string
+     * @return the string . return null if key doesn't exist
      * @throws IOException 
      */
     public static String getString(String key) 
@@ -73,7 +73,7 @@ public final class Messages
         }
         catch (MissingResourceException e)
         {
-            return '!' + key + '!';
+            return null;
         }
      
     }

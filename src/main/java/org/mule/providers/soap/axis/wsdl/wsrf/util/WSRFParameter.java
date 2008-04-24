@@ -48,6 +48,9 @@ public class WSRFParameter
     /** The Constant SOAP_ACTION_URI. */
     public static final String SOAP_ACTION_URI = "soapActionURI";
 
+    /** The Constant WSRF_EXTRA_RESPONSE_MAP . It contains extra wsrf properties set by advice */
+    public static final String WSRF_EXTRA_RESPONSE_MAP = "WSRFExtraResponse";
+
 }
 
 

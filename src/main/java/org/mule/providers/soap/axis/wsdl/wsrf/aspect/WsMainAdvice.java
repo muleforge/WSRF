@@ -22,14 +22,23 @@ import org.springframework.aop.MethodBeforeAdvice;
 
 
 
+// TODO: Auto-generated Javadoc
 /**
  * Main Advice in order to perform Log operations and other ...
  */
 public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvice
 {
+    
+    /* getPriority
+     * @see org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice#getPriority()
+     */
+    public int getPriority()
+    {
+        return BasePriorityAdvice.CRITICAL_PRIORITY;
+    }
+
     /**
-     * Default Constructor
-     *
+     * Default Constructor.
      */
     public WsMainAdvice()
     {
@@ -37,6 +46,7 @@ public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvi
     }
     
     /**
+     * Before.
      * 
      * @param arg0 .
      * @param arg1 .
@@ -48,6 +58,7 @@ public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvi
         Logger.getLogger(this.getClass()).log(Level.INFO,  this.getClass().getName() + " : advice method started.");
         
     }
+ 
 
 }
 

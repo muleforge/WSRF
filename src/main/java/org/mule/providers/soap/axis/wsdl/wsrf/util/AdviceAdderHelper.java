@@ -17,10 +17,12 @@ import org.mule.providers.soap.axis.wsdl.wsrf.IPriorityAdvice;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-
+import java.util.SortedSet;
+import java.util.TreeSet;
 import org.aopalliance.aop.Advice;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -29,30 +31,32 @@ import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.NameMatchMethodPointcut;
 import org.springframework.aop.support.NameMatchMethodPointcutAdvisor;
 
+
 /**
- * This Class add at runtime Advisors/Advices instance to a ProxyFactoryBean using reflection to find and instance
- * Advice class localized org.mule.providers.soap.axis.wsdl.wsrf.aspect package.
+ * This Class add at runtime Advisors/Advices instance to a ProxyFactoryBean using
+ * reflection to find and instance Advice class localized
+ * org.mule.providers.soap.axis.wsdl.wsrf.aspect package.
  */
 public final class AdviceAdderHelper
 {
-    /**
-     * It refers to  suffix leght refer to a class name ( ".class" , 6 chars)
-     */
+    
+    /** It refers to suffix leght refer to a class name ( ".class" , 6 chars) */
     private static final int SUFFIX_CLASS_LENGTH = 6;
+    
     /**
-     * It refers to  match method advisor
-     * TODO MULE-WSRF-6: Discuss about externalize string
+     * It refers to match method advisor TODO MULE-WSRF-6: Discuss about externalize
+     * string.
      */
     private static final String MAPPED_NAME = "extend*";
     
-    /**
-     * Counter advice
-     */
+    /** Counter advice. */
     private static int countAdvice = 0;
     
+    /** The set to order advice using priority. */
+    private static SortedSet order = new TreeSet(new PriorityAdvisorsComparator());
+    
     /**
-     * 
-     *Default constructor private
+     * Default constructor private.
      */
     private AdviceAdderHelper() 
     {
@@ -60,9 +64,11 @@ public final class AdviceAdderHelper
     }
     
     /**
-     * addAdvisors to ProxyfactoryBean given using reflection to find Advices class end with "Advice" suffix.
-     * All advisors are mapped on "extend*" pattern string method refer to Target bean.
-     * @param targetImpl Target Object 
+     * addAdvisors to ProxyfactoryBean given using reflection to find Advices class
+     * end with "Advice" suffix. All advisors are mapped on "extend*" pattern string
+     * method refer to Target bean.
+     * 
+     * @param targetImpl Target Object
      * @return new Proxy
      */
     public static IExtendCall addAdvisorsTo(IExtendCall targetImpl)
@@ -72,47 +78,40 @@ public final class AdviceAdderHelper
         List l = getListAdvisorClass();
         ListIterator li = l.listIterator();
         Advisor advisor = null;
-        int index;
-        // TODO raffaele.picardi: order list using priority
+   
+
+        
         while (li.hasNext()) 
         {
             advisor = (Advisor) li.next();
-            if (advisor.getAdvice() instanceof IPriorityAdvice)
-            { 
-               index = getOrderIndexFromPriority (((IPriorityAdvice) advisor.getAdvice()).getPriority() );
-                factory.addAdvisor(index, advisor);
-                Logger.getLogger(factory.getClass()).log(Level.DEBUG,  factory.getClass().getName() + " : added " + advisor.getAdvice().getClass().getName() + " at index position " + index);
-            }
-            else
-            {
-                index = getOrderIndexFromPriority (BasePriorityAdvice.DEFAULT_PRIORITY );
-                factory.addAdvisor(index , advisor);
-                Logger.getLogger(factory.getClass()).log(Level.DEBUG,  factory.getClass().getName() + " : added " + advisor.getAdvice().getClass().getName() + " at index position " + index);
-                
-            }
+            order.add(advisor);
         }
+        
+        Iterator it  = order.iterator();
+        
+        while (it.hasNext()) 
+        {
+            advisor = (Advisor) it.next();
+            factory.addAdvisor(countAdvice, advisor);
+            Logger.getLogger(factory.getClass()).log(Level.DEBUG,  factory.getClass().getName() + " : added " + advisor.getAdvice().getClass().getName() + " at index position " + countAdvice);
+            countAdvice++;
+        }
+        
+        countAdvice =  0;
         return (IExtendCall) factory.getProxy();
     }
     
-    /**
-     * method map list index to priority.
-     * @param priority priority
-     * @return index position
-     */
-    private static int getOrderIndexFromPriority(int priority)
-    {
-        
-     
-        return countAdvice++;
-    }
 
     /**
-     * Get Advice from .aspect package and create for each Advice class instance an Advisor with mapped name "*extend".
+     * Get Advice from .aspect package and create for each Advice class instance an
+     * Advisor with mapped name "*extend".
+     * 
      * @return A List of Advisor.
      */
     private static List getListAdvisorClass()
     {
         List advisors = new LinkedList();
+        
         try
         {
             Class[] listClassAdvice = getClasses("org.mule.providers.soap.axis.wsdl.wsrf.aspect");
@@ -149,11 +148,12 @@ public final class AdviceAdderHelper
         return advisors;
     }
     
-    /** 
-     * list Classes inside a given package 
-     * @param pckgname String name of a Package, EG "java.lang" 
-     * @return Class[] classes inside the root of the given package 
-     * @throws ClassNotFoundException if the Package is invalid 
+    /**
+     * list Classes inside a given package.
+     * 
+     * @param pckgname String name of a Package, EG "java.lang"
+     * @return Class[] classes inside the root of the given package
+     * @throws ClassNotFoundException if the Package is invalid
      */ 
     private static Class[] getClasses(String pckgname) throws ClassNotFoundException
     {

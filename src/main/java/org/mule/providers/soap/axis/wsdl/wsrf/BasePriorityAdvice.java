@@ -10,6 +10,8 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf;
 
+import org.mule.providers.soap.axis.wsdl.wsrf.factory.Messages;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -22,13 +24,13 @@ public class BasePriorityAdvice implements org.aopalliance.aop.Advice, IPriority
      * Default priority (Lowest priority)
      * 
      */
-    public static final int DEFAULT_PRIORITY = -1;
+    public static final int DEFAULT_PRIORITY = Integer.MIN_VALUE;
 
     /**
      * Critical priority (highest priority)
      * 
      */
-    public static final int CRITICAL_PRIORITY = 1;    
+    public static final int CRITICAL_PRIORITY = Integer.MAX_VALUE;    
     
     /**
      * Priority code of this Advice
@@ -47,12 +49,28 @@ public class BasePriorityAdvice implements org.aopalliance.aop.Advice, IPriority
   
     /**
      * Constructor defines priority code of Advice to DEFAULT_PRIORITY 
-     *
+     * It gets priority using Messages resource bundle class :
+     * Messages.getString(this.getClass().getName() + "_Priority");
+     * If priority is not found or not valid integer  , DEFAULT_PRIORITY is set.
+     *  
      */
     public  BasePriorityAdvice ()
     {
+        String res = Messages.getString(this.getClass().getName() + "_Priority");
         this.priorityCode = DEFAULT_PRIORITY;
-        Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : started.");    
+        if (res != null)
+        {
+           try
+           {
+            this.priorityCode = Integer.parseInt(res.trim());
+           }
+           catch (NumberFormatException e ) 
+           {
+               this.priorityCode = DEFAULT_PRIORITY;
+               Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : IGNORED resorce property : Not valid integer");    
+           }
+        }
+        Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : started with ." + this.priorityCode + " priority");    
     }
     /**
      * return priority code
