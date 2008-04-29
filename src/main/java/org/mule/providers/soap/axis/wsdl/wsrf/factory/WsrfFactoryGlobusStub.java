@@ -10,6 +10,17 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.factory;
 
+import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
+
+import javax.xml.namespace.QName;
+
+import org.apache.axis.message.MessageElement;
+import org.apache.axis.message.SOAPEnvelope;
+import org.apache.axis.message.addressing.EndpointReferenceType;
+import org.apache.axis.message.addressing.ReferenceParametersType;
+import org.apache.axis.message.addressing.ReferencePropertiesType;
+import org.apache.log4j.Logger;
+
 /**
  * Factory Soap Binding Stub (Generic).
  */
@@ -42,7 +53,8 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
      */
     private static void initOperationDesc1()
     {
-
+       
+        //TODO raffaele.picardi: configure in generic this operation desc in order to set parameters
         org.apache.axis.description.OperationDesc oper;
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName(Messages.getString("WsrfFactoryGlobusStub.CREATE_RESOURCE")); //$NON-NLS-1$
@@ -288,7 +300,7 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
      * @param request request to create Resource
      * @return CreateResourceResponse create recource information
      */
-    public CreateResourceResponse createResource(CreateResource request) throws java.rmi.RemoteException
+    public String createResource(Object request) throws java.rmi.RemoteException
     {
         if (super.cachedEndpoint == null)
         {
@@ -306,25 +318,21 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
 
         setRequestHeaders(call);
         setAttachments(call);
-        java.lang.Object resp = call.invoke(new java.lang.Object[]{request});
-
-        if (resp instanceof java.rmi.RemoteException)
-        {
-            throw (java.rmi.RemoteException) resp;
+        // TODO MULE-WSRF-22: Manage input create resource request param and response
+        CreateResourceResponse resp = (CreateResourceResponse)call.invoke(new Object[] {new CreateResource()});
+       
+        extractAttachments(call);
+        ReferencePropertiesType rfp = resp.getEndpointReference().getProperties();
+        MessageElement resourceKey = rfp.get_any()[0];
+        if (resourceKey.getName().indexOf(WSRFParameter.RESOURCE_KEY_SUB) == -1) {
+            Logger.getLogger(this.getClass()).error("resource key not found! Set to 0");
+            return "0";
         }
-        else
-        {
-            extractAttachments(call);
-            try
-            {
-                return (CreateResourceResponse) resp;
-            }
-            catch (java.lang.Exception exception)
-            {
-                return (CreateResourceResponse) org.apache.axis.utils.JavaUtils.convert(resp,
-                    CreateResourceResponse.class);
-            }
-        }
+    
+        //TODO raffaele.picardi: generate from resp epr
+      
+        return resourceKey.getChildElements().next().toString();
+           
     }
 
 }

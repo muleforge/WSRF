@@ -21,8 +21,8 @@ public interface FactoryPortType extends java.rmi.Remote
      * Creates the resource.
      * 
      * @param request the request
-     * @return the creates the resource response
+     * @return the created resource key
      */
-    CreateResourceResponse createResource(CreateResource request) throws java.rmi.RemoteException;
+    String createResource(Object request) throws java.rmi.RemoteException;
 }
 

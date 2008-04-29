@@ -29,7 +29,9 @@ public class WSRFParameter
     /** The Constant RESOURCEKEY. */
     public static final String RESOURCE_KEY = "resourceKey";
 
-
+    /** The Constant RESOURCEKEY substring . */
+    public static final String RESOURCE_KEY_SUB = "ResourceKey";
+    
     /** The Constant RETURNQNAME. */
     public static final String RETURN_QNAME = "returnQName";
 
@@ -50,6 +52,10 @@ public class WSRFParameter
 
     /** The Constant WSRF_EXTRA_RESPONSE_MAP . It contains extra wsrf properties set by advice */
     public static final String WSRF_EXTRA_RESPONSE_MAP = "WSRFExtraResponse";
+    
+    
+    /** The Constant WSRF_FACTORY_SERVICE_ADDRESS . It contains extra wsrf property: Service URI of Factory Service to use in order to create resource */
+    public static final String WSRF_FACTORY_SERVICE_ADDRESS= "wsrfFactoryServiceAddress";
 
 }
 

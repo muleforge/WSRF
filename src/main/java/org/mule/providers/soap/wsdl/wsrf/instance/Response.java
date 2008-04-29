@@ -13,7 +13,7 @@ package org.mule.providers.soap.wsdl.wsrf.instance;
 /**
  * The Class Response. A generic class containing response from wsrf service
  * invocations.
- * TODO raffaele.picardi:is it need?
+ * TODO raffaele.picardi: Does it need?
  */
 public class Response implements java.io.Serializable
 {
