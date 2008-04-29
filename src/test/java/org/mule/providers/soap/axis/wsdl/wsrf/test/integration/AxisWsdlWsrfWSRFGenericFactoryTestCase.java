@@ -97,7 +97,7 @@ public final void  testCreateServiceInstanceFromFactoryService() throws Exceptio
         props.put("use", "literal"); 
         props.put(MuleProperties.MULE_SOAP_METHOD, method);
        
-        props.put("resourceKey", Messages.getString("RESOURCE_KEY"));
+        //props.put(WSRFParameter.SERVICE_NAMESPACE, Messages.getString("RESOURCE_KEY"));
         props.put(WSRFParameter.SERVICE_NAMESPACE , Messages.getString("SERVICE_NAMESPACE_URI"));
         props.put(WSRFParameter.RESOURCE_KEY_NAME , Messages.getString("RESOURCE_KEY_NAME"));
         props.put(WSRFParameter.RETURN_QNAME, Messages.getString("RETURN_QNAME"));
@@ -107,7 +107,6 @@ public final void  testCreateServiceInstanceFromFactoryService() throws Exceptio
         
         //factory properties
         props.put(WSRFParameter.WSRF_FACTORY_SERVICE_ADDRESS, Messages.getString("FACTORY_SERVICE_ADDRESS"));
-
         
         
         UMOMessage result = client.send("vm://vmQueue", new Integer(2), props);
@@ -115,8 +114,9 @@ public final void  testCreateServiceInstanceFromFactoryService() throws Exceptio
     
         assertNotNull(result);
         assertNotNull(result.getPayload()); 
+        assertNotNull(result.getProperty(WSRFParameter.RESOURCE_KEY));
         System.out.println(result.getPayload());
-        
+        System.out.println("New resource Key: " + result.getProperty(WSRFParameter.RESOURCE_KEY));
     
     
 
