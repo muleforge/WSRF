@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mule-configuration PUBLIC "-//MuleSource //DTD mule-configuration XML V1.0//EN"
+                                "http://mule.mulesource.org/dtds/mule-configuration.dtd">
+<!--  This is a blank configuration file for the test WsAddressingAdvice project -->
+<mule-configuration id="TestGridFactoryAddressingService-config" version="1.0">
+	<description>
+        This is a blank configuration file for the test WsFactoryAddressingAdvice project   </description>
+	
+
+	<transformers>
+		<transformer name="StringToObjectArray" className="org.mule.transformers.simple.StringToObjectArray">
+			<properties>
+				<property name="delimiter" value=","/>
+			</properties>
+		</transformer>
+	</transformers>
+	<model name="TestGridAddressingService">
+		<mule-descriptor name="PassC" implementation="org.mule.components.simple.BridgeComponent">
+			<inbound-router>
+				<endpoint address="vm://vmQueue" />
+			</inbound-router>
+			<outbound-router>
+				<router className="org.mule.routing.outbound.ChainingRouter">
+					<endpoint address="wsrf-wsdl-axis:http://127.0.0.1:8080/wsrf/services/examples/core/factory/MathService?method=add" />
+					<endpoint address="stream://System.out"/>
+				</router>
+			</outbound-router>
+		</mule-descriptor>
+	</model>
+</mule-configuration>
