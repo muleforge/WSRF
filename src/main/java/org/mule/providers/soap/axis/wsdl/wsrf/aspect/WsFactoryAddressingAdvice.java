@@ -8,62 +8,31 @@
  * LICENSE.txt file.
  */
 
-
 package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
-
-
-
-
-
-
 
 import org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice;
 import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryPortType;
 import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryServiceAddressingLocator;
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
-import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortTypeSoapBindingsStub;
 
 import org.mule.umo.UMOEvent;
 
-
 import java.lang.reflect.Method;
 
-
-
-import javax.xml.namespace.QName;
-import javax.xml.rpc.ServiceException;
-
-
-
-
-
-import org.apache.axis.AxisFault;
-import org.apache.axis.client.Call;
-import org.apache.axis.description.OperationDesc;
 import org.apache.axis.message.addressing.Address;
-import org.apache.axis.message.addressing.AddressingHeaders;
-import org.apache.axis.message.addressing.Constants;
+
 import org.apache.axis.message.addressing.EndpointReferenceType;
-import org.apache.axis.message.addressing.ReferencePropertiesType;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.globus.wsrf.encoding.SerializationException;
-import org.globus.wsrf.impl.SimpleResourceKey;
 
 import org.springframework.aop.MethodBeforeAdvice;
 
-
-// TODO: Auto-generated Javadoc
 /**
- * WsAddressing Aspect to inject Ws-Addressing information in SOAP - Header and/or
- * manage WSDL Stub.
+ * WsFactoryAddressing Aspect to perform Factory create resource request in order to obtain and set in mule message resource Key.
  */
 public class WsFactoryAddressingAdvice extends BasePriorityAdvice implements MethodBeforeAdvice
 {
-    
-
-
-    
 
     /**
      * Default Constructor.
@@ -72,7 +41,7 @@ public class WsFactoryAddressingAdvice extends BasePriorityAdvice implements Met
     {
         Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : started.");
     }
-    
+
     /**
      * Inject call informations.
      * 
@@ -83,111 +52,111 @@ public class WsFactoryAddressingAdvice extends BasePriorityAdvice implements Met
      */
     public void before(Method arg0, Object[] arg1, Object arg2) throws Throwable
     {
-        
-       // Get params
-        
+        UMOEvent event = (UMOEvent) arg1[1];
+        String factoryServiceURI = null;
 
-       UMOEvent event = (UMOEvent) arg1[1];
-       String factoryServiceURI =null;
-       
-           try
+        try
         {
-            factoryServiceURI = (String) event.getMessage().getProperty(WSRFParameter.WSRF_FACTORY_SERVICE_ADDRESS);
-               if (factoryServiceURI == null) 
-               {
-                   Logger.getLogger(this.getClass()).log(
-                       Level.DEBUG,
-                       this.getClass().getName() + " : " + WSRFParameter.WSRF_FACTORY_SERVICE_ADDRESS
-                                       + " property is null. IGNORED Factory Resource creation process");
-                   
-                   return;
-               }
-                 
+            factoryServiceURI = (String) event.getMessage().getProperty(
+                WSRFParameter.WSRF_FACTORY_SERVICE_ADDRESS);
+            if (factoryServiceURI == null)
+            {
+                Logger.getLogger(this.getClass()).log(
+                    Level.DEBUG,
+                    this.getClass().getName() + " : " + WSRFParameter.WSRF_FACTORY_SERVICE_ADDRESS
+                                    + " property is null. IGNORED Factory Resource creation process");
+
+                return;
+            }
+
         }
         catch (Exception e)
         {
             Logger.getLogger(this.getClass()).log(
                 Level.ERROR,
-                this.getClass().getName() + " : " + " ERROR in getting Factory Service URI params: " + e.getMessage());
-           e.printStackTrace();
+                this.getClass().getName() + " : " + " ERROR in getting Factory Service URI params: "
+                                + e.getMessage());
+            e.printStackTrace();
         }
-       
 
- 
-       if (event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY) != null)
-       {
-           Logger.getLogger(this.getClass()).log(
-               Level.DEBUG,
-               this.getClass().getName() + " : " + " ResourceKey creation IGNORED! Just included in Mule Message");
-           return;
-       }
-        
+        if (event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY) != null)
+        {
+            Logger.getLogger(this.getClass()).log(
+                Level.DEBUG,
+                this.getClass().getName() + " : "
+                                + " ResourceKey creation IGNORED! Just included in Mule Message");
+            return;
+        }
+
+        if (event.getMessage().getProperty(WSRFParameter.WSRF_MULE_SESSION_RESOURCE_KEY_MAPPING) != null)
+        {
+            // check session-mapping value
+            if (event.getMessage().getProperty(WSRFParameter.WSRF_MULE_SESSION_RESOURCE_KEY_MAPPING).equals(
+                WSRFParameter.SESSION_MAPPING_YES))
+            {
+
+                int uriHashCode = event.getMessage().getProperty(WSRFParameter.SOAP_ACTION_URI).hashCode();
+                String entry = WSRFParameter.PREFIX_FOR_RESOURCE_KEY_IN_SESSION + uriHashCode;
+                String resourceKey = (String) event.getSession().getProperty(entry);
+                // If first time , create and set in session new resource Key
+                if (resourceKey == null)
+                {
+                    resourceKey = createResource(factoryServiceURI);
+                    event.getSession().setProperty(entry, resourceKey);
+                    Logger.getLogger(this.getClass()).log(
+                        Level.DEBUG,
+                        this.getClass().getName() + " : "
+                                        + " ResourceKey Created and included in Mule Session with entry : "
+                                        + entry);
+                }
+
+                event.getMessage().setProperty(WSRFParameter.RESOURCE_KEY, resourceKey);
+                Logger.getLogger(this.getClass()).log(
+                    Level.DEBUG,
+                    this.getClass().getName() + " : "
+                                    + " ResourceKey creation IGNORED! Just included in Mule Session");
+                return;
+            }
+            Logger.getLogger(this.getClass()).log(
+                Level.DEBUG,
+                this.getClass().getName() + " : "
+                                + " ResourceKey creation IGNORED! Just included in Mule Message");
+            return;
+        }
+
         event.getMessage().setProperty(WSRFParameter.RESOURCE_KEY, createResource(factoryServiceURI));
-        //TODO raffaele.picardi: if resourceKey just included in session ?
+
     }
 
     /**
      * Creates the resource.
      * 
      * @param factoryServiceURI the factory service uri
+     * @return string Resource key created
      */
     private String createResource(String factoryServiceURI)
     {
-       
         FactoryServiceAddressingLocator factoryLocator = new FactoryServiceAddressingLocator();
-       
-        String resourceKey = null ; 
-        try 
+        String resourceKey = null;
+        try
         {
-          
             EndpointReferenceType factoryEPR;
             FactoryPortType factory;
-         
             factoryEPR = new EndpointReferenceType();
             factoryEPR.setAddress(new Address(factoryServiceURI));
             factory = factoryLocator.getFactoryPortTypePort(factoryEPR);
-
-          
-            // TODO raffaele.picardi:1 invoke factory grid service using generic stub 
-          
             
-            // TODO raffaele.picardi: implements create resource operation with params in and out specificated from client message
-            // TODO MULE-WSRF-22: Manage input create resource request param
-            resourceKey =  factory.createResource(null);
-            
-            // From specification it needs to define a response object that contains , mapping during generation from wsdl2java ,
-            // the  xsd type : <xsd:element ref="wsa:EndpointReference"/>
-            // <xsd:import namespace="http://schemas.xmlsoap.org/ws/2004/03/addressing" schemaLocation="../../ws/addressing/WS-Addressing.xsd" />
-          /*  
-            instanceEPR = createResponse.getEndpointReference();
-            
-            createResponse = mathFactory
-            .createResource(new CreateResource());
-            createResponse = mathFactory
-            .createResource(new CreateResource());
-           
-            assertNotNull(instanceEPR);
-
-            Logger.getLogger(this.getClass()).info("instance EPR: " + instanceEPR  + '\n');
-            
-            GenericServiceAddressingLocator instanceLocator = new GenericServiceAddressingLocator();
-            GenericPortType serviceInstance = instanceLocator.getMathPortTypePort(instanceEPR);
-     
-            String NS = "http://www.globus.org/namespaces/examples/core/MathService_instance";
-            Logger.getLogger(this.getClass()).info("response of getResourceProperty(value) operation : " + serviceInstance.getResourceProperty(new QName(NS, "Value"))  + '\n');
-*/        
-            } 
-        catch (Exception e) 
+            // TODO MULE-WSRF-22: Manage input/output create resource request param
+            resourceKey = factory.createResource(null);
+            Logger.getLogger(this.getClass()).log(Level.DEBUG,
+                this.getClass().getName() + " : " + " ResourceKey created");
+        }
+        catch (Exception e)
         {
+            Logger.getLogger(this.getClass()).log(Level.ERROR,
+                this.getClass().getName() + " : " + " Error during resource key creation");
             e.printStackTrace();
-            
         }
         return resourceKey;
     }
-    
- 
-
-
 }
-
-
