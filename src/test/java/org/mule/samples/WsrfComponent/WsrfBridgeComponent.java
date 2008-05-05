@@ -10,8 +10,11 @@
 
 package org.mule.samples.WsrfComponent;
 
+
 import org.mule.umo.UMOEventContext;
+
 import org.mule.umo.lifecycle.Callable;
+
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -21,6 +24,8 @@ import org.apache.log4j.Logger;
  */
 public class WsrfBridgeComponent implements Callable
 {
+
+
     /**
      * 
      *
@@ -40,6 +45,10 @@ public class WsrfBridgeComponent implements Callable
     public Object onCall(UMOEventContext arg0) throws Exception
     {
         Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : payload class name:" + arg0.getMessage().getPayload().getClass().getName());
-        return arg0;
+        Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : Session id:" + arg0.getSession().getId());
+       
+       
+        return  arg0;
     }
 }
+ 
