@@ -13,7 +13,7 @@ import org.mule.config.MuleProperties;
 import org.mule.extras.client.MuleClient;
 import org.mule.providers.soap.SoapMethod;
 
-import org.mule.providers.soap.axis.wsdl.wsrf.test.util.Messages;
+import org.mule.providers.soap.axis.wsdl.wsrf.test.util.MessagesTest;
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 
 
@@ -30,13 +30,13 @@ import javax.xml.namespace.QName;
  * @author raffaele.picardi
  *
  */
-public class AxisWsdlWsrfMessageDispatcherAddressingAdviceTestCase extends FunctionalTestCase
+public class AxisWsdlWsrfMessageDispatcherAddressingAdviceIntegrationTestCase extends FunctionalTestCase
 {
     /**
      * Constructor
      *
      */
-    public AxisWsdlWsrfMessageDispatcherAddressingAdviceTestCase () 
+    public AxisWsdlWsrfMessageDispatcherAddressingAdviceIntegrationTestCase () 
     {
         System.out.println("start...");
         
@@ -59,10 +59,10 @@ public final void  testCallSingleInstanceGlobusServiceByMessageWithResourceKey()
         
       
         MuleClient client = new MuleClient();
-        SoapMethod method = new SoapMethod(new QName("", Messages.getString("SOAP_METHOD_NAME")));
-        method.addNamedParameter(new QName( Messages.getString("NAMED_PARAMETER")), new javax.xml.namespace.QName( Messages.getString("SERVICE_NAMESPACE_URI"), Messages.getString("RETURN_QNAME")), "in");
-        method.setReturnType( new javax.xml.namespace.QName(Messages.getString("SERVICE_NAMESPACE_URI"), Messages.getString("RETURN_QTYPE_NAME")));
-        method.setReturnClass(Class.forName(Messages.getString("RETURN_CLASSNAME")));
+        SoapMethod method = new SoapMethod(new QName("", MessagesTest.getString("SOAP_METHOD_NAME")));
+        method.addNamedParameter(new QName( MessagesTest.getString("NAMED_PARAMETER")), new javax.xml.namespace.QName( MessagesTest.getString("SERVICE_NAMESPACE_URI"), MessagesTest.getString("RETURN_QNAME")), "in");
+        method.setReturnType( new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"), MessagesTest.getString("RETURN_QTYPE_NAME")));
+        method.setReturnClass(Class.forName(MessagesTest.getString("RETURN_CLASSNAME")));
         
         
         Map props = new HashMap();
@@ -70,13 +70,13 @@ public final void  testCallSingleInstanceGlobusServiceByMessageWithResourceKey()
         props.put("use", "literal"); 
         props.put(MuleProperties.MULE_SOAP_METHOD, method);
        
-        props.put("resourceKey", Messages.getString("RESOURCE_KEY"));
-        props.put(WSRFParameter.SERVICE_NAMESPACE , Messages.getString("SERVICE_NAMESPACE_URI"));
-        props.put(WSRFParameter.RESOURCE_KEY_NAME , Messages.getString("RESOURCE_KEY_NAME"));
-        props.put(WSRFParameter.RETURN_QNAME, Messages.getString("RETURN_QNAME"));
-        props.put(WSRFParameter.RETURN_QTYPE,  new javax.xml.namespace.QName(Messages.getString("SERVICE_NAMESPACE_URI"),  Messages.getString("RETURN_QTYPE_NAME")));
-        props.put(WSRFParameter.RETURN_CLASS, Class.forName(Messages.getString("RETURN_CLASSNAME")));
-        props.put(WSRFParameter.SOAP_ACTION_URI, Messages.getString("SOAP_ACTION_URI"));
+        props.put("resourceKey", MessagesTest.getString("RESOURCE_KEY"));
+        props.put(WSRFParameter.SERVICE_NAMESPACE , MessagesTest.getString("SERVICE_NAMESPACE_URI"));
+        props.put(WSRFParameter.RESOURCE_KEY_NAME , MessagesTest.getString("RESOURCE_KEY_NAME"));
+        props.put(WSRFParameter.RETURN_QNAME, MessagesTest.getString("RETURN_QNAME"));
+        props.put(WSRFParameter.RETURN_QTYPE,  new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"),  MessagesTest.getString("RETURN_QTYPE_NAME")));
+        props.put(WSRFParameter.RETURN_CLASS, Class.forName(MessagesTest.getString("RETURN_CLASSNAME")));
+        props.put(WSRFParameter.SOAP_ACTION_URI, MessagesTest.getString("SOAP_ACTION_URI"));
         UMOMessage result = client.send("vm://vmQueue", new Integer(2), props);
        
 
