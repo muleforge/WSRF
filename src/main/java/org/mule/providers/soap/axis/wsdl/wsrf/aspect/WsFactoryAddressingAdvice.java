@@ -10,6 +10,7 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
+import org.mule.providers.soap.axis.wsdl.wsrf.AxisWsdlWsrfMessageDispatcher;
 import org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice;
 import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryPortType;
 import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryServiceAddressingLocator;
@@ -97,8 +98,10 @@ public class WsFactoryAddressingAdvice extends BasePriorityAdvice implements Met
 
                 int uriHashCode = event.getMessage().getProperty(WSRFParameter.SOAP_ACTION_URI).hashCode();
                 String entry = WSRFParameter.PREFIX_FOR_RESOURCE_KEY_IN_SESSION + uriHashCode;
+                
                 String resourceKey = (String) event.getSession().getProperty(entry);
                 // If first time , create and set in session new resource Key
+                // TODO raffaele.picardi: manage list of entries in overlapping
                 if (resourceKey == null)
                 {
                     resourceKey = createResource(factoryServiceURI);

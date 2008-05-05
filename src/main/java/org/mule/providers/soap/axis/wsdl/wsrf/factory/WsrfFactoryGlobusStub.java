@@ -319,6 +319,10 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
         setRequestHeaders(call);
         setAttachments(call);
         // TODO MULE-WSRF-22: Manage input create resource request param and response
+        /**
+         * CreateReliableFileTransferOutputType response = factoryPort .createReliableFileTransfer(input);
+         *  response.getReliableTransferEPR(); 
+         */
         CreateResourceResponse resp = (CreateResourceResponse)call.invoke(new Object[] {new CreateResource()});
        
         extractAttachments(call);

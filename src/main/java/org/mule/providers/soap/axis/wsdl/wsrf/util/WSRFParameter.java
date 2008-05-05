@@ -75,6 +75,12 @@ public class WSRFParameter
 
     /**  The Constant PREFIX_FOR_RESOURCE_KEY_IN_SESSION specifies the prefix for all resource key related to SOAP ACTION URIs for each session*/
     public static final String PREFIX_FOR_RESOURCE_KEY_IN_SESSION = "WSRF_RK_SESSION_";
+
+    /** The Constant FIRST_VALUE_IN. */
+    public static final int FIRST_VALUE_IN = 2000;
+    
+    /** The Constant SECOND_VALUE_IN. */
+    public static final int SECOND_VALUE_IN = 4000;
 }
 
 
