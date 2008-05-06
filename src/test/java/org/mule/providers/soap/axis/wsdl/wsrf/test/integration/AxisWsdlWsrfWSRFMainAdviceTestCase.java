@@ -38,7 +38,7 @@ import javax.xml.namespace.QName;
  * 
  * @author raffaele.picardi
  */
-public class AxisWsdlWsrfWSRFGenericFactoryTestCase extends FunctionalTestCase
+public class AxisWsdlWsrfWSRFMainAdviceTestCase extends FunctionalTestCase
 {
     
 
@@ -46,7 +46,7 @@ public class AxisWsdlWsrfWSRFGenericFactoryTestCase extends FunctionalTestCase
     /**
      * Constructor.
      */
-    public AxisWsdlWsrfWSRFGenericFactoryTestCase()
+    public AxisWsdlWsrfWSRFMainAdviceTestCase()
     {
         System.out.println("starting...");
 
@@ -59,69 +59,16 @@ public class AxisWsdlWsrfWSRFGenericFactoryTestCase extends FunctionalTestCase
      */
     protected final String getConfigResources()
     {
-        return "axis-wsdl-wsrf-globus-grid-service-factory-addressing-mule-config.xml";
+        return "axis-wsdl-wsrf-globus-grid-service-main-mule-config.xml";
     }
-
     /**
-     * Test Resource key creation using only WSRF_FACTORY_SERVICE_ADDRESS.
+     * test copy of from wsrfOption to message properties with overwright
      * 
      * @throws Exception exception
      */
-    public final void testCreateServiceInstanceFromFactoryService() throws Exception
+    public final void testCopyWithOverwright() throws Exception
     {
-        MuleClient client = new MuleClient();
-        SoapMethod method = new SoapMethod(new QName("", MessagesTest.getString("SOAP_METHOD_NAME")));
-        method.addNamedParameter(new QName(MessagesTest.getString("NAMED_PARAMETER")),
-            new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"),
-                MessagesTest.getString("RETURN_QNAME")), "in");
-        method.setReturnType(new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"),
-            MessagesTest.getString("RETURN_QTYPE_NAME")));
-        method.setReturnClass(Class.forName(MessagesTest.getString("RETURN_CLASSNAME")));
-
-        Map props = new HashMap();
-        props.put("style", "wrapped");
-        props.put("use", "literal");
-        props.put(MuleProperties.MULE_SOAP_METHOD, method);
-
-        //props.put(WSRFParameter.SERVICE_NAMESPACE, Messages.getString("RESOURCE_KEY"));
-        props.put(WSRFParameter.SERVICE_NAMESPACE, MessagesTest.getString("SERVICE_NAMESPACE_URI"));
-        props.put(WSRFParameter.RESOURCE_KEY_NAME, MessagesTest.getString("RESOURCE_KEY_NAME"));
-        props.put(WSRFParameter.RETURN_QNAME, MessagesTest.getString("RETURN_QNAME"));
-        props.put(WSRFParameter.RETURN_QTYPE, new javax.xml.namespace.QName(
-            MessagesTest.getString("SERVICE_NAMESPACE_URI"), MessagesTest.getString("RETURN_QTYPE_NAME")));
-        props.put(WSRFParameter.RETURN_CLASS, Class.forName(MessagesTest.getString("RETURN_CLASSNAME")));
-        props.put(WSRFParameter.SOAP_ACTION_URI, MessagesTest.getString("SOAP_ACTION_URI"));
-
-        //factory properties
-        props.put(WSRFParameter.WSRF_FACTORY_SERVICE_ADDRESS, MessagesTest.getString("FACTORY_SERVICE_ADDRESS"));
-
-        UMOMessage result = client.send("vm://vmQueue", new Integer(2), props);
-
-        assertNotNull(result);
-        assertNotNull(result.getPayload());
-        assertNotNull(result.getProperty(WSRFParameter.RESOURCE_KEY));
-        System.out.println(result.getPayload());
-        System.out.println("New resource Key: " + result.getProperty(WSRFParameter.RESOURCE_KEY));
-
-        props.put(WSRFParameter.RESOURCE_KEY, result.getProperty(WSRFParameter.RESOURCE_KEY));
-        
-        result = client.send("vm://vmQueue", new Integer(2000) , props);
-        
-        assertNotNull(result);
-        assertNotNull(result.getPayload());
-        assertNotNull(result.getProperty(WSRFParameter.RESOURCE_KEY));
-    }
-    
-    /**
-     * Test Resource key creation using only WSRF_FACTORY_SERVICE_ADDRESS and
-     * WSRF_MULE_SESSION_RESOURCE_KEY_MAPPING=yes. 
-     * TODO raffaele.picardi: develop test  using session 
-     * @throws Exception exception
-     */
-    
-    /*
-    public final void testCreateServiceInstanceFromFactoryServiceUsingSession() throws Exception
-    {
+      
         MuleClient client = new MuleClient();
         
         
@@ -153,14 +100,16 @@ public class AxisWsdlWsrfWSRFGenericFactoryTestCase extends FunctionalTestCase
             MessagesTest.getString("SERVICE_NAMESPACE_URI"), MessagesTest.getString("RETURN_QTYPE_NAME")));
         props.put(WSRFParameter.RETURN_CLASS, Class.forName(MessagesTest.getString("RETURN_CLASSNAME")));
         props.put(WSRFParameter.SOAP_ACTION_URI, MessagesTest.getString("SOAP_ACTION_URI"));
-
-        //factory properties
-        props.put(WSRFParameter.WSRF_FACTORY_SERVICE_ADDRESS, MessagesTest.getString("FACTORY_SERVICE_ADDRESS"));
-        props.put(WSRFParameter.WSRF_MULE_SESSION_RESOURCE_KEY_MAPPING, "yes");
+        
+        //force overwright
+        props.put(WSRFParameter.WSRF_MULE_CORRELATIONID_RESOURCE_KEY_MAPPING, "no");
+       
         
         UMOMessage firstMessage = new MuleMessage(new Integer(WSRFParameter.FIRST_VALUE_IN) , props);
         
-       
+        String corID = "123123";
+        
+        firstMessage.setCorrelationId(corID);
         UMOMessage result = client.send("vm://vmQueue" , firstMessage);
         
         
@@ -178,7 +127,9 @@ public class AxisWsdlWsrfWSRFGenericFactoryTestCase extends FunctionalTestCase
         
       
        UMOMessage secondMessage = new MuleMessage(new Integer(WSRFParameter.SECOND_VALUE_IN), props);
-  
+
+       secondMessage.setCorrelationId(corID);
+        
        result = client.send("vm://vmQueue" , secondMessage);
 
         
@@ -191,25 +142,23 @@ public class AxisWsdlWsrfWSRFGenericFactoryTestCase extends FunctionalTestCase
         
   
         
-        assertEquals(firstResourceKey , secondResourceKey);
+        assertNotSame(firstResourceKey , secondResourceKey);
 
         
         System.out.println(result.getPayload());
-        System.out.println("Resource Key just defined in session : " + result.getProperty(WSRFParameter.RESOURCE_KEY));
-        
 
         
-       
-    }*/
+
+    }
     
     /**
-     * Test Resource key creation using only WSRF_FACTORY_SERVICE_ADDRESS and
-     * WSRF_MULE_CORRELATIONID_RESOURCE_KEY_MAPPING=yes. 
+     * test copy of from wsrfOption to message properties 
      * 
      * @throws Exception exception
      */
-    public final void testCreateServiceInstanceFromFactoryServiceUsingCorrelation() throws Exception
+    public final void testCopy() throws Exception
     {
+      
         MuleClient client = new MuleClient();
         
         
@@ -242,9 +191,7 @@ public class AxisWsdlWsrfWSRFGenericFactoryTestCase extends FunctionalTestCase
         props.put(WSRFParameter.RETURN_CLASS, Class.forName(MessagesTest.getString("RETURN_CLASSNAME")));
         props.put(WSRFParameter.SOAP_ACTION_URI, MessagesTest.getString("SOAP_ACTION_URI"));
 
-        //factory properties
-        props.put(WSRFParameter.WSRF_FACTORY_SERVICE_ADDRESS, MessagesTest.getString("FACTORY_SERVICE_ADDRESS"));
-        props.put(WSRFParameter.WSRF_MULE_CORRELATIONID_RESOURCE_KEY_MAPPING, "yes");
+       
         
         UMOMessage firstMessage = new MuleMessage(new Integer(WSRFParameter.FIRST_VALUE_IN) , props);
         
@@ -287,10 +234,8 @@ public class AxisWsdlWsrfWSRFGenericFactoryTestCase extends FunctionalTestCase
 
         
         System.out.println(result.getPayload());
-        System.out.println("Resource Key just defined in session : " + result.getProperty(WSRFParameter.RESOURCE_KEY));
-        
-
-        
-       
+      
     }
+    
+   
 }

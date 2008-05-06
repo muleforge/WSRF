@@ -88,6 +88,11 @@ public class WSRFParameter
      * ResourceKey must be persisted by WSRF Provider in order to lookup it using correlationID and Service URI.
      */
     public static final String WSRF_MULE_CORRELATIONID_RESOURCE_KEY_MAPPING = "wsrfMuleCorrelationIDResourceKeyMapping";
+    
+    /**
+     * The Constant WSRF_ENDPOINT_PROPERTY_MAP . It specifies the property name of map object thath encapsulates all wsrf properties-.
+     */
+    public static final String WSRF_ENDPOINT_PROPERTY_MAP = "wsrfOption";
 }
 
 

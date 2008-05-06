@@ -11,10 +11,16 @@
 package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
+
 import org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice;
+import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
+import org.mule.umo.UMOEvent;
+import org.mule.umo.UMOMessage;
 
 
 import java.lang.reflect.Method;
+import java.util.Iterator;
+import java.util.Map;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -22,15 +28,15 @@ import org.springframework.aop.MethodBeforeAdvice;
 
 
 
-// TODO: Auto-generated Javadoc
+
 /**
- * Main Advice in order to perform Log operations and other ...
+ * Main Advice: Advice copies wsrfOption map porperties of Endpoint configuration in Message properties (not overwrite just properties of message)
  */
 public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvice
 {
     
     /* getPriority
-     * @see org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice#getPriority()
+     * @return priority
      */
     public int getPriority()
     {
@@ -47,7 +53,7 @@ public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvi
     
     /**
      * Before.
-     * 
+     * opies wsrfOption map porperties of Endpoint configuration in current Message properties
      * @param arg0 .
      * @param arg1 .
      * @param arg2 .
@@ -56,6 +62,28 @@ public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvi
     public void before(Method arg0, Object[] arg1, Object arg2) throws Throwable
     {
         Logger.getLogger(this.getClass()).log(Level.INFO,  this.getClass().getName() + " : advice method started.");
+      
+        UMOEvent event = (UMOEvent) arg1[1];
+        UMOMessage msg = event.getMessage();
+        Map p = (Map) event.getEndpoint().getProperty(WSRFParameter.WSRF_ENDPOINT_PROPERTY_MAP);
+        if (p ==  null )
+        {
+            Logger.getLogger(this.getClass()).log(Level.DEBUG,  this.getClass().getName() + " : wsrf option not found . Copy IGNORED for msg:" + msg.getUniqueId());
+            return;
+        }
+        Iterator it = p.keySet().iterator();
+        String tmpPropertyName = null;
+       
+        
+        while (it.hasNext())
+        {
+            tmpPropertyName = (String) it.next();
+            if (msg.getProperty(tmpPropertyName) == null)
+            {
+                msg.setProperty(tmpPropertyName, p.get(tmpPropertyName));
+                Logger.getLogger(this.getClass()).log(Level.DEBUG,  this.getClass().getName() + " : " + tmpPropertyName + " exported in message id: " + msg.getUniqueId());
+            }
+        }
         
     }
  
