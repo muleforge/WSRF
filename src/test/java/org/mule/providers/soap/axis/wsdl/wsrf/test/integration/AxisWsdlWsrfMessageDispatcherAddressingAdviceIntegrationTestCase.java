@@ -12,11 +12,8 @@ package org.mule.providers.soap.axis.wsdl.wsrf.test.integration;
 import org.mule.config.MuleProperties;
 import org.mule.extras.client.MuleClient;
 import org.mule.providers.soap.SoapMethod;
-
 import org.mule.providers.soap.axis.wsdl.wsrf.test.util.MessagesTest;
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
-
-
 import org.mule.tck.FunctionalTestCase;
 import org.mule.umo.UMOMessage;
 
