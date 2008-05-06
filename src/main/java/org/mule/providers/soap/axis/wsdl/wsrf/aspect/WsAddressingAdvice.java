@@ -175,6 +175,7 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
         QName keyName = new QName(serviceNamespace , resourceKeyName);
         String keyValue = (String) event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY);
         SimpleResourceKey key = new SimpleResourceKey(keyName, keyValue);
+        
         ReferencePropertiesType props = headers.getReferenceProperties();
         if (props == null ) 
         {
@@ -182,7 +183,14 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
         }
         try
         {
+            if (keyValue ==  null )
+            {
+                Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : ReferencesProperties IGNORED . Resource key not found..");
+            }
+            else 
+            {
             props.add(key.toSOAPElement());
+            }
         }
         catch (SerializationException e)
         {

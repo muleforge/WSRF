@@ -10,9 +10,9 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.util;
 
-import org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice;
+
 import org.mule.providers.soap.axis.wsdl.wsrf.IExtendCall;
-import org.mule.providers.soap.axis.wsdl.wsrf.IPriorityAdvice;
+
 
 import java.io.File;
 import java.net.URL;

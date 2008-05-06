@@ -299,6 +299,7 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
      * createResource
      * @param request request to create Resource
      * @return CreateResourceResponse create recource information
+     * @throws RemoteException 
      */
     public String createResource(Object request) throws java.rmi.RemoteException
     {
