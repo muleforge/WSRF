@@ -68,9 +68,7 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
 
         try
         {
-            // TODO raffaele.picardi : move application.xml into meta_inf dir
-
-            
+                       
             aopSpringContext = new ClassPathXmlApplicationContext(Messages.getString("AxisWsdlWsrfMessageDispatcher.APPLICATION_CONTEXT_PATH"));
 
         }
@@ -99,7 +97,7 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
     protected UMOMessage doSend(UMOEvent event) throws Exception
     {
         UMOMessage messageResponse = super.doSend(event);
-
+        
         try
         {
             Map map = (Map) event.getMessage().getProperty(WSRFParameter.WSRF_EXTRA_RESPONSE_MAP);

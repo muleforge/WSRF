@@ -10,7 +10,6 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
-import org.mule.providers.soap.axis.wsdl.wsrf.AxisWsdlWsrfMessageDispatcher;
 import org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice;
 import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryPortType;
 import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryServiceAddressingLocator;
@@ -19,6 +18,8 @@ import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 import org.mule.umo.UMOEvent;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.axis.message.addressing.Address;
 
@@ -29,11 +30,18 @@ import org.apache.log4j.Logger;
 
 import org.springframework.aop.MethodBeforeAdvice;
 
+
 /**
- * WsFactoryAddressing Aspect to perform Factory create resource request in order to obtain and set in mule message resource Key.
+ * WsFactoryAddressing Aspect to perform Factory create resource request in order to
+ * obtain and set in mule message resource Key.
  */
 public class WsFactoryAddressingAdvice extends BasePriorityAdvice implements MethodBeforeAdvice
 {
+    /**
+     * Map message correlationID and Service with ResourceKey in order to retrieve
+     * resource key when session id is not persisted across Mule Events.
+     */
+    private Map correlationIDAndServiceToResourceKey;
 
     /**
      * Default Constructor.
@@ -41,6 +49,7 @@ public class WsFactoryAddressingAdvice extends BasePriorityAdvice implements Met
     public WsFactoryAddressingAdvice()
     {
         Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : started.");
+        correlationIDAndServiceToResourceKey = new HashMap();
     }
 
     /**
@@ -80,6 +89,7 @@ public class WsFactoryAddressingAdvice extends BasePriorityAdvice implements Met
             e.printStackTrace();
         }
 
+        // MANAGE defined Resource Key
         if (event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY) != null)
         {
             Logger.getLogger(this.getClass()).log(
@@ -89,21 +99,24 @@ public class WsFactoryAddressingAdvice extends BasePriorityAdvice implements Met
             return;
         }
 
+        // MANAGE Session ID mapping for Resource key
         if (event.getMessage().getProperty(WSRFParameter.WSRF_MULE_SESSION_RESOURCE_KEY_MAPPING) != null)
         {
-            // check session-mapping value
+
             if (event.getMessage().getProperty(WSRFParameter.WSRF_MULE_SESSION_RESOURCE_KEY_MAPPING).equals(
                 WSRFParameter.SESSION_MAPPING_YES))
             {
 
                 int uriHashCode = event.getMessage().getProperty(WSRFParameter.SOAP_ACTION_URI).hashCode();
                 String entry = WSRFParameter.PREFIX_FOR_RESOURCE_KEY_IN_SESSION + uriHashCode;
-                
+
                 String resourceKey = (String) event.getSession().getProperty(entry);
-                // If first time , create and set in session new resource Key
-                // TODO raffaele.picardi: manage list of entries in overlapping
+
+                // TODO MULE-WSRF-23: manage list of entries in overlapping in
+                // session mapping and session lock during operation
                 if (resourceKey == null)
                 {
+
                     resourceKey = createResource(factoryServiceURI);
                     event.getSession().setProperty(entry, resourceKey);
                     Logger.getLogger(this.getClass()).log(
@@ -120,14 +133,49 @@ public class WsFactoryAddressingAdvice extends BasePriorityAdvice implements Met
                                     + " ResourceKey creation IGNORED! Just included in Mule Session");
                 return;
             }
-            Logger.getLogger(this.getClass()).log(
-                Level.DEBUG,
-                this.getClass().getName() + " : "
-                                + " ResourceKey creation IGNORED! Just included in Mule Message");
-            return;
+
+        }
+
+        // MANAGE Correlation ID mapping for Resource key
+        if (event.getMessage().getProperty(WSRFParameter.WSRF_MULE_CORRELATIONID_RESOURCE_KEY_MAPPING) != null)
+        {
+
+            if (event.getMessage()
+                .getProperty(WSRFParameter.WSRF_MULE_CORRELATIONID_RESOURCE_KEY_MAPPING)
+                .equals(WSRFParameter.SESSION_MAPPING_YES))
+            {
+
+                int uriHashCode = event.getMessage().getProperty(WSRFParameter.SOAP_ACTION_URI).hashCode();
+                String entry = WSRFParameter.PREFIX_FOR_RESOURCE_KEY_IN_SESSION + uriHashCode;
+                String entryC = event.getMessage().getCorrelationId() + "_" + entry;
+
+                String resourceKey = (String) correlationIDAndServiceToResourceKey.get(entryC);
+
+                if (resourceKey == null)
+                {
+
+                    resourceKey = createResource(factoryServiceURI);
+                    // TODO raffaele.picardi: manage auto garbage of map
+                    correlationIDAndServiceToResourceKey.put(entryC, resourceKey);
+                    Logger.getLogger(this.getClass())
+                        .log(
+                            Level.DEBUG,
+                            this.getClass().getName()
+                                            + " : "
+                                            + " ResourceKey Created and included in Map CorrelationID Service to Resource with entry : "
+                                            + entryC);
+                }
+
+                event.getMessage().setProperty(WSRFParameter.RESOURCE_KEY, resourceKey);
+
+                return;
+            }
+
         }
 
         event.getMessage().setProperty(WSRFParameter.RESOURCE_KEY, createResource(factoryServiceURI));
+        Logger.getLogger(this.getClass()).log(Level.DEBUG,
+            this.getClass().getName() + " : " + " ResourceKey created and set in message ");
 
     }
 
@@ -148,7 +196,7 @@ public class WsFactoryAddressingAdvice extends BasePriorityAdvice implements Met
             factoryEPR = new EndpointReferenceType();
             factoryEPR.setAddress(new Address(factoryServiceURI));
             factory = factoryLocator.getFactoryPortTypePort(factoryEPR);
-            
+
             // TODO MULE-WSRF-22: Manage input/output create resource request param
             resourceKey = factory.createResource(null);
             Logger.getLogger(this.getClass()).log(Level.DEBUG,

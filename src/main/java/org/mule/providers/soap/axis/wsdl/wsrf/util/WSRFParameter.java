@@ -15,6 +15,7 @@ package org.mule.providers.soap.axis.wsdl.wsrf.util;
  * Specifications.
  */
 public class WSRFParameter
+
 {
        
     /** The Constant SERVICE_NAMESPACE. */
@@ -81,6 +82,12 @@ public class WSRFParameter
     
     /** The Constant SECOND_VALUE_IN. */
     public static final int SECOND_VALUE_IN = 4000;
+
+    /**
+     * The Constant WSRF_MULE_CORRELATIONID_RESOURCE_KEY_MAPPING . It specifies if
+     * ResourceKey must be persisted by WSRF Provider in order to lookup it using correlationID and Service URI.
+     */
+    public static final String WSRF_MULE_CORRELATIONID_RESOURCE_KEY_MAPPING = "wsrfMuleCorrelationIDResourceKeyMapping";
 }
 
 
