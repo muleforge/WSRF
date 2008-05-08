@@ -341,11 +341,8 @@ public class AxisWsdlWsrfWSRFGenericFactoryTestCase extends FunctionalTestCase
         props.put(WSRFParameter.WSRF_FACTORY_SERVICE_ADDRESS, MessagesTest.getString("FACTORY_SERVICE_ADDRESS"));
         props.put(WSRFParameter.WSRF_MULE_CORRELATIONID_RESOURCE_KEY_MAPPING, "yes");
         props.put(WSRFParameter.WSRF_FACTORY_PORT_TYPE_PORT_ADDRESS, MessagesTest.getString("FACTORY_PORT_TYPE_PORT_ADDRESS"));
-        
-
-        
-        
-        
+        props.put(WSRFParameter.WSRF_FACTORY_PORT_TYPE, MessagesTest.getString("FACTORY_PORT_TYPE"));
+               
         UMOMessage firstMessage = new MuleMessage(new Integer(WSRFParameter.FIRST_VALUE_IN) , props);
         
         String corID = "123123";

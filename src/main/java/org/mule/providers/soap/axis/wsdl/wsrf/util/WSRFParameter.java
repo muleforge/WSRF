@@ -107,6 +107,11 @@ public class WSRFParameter
     
     /** The Constant wsrfPrefix. */
     public static final String wsrfPrefix = "wsrf";
+
+    /** The Constant WSRF_FACTORY_PORT_TYPE specifies port type */
+    public static final String WSRF_FACTORY_PORT_TYPE = "wsrfFactoryPortType";
+    
+    
 }
 
 

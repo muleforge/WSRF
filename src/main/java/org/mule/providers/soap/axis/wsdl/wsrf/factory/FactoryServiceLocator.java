@@ -38,7 +38,7 @@ public class FactoryServiceLocator extends org.apache.axis.client.Service implem
     {
        //TODO raffaele.picardi:TOP continue to add other properties
         factoryPortTypePortAddress = Messages.getString(WSRFParameter.WSRF_FACTORY_PORT_TYPE_PORT_ADDRESS);
-        
+        factoryPortTypePortWSDDServiceName = Messages.getString(WSRFParameter.WSRF_FACTORY_PORT_TYPE);
     }
 
     /**
@@ -83,7 +83,7 @@ public class FactoryServiceLocator extends org.apache.axis.client.Service implem
 
     // The WSDD service name defaults to the port name.
     /** The factory port type port wsdd service name. */
-    private java.lang.String factoryPortTypePortWSDDServiceName = Messages.getString("FactoryServiceLocator.FACTORY_PORT_TYPE_PORT"); //$NON-NLS-1$
+    private java.lang.String factoryPortTypePortWSDDServiceName = Messages.getString(WSRFParameter.WSRF_FACTORY_PORT_TYPE); //$NON-NLS-1$
 
     /**
      * Gets the factory port type port wsdd service name.
