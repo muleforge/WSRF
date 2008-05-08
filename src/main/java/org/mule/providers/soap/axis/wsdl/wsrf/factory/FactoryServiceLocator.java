@@ -36,7 +36,7 @@ public class FactoryServiceLocator extends org.apache.axis.client.Service implem
      */
     public void refreshProperties()
     {
-       //TODO raffaele.picardi:TOP continue to add other properties
+
         factoryPortTypePortAddress = Messages.getString(WSRFParameter.WSRF_FACTORY_PORT_TYPE_PORT_ADDRESS);
         factoryPortTypePortWSDDServiceName = Messages.getString(WSRFParameter.WSRF_FACTORY_PORT_TYPE);
     }
@@ -206,7 +206,7 @@ public class FactoryServiceLocator extends org.apache.axis.client.Service implem
             return getPort(serviceEndpointInterface);
         }
         java.lang.String inputPortName = portName.getLocalPart();
-        if (Messages.getString("FactoryServiceLocator.FACTORY_PORT_TYPE_PORT").equals(inputPortName)) //$NON-NLS-1$
+        if (factoryPortTypePortWSDDServiceName.equals(inputPortName)) //$NON-NLS-1$
         {
             return getFactoryPortTypePort();
         }
@@ -225,7 +225,7 @@ public class FactoryServiceLocator extends org.apache.axis.client.Service implem
     public javax.xml.namespace.QName getServiceName()
     {
         return new javax.xml.namespace.QName(
-            Messages.getString("WsrfFactoryGlobusStub.FACTORY_SERVICE"), Messages.getString("FactoryServiceLocator.FACTORY_SERVICE")); //$NON-NLS-1$ //$NON-NLS-2$
+            Messages.getString(WSRFParameter.WSRF_FACTORY_SERVICE_NS), Messages.getString(WSRFParameter.WSRF_FACTORY_SERVICE_NAME)); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /** The ports. */
@@ -241,8 +241,8 @@ public class FactoryServiceLocator extends org.apache.axis.client.Service implem
         {
             ports = new java.util.HashSet();
             ports.add(new javax.xml.namespace.QName(
-                Messages.getString("WsrfFactoryGlobusStub.FACTORY_SERVICE"), //$NON-NLS-1$
-                Messages.getString("FactoryServiceLocator.FACTORY_PORT_TYPE_PORT"))); //$NON-NLS-1$
+                Messages.getString(WSRFParameter.WSRF_FACTORY_SERVICE_NS), //$NON-NLS-1$
+                Messages.getString(WSRFParameter.WSRF_FACTORY_PORT_TYPE))); //$NON-NLS-1$
         }
         return ports.iterator();
     }
@@ -256,7 +256,7 @@ public class FactoryServiceLocator extends org.apache.axis.client.Service implem
     public void setEndpointAddress(java.lang.String portName, java.lang.String address)
         throws javax.xml.rpc.ServiceException
     {
-        if (Messages.getString("FactoryServiceLocator.FACTORY_PORT_TYPE_PORT").equals(portName)) //$NON-NLS-1$
+        if (Messages.getString(WSRFParameter.WSRF_FACTORY_PORT_TYPE).equals(portName)) //$NON-NLS-1$
         {
             setFactoryPortTypePortEndpointAddress(address);
         }

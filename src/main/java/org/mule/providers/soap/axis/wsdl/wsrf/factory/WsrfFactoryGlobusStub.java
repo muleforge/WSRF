@@ -303,6 +303,7 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
      */
     public String createResource(Object request) throws java.rmi.RemoteException
     {
+        //TODO raffaele.picardi:TOP continue to add other properties
         if (super.cachedEndpoint == null)
         {
             throw new org.apache.axis.NoEndPointException();

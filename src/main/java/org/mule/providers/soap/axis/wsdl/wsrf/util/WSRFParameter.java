@@ -111,7 +111,11 @@ public class WSRFParameter
     /** The Constant WSRF_FACTORY_PORT_TYPE specifies port type */
     public static final String WSRF_FACTORY_PORT_TYPE = "wsrfFactoryPortType";
     
+    /** The Constant WSRF_FACTORY_SERVICE_NS specifies factory service namespace */
+    public static final String WSRF_FACTORY_SERVICE_NS = "wsrfFactoryServiceNS";
     
+    /** The Constant WSRF_FACTORY_SERVICE_NAME specifies factory service name  */
+    public static final String WSRF_FACTORY_SERVICE_NAME = "wsrfFactoryServiceName";
 }
 
 
