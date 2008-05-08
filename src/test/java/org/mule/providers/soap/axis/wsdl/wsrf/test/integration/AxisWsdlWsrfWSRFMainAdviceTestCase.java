@@ -13,7 +13,7 @@ package org.mule.providers.soap.axis.wsdl.wsrf.test.integration;
 import org.mule.config.MuleProperties;
 import org.mule.extras.client.MuleClient;
 import org.mule.impl.MuleMessage;
-import org.mule.impl.RequestContext;
+
 import org.mule.impl.endpoint.MuleEndpoint;
 import org.mule.impl.endpoint.MuleEndpointURI;
 
@@ -23,7 +23,7 @@ import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 
 
 import org.mule.tck.FunctionalTestCase;
-import org.mule.umo.UMOEventContext;
+
 import org.mule.umo.UMOMessage;
 
 

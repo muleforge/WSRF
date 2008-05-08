@@ -74,7 +74,10 @@ public class WSRFParameter
     /** The Constant SESSION_MAPPING_NO. */
     public static final String SESSION_MAPPING_NO = "no";
 
-    /**  The Constant PREFIX_FOR_RESOURCE_KEY_IN_SESSION specifies the prefix for all resource key related to SOAP ACTION URIs for each session*/
+    /**
+     * The Constant PREFIX_FOR_RESOURCE_KEY_IN_SESSION specifies the prefix for all
+     * resource key related to SOAP ACTION URIs for each session.
+     */
     public static final String PREFIX_FOR_RESOURCE_KEY_IN_SESSION = "WSRF_RK_SESSION_";
 
     /** The Constant FIRST_VALUE_IN. */
@@ -85,14 +88,25 @@ public class WSRFParameter
 
     /**
      * The Constant WSRF_MULE_CORRELATIONID_RESOURCE_KEY_MAPPING . It specifies if
-     * ResourceKey must be persisted by WSRF Provider in order to lookup it using correlationID and Service URI.
+     * ResourceKey must be persisted by WSRF Provider in order to lookup it using
+     * correlationID and Service URI.
      */
     public static final String WSRF_MULE_CORRELATIONID_RESOURCE_KEY_MAPPING = "wsrfMuleCorrelationIDResourceKeyMapping";
     
     /**
-     * The Constant WSRF_ENDPOINT_PROPERTY_MAP . It specifies the property name of map object thath encapsulates all wsrf properties-.
+     * The Constant WSRF_ENDPOINT_PROPERTY_MAP . It specifies the property name of
+     * map object thath encapsulates all wsrf properties-.
      */
     public static final String WSRF_ENDPOINT_PROPERTY_MAP = "wsrfOption";
+    
+    /**
+     * The Constant WSRF_FACTORY_PORT_TYPE_PORT_ADDRESS specifies port type address of
+     * globus service.
+     */
+    public static final String WSRF_FACTORY_PORT_TYPE_PORT_ADDRESS = "wsrfFactoryPortTypePortAddress";
+    
+    /** The Constant wsrfPrefix. */
+    public static final String wsrfPrefix = "wsrf";
 }
 
 

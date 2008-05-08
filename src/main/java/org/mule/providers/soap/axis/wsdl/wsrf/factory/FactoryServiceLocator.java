@@ -10,6 +10,8 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.factory;
 
+import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
+
 
 /**
  * The Class FactoryServiceLocator.
@@ -26,6 +28,17 @@ public class FactoryServiceLocator extends org.apache.axis.client.Service implem
     public FactoryServiceLocator()
     {
         // Empty constructor
+        refreshProperties();
+    }
+    /**
+     * Refresh other properties using Messages class re-updated from MainAdvice for each new message
+     *
+     */
+    public void refreshProperties()
+    {
+       //TODO raffaele.picardi:TOP continue to add other properties
+        factoryPortTypePortAddress = Messages.getString(WSRFParameter.WSRF_FACTORY_PORT_TYPE_PORT_ADDRESS);
+        
     }
 
     /**
@@ -35,7 +48,9 @@ public class FactoryServiceLocator extends org.apache.axis.client.Service implem
      */
     public FactoryServiceLocator(org.apache.axis.EngineConfiguration config)
     {
+        
         super(config);
+        refreshProperties();
     }
 
     /**
@@ -47,12 +62,14 @@ public class FactoryServiceLocator extends org.apache.axis.client.Service implem
     public FactoryServiceLocator(java.lang.String wsdlLoc, javax.xml.namespace.QName sName)
         throws javax.xml.rpc.ServiceException
     {
+       
         super(wsdlLoc, sName);
+        refreshProperties();
     }
 
     // Use to get a proxy class for FactoryPortTypePort
     /** The factory port type port address. */
-    private java.lang.String factoryPortTypePortAddress = Messages.getString("FactoryServiceLocator.FACTORY_PORT_TYPE_PORT_ADDRESS"); //$NON-NLS-1$
+    private java.lang.String factoryPortTypePortAddress = Messages.getString(WSRFParameter.WSRF_FACTORY_PORT_TYPE_PORT_ADDRESS); //$NON-NLS-1$
 
     /**
      * Gets the factory port type port address.

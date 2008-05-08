@@ -324,19 +324,29 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
          * CreateReliableFileTransferOutputType response = factoryPort .createReliableFileTransfer(input);
          *  response.getReliableTransferEPR(); 
          */
-        CreateResourceResponse resp = (CreateResourceResponse)call.invoke(new Object[] {new CreateResource()});
+        CreateResourceResponse resp = (CreateResourceResponse) call.invoke(new Object[] {new CreateResource()});
        
         extractAttachments(call);
         ReferencePropertiesType rfp = resp.getEndpointReference().getProperties();
         MessageElement resourceKey = rfp.get_any()[0];
-        if (resourceKey.getName().indexOf(WSRFParameter.RESOURCE_KEY_SUB) == -1) {
+        if (resourceKey.getName().indexOf(WSRFParameter.RESOURCE_KEY_SUB) == -1)
+        {
             Logger.getLogger(this.getClass()).error("resource key not found! Set to 0");
             return "0";
         }
     
-        //TODO raffaele.picardi: generate from resp epr
-      
-        return resourceKey.getChildElements().next().toString();
+     
+        String rtrResourceKey = null;
+        try 
+        {
+            rtrResourceKey =  resourceKey.getChildElements().next().toString();
+        }
+        catch (Exception e) 
+        {
+            Logger.getLogger(this.getClass()).error("resource key not found! Set to 0");
+            return "0";
+        }
+        return rtrResourceKey;
            
     }
 

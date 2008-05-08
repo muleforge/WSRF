@@ -14,7 +14,12 @@ package org.mule.providers.soap.axis.wsdl.wsrf.factory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.MissingResourceException;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 /**
  * The Class Messages. Retrieve properties from META-INF/messages_stub.properties
@@ -25,7 +30,7 @@ public final class Messages
     /** The Constant BUNDLE_NAME. */
     private static final String BUNDLE_NAME = "META-INF/messages_stub.properties"; //$NON-NLS-1$
 
-
+    private static Map propertiesUpdated = new HashMap();
 
 
     /** The t. */
@@ -69,12 +74,35 @@ public final class Messages
         }
         try
         {
+            if (propertiesUpdated.containsKey(key))
+            {
+                return  (String) propertiesUpdated.get(key);
+            }
             return props.getProperty(key);
         }
         catch (MissingResourceException e)
         {
+            Logger.getLogger(Messages.class).log(Level.ERROR,
+                Messages.class.getName() + " : " + " Resource property  missing");
             return null;
+            
         }
      
     }
+    
+    /**
+     * Used to Update key-value property of  resource property file BUNDLE_NAME in order to customize it skipping default values
+     * @param key key
+     * @param value value string
+     */
+    public static void setProperty(String key , Object value)
+    {
+        if (propertiesUpdated.containsKey(key)) 
+        {
+            propertiesUpdated.remove(key);
+        }
+        propertiesUpdated.put(key, value);
+    }
+    
+    
 }

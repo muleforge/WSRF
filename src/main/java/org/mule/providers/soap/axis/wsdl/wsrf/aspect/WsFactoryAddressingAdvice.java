@@ -16,6 +16,7 @@ import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryServiceAddressingLo
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 
 import org.mule.umo.UMOEvent;
+import org.mule.umo.UMOMessage;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -64,9 +65,10 @@ public class WsFactoryAddressingAdvice extends BasePriorityAdvice implements Met
     {
         UMOEvent event = (UMOEvent) arg1[1];
         String factoryServiceURI = null;
-
+        
         try
         {
+            
             factoryServiceURI = (String) event.getMessage().getProperty(
                 WSRFParameter.WSRF_FACTORY_SERVICE_ADDRESS);
             if (factoryServiceURI == null)
@@ -178,6 +180,8 @@ public class WsFactoryAddressingAdvice extends BasePriorityAdvice implements Met
             this.getClass().getName() + " : " + " ResourceKey created and set in message ");
 
     }
+
+
 
     /**
      * Creates the resource.

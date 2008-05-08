@@ -10,7 +10,7 @@
 
 package org.mule.providers.soap.wsdl.wsrf.instance;
 
-import java.rmi.RemoteException;
+
 
 import javax.xml.rpc.ServiceException;
 

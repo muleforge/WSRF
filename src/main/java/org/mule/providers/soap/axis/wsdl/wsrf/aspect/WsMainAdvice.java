@@ -13,6 +13,7 @@ package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
 import org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice;
+import org.mule.providers.soap.axis.wsdl.wsrf.factory.Messages;
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 import org.mule.umo.UMOEvent;
 import org.mule.umo.UMOMessage;
@@ -53,7 +54,7 @@ public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvi
     
     /**
      * Before.
-     * opies wsrfOption map porperties of Endpoint configuration in current Message properties
+     * Copies wsrfOption map porperties of Endpoint configuration in current Message properties and updates or adds Messages properties class 
      * @param arg0 .
      * @param arg1 .
      * @param arg2 .
@@ -72,18 +73,42 @@ public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvi
             return;
         }
         Iterator it = p.keySet().iterator();
-        String tmpPropertyName = null;
-       
+        String key = null;
+        Object value = null;
         
         while (it.hasNext())
         {
-            tmpPropertyName = (String) it.next();
-            if (msg.getProperty(tmpPropertyName) == null)
+            key = (String) it.next();
+            if (msg.getProperty(key) == null)
             {
-                msg.setProperty(tmpPropertyName, p.get(tmpPropertyName));
-                Logger.getLogger(this.getClass()).log(Level.DEBUG,  this.getClass().getName() + " : " + tmpPropertyName + " exported in message id: " + msg.getUniqueId());
+                value = p.get(key);
+                msg.setProperty(key, value);
+                Logger.getLogger(this.getClass()).log(Level.DEBUG,  this.getClass().getName() + " : " + key + " exported in message id: " + msg.getUniqueId());
             }
         }
+        
+        
+        //Updated Messages properties using Message properties (only properties begins with WSRFParamter.wsrfPrefix)
+        
+        it = msg.getPropertyNames().iterator();
+        key = null;
+        value = null;
+        
+        while (it.hasNext())
+        {
+            key = (String) it.next();
+            if (key.indexOf(WSRFParameter.wsrfPrefix) != -1)
+            {
+            value = p.get(key);
+            Messages.setProperty(key, value);
+            Logger.getLogger(this.getClass()).log(Level.DEBUG,
+                this.getClass().getName() + " : " + key + " set in Messages class");
+            }
+        }
+        
+        
+        
+        
         
     }
  
