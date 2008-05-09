@@ -316,7 +316,7 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
         call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        call.setOperationName(new javax.xml.namespace.QName("", Messages.getString("WsrfFactoryGlobusStub.CREATE_RESOURCE"))); //$NON-NLS-1$ //$NON-NLS-2$
+        call.setOperationName(new javax.xml.namespace.QName("", Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME))); //$NON-NLS-1$ //$NON-NLS-2$
 
         setRequestHeaders(call);
         setAttachments(call);
