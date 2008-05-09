@@ -10,6 +10,8 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.factory;
 
+import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
+
 
 /**
  * Class to receive Resource Information from Create request in Factory WSRF Pattern.
@@ -133,8 +135,9 @@ public class CreateResourceResponse implements java.io.Serializable
     static
     {
         typeDesc.setXmlType(new javax.xml.namespace.QName(
-            Messages.getString("WsrfFactoryGlobusStub.FACTORY_SERVICE"), Messages.getString("WsrfFactoryGlobusStub.CREATE_RESOURCE_RESPONSE2"))); //$NON-NLS-1$ //$NON-NLS-2$
+            Messages.getString(WSRFParameter.WSRF_FACTORY_SERVICE_NS), ">" + Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_RESPONSE_NAME))); //$NON-NLS-1$ //$NON-NLS-2$
         org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
+        //TODO raffaele.picardi:TOP generic CreateResourceResponse
         elemField.setFieldName(Messages.getString("CreateResourceResponse.ENDPOINT_REFERENCE")); //$NON-NLS-1$
         elemField.setXmlName(new javax.xml.namespace.QName(
             Messages.getString("WsrfFactoryGlobusStub.WS_ADDRESSING"), Messages.getString("CreateResourceResponse.ENDPOINT_REFERENCE2"))); //$NON-NLS-1$ //$NON-NLS-2$

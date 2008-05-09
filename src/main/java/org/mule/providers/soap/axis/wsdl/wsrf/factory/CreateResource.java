@@ -10,6 +10,8 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.factory;
 
+import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
+
 
 /**
  * Class to create Resource in Factory WSRF Pattern.
@@ -91,8 +93,7 @@ public class CreateResource implements java.io.Serializable
 
     static
     {
-        typeDesc.setXmlType(new javax.xml.namespace.QName(
-            Messages.getString("WsrfFactoryGlobusStub.FACTORY_SERVICE"), Messages.getString("WsrfFactoryGlobusStub.CREATE_RESOURCE_2")));
+        typeDesc.setXmlType(new javax.xml.namespace.QName(Messages.getString(WSRFParameter.WSRF_FACTORY_SERVICE_NS), ">" + Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME)));
     }
 
     /**
