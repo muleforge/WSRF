@@ -116,6 +116,17 @@ public class WSRFParameter
     
     /** The Constant WSRF_FACTORY_SERVICE_NAME specifies factory service name  */
     public static final String WSRF_FACTORY_SERVICE_NAME = "wsrfFactoryServiceName";
+    
+    /** The Constant WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME  specifies name of  service operation about create resource  */
+    public static final String WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME = "wsrfFactoryCreateResourceOperationName";
+    
+    /** The Constant WSRF_FACTORY_CREATE_RESOURCE_NAME  specifies name of  response   object about create resource  operation */
+    public static final String WSRF_FACTORY_CREATE_RESOURCE_RESPONSE_NAME = "wsrfFactoryCreateResourceResponseName";
+    
+    /** The Constant WSRF_FACTORY_CREATE_RESOURCE_REQUEST_NS  specifies namespace  of  create resource request  operation */
+    public static final String WSRF_FACTORY_CREATE_RESOURCE_REQUEST_NS = "wsrfFactoryCreateResourceRequestNS";
+    
+    
 }
 
 

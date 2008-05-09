@@ -13,7 +13,7 @@ package org.mule.providers.soap.axis.wsdl.wsrf.test.integration;
 import org.mule.config.MuleProperties;
 import org.mule.extras.client.MuleClient;
 import org.mule.impl.MuleMessage;
-import org.mule.impl.RequestContext;
+
 import org.mule.impl.endpoint.MuleEndpoint;
 import org.mule.impl.endpoint.MuleEndpointURI;
 
@@ -342,7 +342,13 @@ public class AxisWsdlWsrfWSRFGenericFactoryTestCase extends FunctionalTestCase
         props.put(WSRFParameter.WSRF_MULE_CORRELATIONID_RESOURCE_KEY_MAPPING, "yes");
         props.put(WSRFParameter.WSRF_FACTORY_PORT_TYPE_PORT_ADDRESS, MessagesTest.getString("FACTORY_PORT_TYPE_PORT_ADDRESS"));
         props.put(WSRFParameter.WSRF_FACTORY_PORT_TYPE, MessagesTest.getString("FACTORY_PORT_TYPE"));
-               
+        props.put(WSRFParameter.WSRF_FACTORY_SERVICE_NAME, MessagesTest.getString("FACTORY_SERVICE_NAME"));
+        props.put(WSRFParameter.WSRF_FACTORY_SERVICE_NS, MessagesTest.getString("FACTORY_SERVICE_NS"));
+        props.put(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME, MessagesTest.getString("FACTORY_CREATE_RESOURCE_OPERATION_NAME"));
+        props.put(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_REQUEST_NS, MessagesTest.getString("FACTORY_CREATE_RESOURCE_REQUEST_NS"));
+        props.put(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_RESPONSE_NAME, MessagesTest.getString("FACTORY_CREATE_RESOURCE_RESPONSE_NAME"));
+
+        
         UMOMessage firstMessage = new MuleMessage(new Integer(WSRFParameter.FIRST_VALUE_IN) , props);
         
         String corID = "123123";

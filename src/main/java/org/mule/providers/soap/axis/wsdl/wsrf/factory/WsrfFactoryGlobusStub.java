@@ -12,12 +12,9 @@ package org.mule.providers.soap.axis.wsdl.wsrf.factory;
 
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 
-import javax.xml.namespace.QName;
 
 import org.apache.axis.message.MessageElement;
-import org.apache.axis.message.SOAPEnvelope;
-import org.apache.axis.message.addressing.EndpointReferenceType;
-import org.apache.axis.message.addressing.ReferenceParametersType;
+
 import org.apache.axis.message.addressing.ReferencePropertiesType;
 import org.apache.log4j.Logger;
 
@@ -57,17 +54,19 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
         //TODO raffaele.picardi: configure in generic this operation desc in order to set parameters
         org.apache.axis.description.OperationDesc oper;
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName(Messages.getString("WsrfFactoryGlobusStub.CREATE_RESOURCE")); //$NON-NLS-1$
+        oper.setName(Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME)); //$NON-NLS-1$
         oper.addParameter(new javax.xml.namespace.QName(
-            Messages.getString("WsrfFactoryGlobusStub.FACTORY_SERVICE"), Messages.getString("WsrfFactoryGlobusStub.CREATE_RESOURCE")), //$NON-NLS-1$ //$NON-NLS-2$
-            new javax.xml.namespace.QName(Messages.getString("WsrfFactoryGlobusStub.FACTORY_SERVICE"), //$NON-NLS-1$
-                Messages.getString("WsrfFactoryGlobusStub.CREATE_RESOURCE_2")), CreateResource.class, org.apache.axis.description.ParameterDesc.IN, //$NON-NLS-1$
+            Messages.getString(WSRFParameter.WSRF_FACTORY_SERVICE_NS), Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME)), //$NON-NLS-1$ //$NON-NLS-2$
+            new javax.xml.namespace.QName(Messages.getString(WSRFParameter.WSRF_FACTORY_SERVICE_NS), //$NON-NLS-1$
+                
+                //TODO raffaele.picardi: configure CreateResource.class as parameter
+                ">" + Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME)), CreateResource.class, org.apache.axis.description.ParameterDesc.IN, //$NON-NLS-1$
             false, false);
         oper.setReturnType(new javax.xml.namespace.QName(
-            Messages.getString("WsrfFactoryGlobusStub.FACTORY_SERVICE"), Messages.getString("WsrfFactoryGlobusStub.CREATE_RESOURCE_RESPONSE2"))); //$NON-NLS-1$ //$NON-NLS-2$
+            Messages.getString(WSRFParameter.WSRF_FACTORY_SERVICE_NS), ">" + Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_RESPONSE_NAME))); //$NON-NLS-1$ //$NON-NLS-2$
         oper.setReturnClass(CreateResourceResponse.class);
         oper.setReturnQName(new javax.xml.namespace.QName(
-            Messages.getString("WsrfFactoryGlobusStub.FACTORY_SERVICE"), Messages.getString("WsrfFactoryGlobusStub.CREATE_RESOURCE_RESPONSE"))); //$NON-NLS-1$ //$NON-NLS-2$
+            Messages.getString(WSRFParameter.WSRF_FACTORY_SERVICE_NS), Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_RESPONSE_NAME))); //$NON-NLS-1$ //$NON-NLS-2$
         oper.setStyle(org.apache.axis.constants.Style.DOCUMENT);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
         operations[0] = oper;
@@ -180,9 +179,9 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
         cachedSerClasses.add(cls);
         cachedSerFactories.add(beansf);
         cachedDeserFactories.add(beandf);
-
+        //TODO raffaele.picardi:TOP CreateResourceResponse class generic
         qName = new javax.xml.namespace.QName(
-            Messages.getString("WsrfFactoryGlobusStub.FACTORY_SERVICE"), Messages.getString("WsrfFactoryGlobusStub.CREATE_RESOURCE_RESPONSE2")); //$NON-NLS-1$ //$NON-NLS-2$
+            Messages.getString(WSRFParameter.WSRF_FACTORY_SERVICE_NS), ">" + Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_RESPONSE_NAME)); //$NON-NLS-1$ //$NON-NLS-2$
         cachedSerQNames.add(qName);
         cls = CreateResourceResponse.class;
         cachedSerClasses.add(cls);
@@ -190,8 +189,9 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
         cachedDeserFactories.add(beandf);
 
         qName = new javax.xml.namespace.QName(
-            Messages.getString("WsrfFactoryGlobusStub.FACTORY_SERVICE"), Messages.getString("WsrfFactoryGlobusStub.CREATE_RESOURCE_2")); //$NON-NLS-1$ //$NON-NLS-2$
+            Messages.getString(WSRFParameter.WSRF_FACTORY_SERVICE_NS), ">" + Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME)); //$NON-NLS-1$ //$NON-NLS-2$
         cachedSerQNames.add(qName);
+        //TODO raffaele.picardi:TOP CreateResource class generic
         cls = CreateResource.class;
         cachedSerClasses.add(cls);
         cachedSerFactories.add(beansf);
@@ -311,7 +311,7 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
         org.apache.axis.client.Call call = createCall();
         call.setOperation(operations[0]);
         call.setUseSOAPAction(true);
-        call.setSOAPActionURI(Messages.getString("WsrfFactoryGlobusStub.CREATE_RESOURCE_REQUEST")); //$NON-NLS-1$
+        call.setSOAPActionURI(Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_REQUEST_NS)); //$NON-NLS-1$
         call.setEncodingStyle(null);
         call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
