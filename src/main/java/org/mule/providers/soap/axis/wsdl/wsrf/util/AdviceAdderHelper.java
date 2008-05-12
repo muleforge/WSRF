@@ -79,12 +79,15 @@ public final class AdviceAdderHelper
         ListIterator li = l.listIterator();
         Advisor advisor = null;
    
-
+//TODO raffaele.picardi:TOPPcheck order advisors duplicate keys
         
         while (li.hasNext()) 
         {
             advisor = (Advisor) li.next();
-            order.add(advisor);
+            if (!order.contains(advisor) ) 
+                {
+                order.add(advisor);
+                }
         }
         
         Iterator it  = order.iterator();
@@ -122,7 +125,9 @@ public final class AdviceAdderHelper
                 advice = listClassAdvice[i];
                 try
                 {
+                 
                     advisor = new NameMatchMethodPointcutAdvisor((Advice) advice.newInstance());
+                   
                 }
                 catch (InstantiationException e)
                 {

@@ -51,7 +51,7 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
     private static void initOperationDesc1()
     {
        
-        //TODO raffaele.picardi: configure in generic this operation desc in order to set parameters
+
         org.apache.axis.description.OperationDesc oper;
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName(Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME)); //$NON-NLS-1$
@@ -59,7 +59,7 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
             Messages.getString(WSRFParameter.WSRF_FACTORY_SERVICE_NS), Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME)), //$NON-NLS-1$ //$NON-NLS-2$
             new javax.xml.namespace.QName(Messages.getString(WSRFParameter.WSRF_FACTORY_SERVICE_NS), //$NON-NLS-1$
                 
-                //TODO raffaele.picardi: configure CreateResource.class as parameter
+
                 ">" + Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME)), CreateResource.class, org.apache.axis.description.ParameterDesc.IN, //$NON-NLS-1$
             false, false);
         oper.setReturnType(new javax.xml.namespace.QName(
@@ -296,10 +296,11 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
     }
 
     /**
-     * createResource
+     * createResource.
+     * 
      * @param request request to create Resource
      * @return CreateResourceResponse create recource information
-     * @throws RemoteException 
+     * @throws RemoteException the remote exception
      */
     public String createResource(Object request) throws java.rmi.RemoteException
     {
@@ -329,14 +330,28 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
        
         extractAttachments(call);
         ReferencePropertiesType rfp = resp.getEndpointReference().getProperties();
-        MessageElement resourceKey = rfp.get_any()[0];
-        if (resourceKey.getName().indexOf(WSRFParameter.RESOURCE_KEY_SUB) == -1)
+        MessageElement resourceKey = null;
+        MessageElement[] messages = rfp.get_any();
+        Logger.getLogger(this.getClass()).debug("try to find xxx" + WSRFParameter.RESOURCE_KEY_SUB + "  element in    ReferenceProperties array of EndPointReference ");
+        //TODO raffaele.picardi: discuss about the  use external property to configure resource key qname entity instead use pattern matching xxxWSRFParameter.RESOURCE_KEY_SUB 
+        
+        for (int i=0; i< messages.length;i++)
+        {
+            resourceKey =messages[i];
+            if (resourceKey.getName().indexOf(WSRFParameter.RESOURCE_KEY_SUB) != -1)
+            {
+                Logger.getLogger(this.getClass()).debug(resourceKey.getName() +  "  element FOUND in    ReferenceProperties array of EndPointReference at position " + i);
+                break;
+            }
+        }
+       
+       
+        if (resourceKey == null)
         {
             Logger.getLogger(this.getClass()).error("resource key not found! Set to 0");
             return "0";
         }
-    
-     
+ 
         String rtrResourceKey = null;
         try 
         {

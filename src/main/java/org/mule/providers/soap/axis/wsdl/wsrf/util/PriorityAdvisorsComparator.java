@@ -50,7 +50,7 @@ public class PriorityAdvisorsComparator implements Comparator
         {
             return -1;
         }
-      
+    
         return 1;
     }
 

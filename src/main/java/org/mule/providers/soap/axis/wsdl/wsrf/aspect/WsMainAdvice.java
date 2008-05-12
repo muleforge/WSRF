@@ -49,6 +49,7 @@ public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvi
      */
     public WsMainAdvice()
     {
+        
         Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : started.");
     }
     
@@ -67,14 +68,18 @@ public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvi
         UMOEvent event = (UMOEvent) arg1[1];
         UMOMessage msg = event.getMessage();
         Map p = (Map) event.getEndpoint().getProperty(WSRFParameter.WSRF_ENDPOINT_PROPERTY_MAP);
+        Iterator it  = null;
+        String key = null;
+        Object value = null;
         if (p ==  null )
         {
             Logger.getLogger(this.getClass()).log(Level.DEBUG,  this.getClass().getName() + " : wsrf option not found . Copy IGNORED for msg:" + msg.getUniqueId());
-            return;
+            
         }
-        Iterator it = p.keySet().iterator();
-        String key = null;
-        Object value = null;
+        else 
+        {
+        it = p.keySet().iterator();
+
         
         while (it.hasNext())
         {
@@ -86,7 +91,7 @@ public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvi
                 Logger.getLogger(this.getClass()).log(Level.DEBUG,  this.getClass().getName() + " : " + key + " exported in message id: " + msg.getUniqueId());
             }
         }
-        
+        }
         
         //Updated Messages properties using Message properties (only properties begins with WSRFParamter.wsrfPrefix)
         
@@ -99,7 +104,7 @@ public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvi
             key = (String) it.next();
             if (key.indexOf(WSRFParameter.wsrfPrefix) != -1)
             {
-            value = p.get(key);
+            value = msg.getProperty(key);
             Messages.setProperty(key, value);
             Logger.getLogger(this.getClass()).log(Level.DEBUG,
                 this.getClass().getName() + " : " + key + " set in Messages class");
