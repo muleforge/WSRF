@@ -74,22 +74,21 @@ public final class AdviceAdderHelper
     public static IExtendCall addAdvisorsTo(IExtendCall targetImpl)
     {
        ProxyFactory factory = new ProxyFactory(targetImpl);
-   
+      
         List l = getListAdvisorClass();
         ListIterator li = l.listIterator();
         Advisor advisor = null;
    
-//TODO raffaele.picardi:TOPPcheck order advisors duplicate keys
-        
+
+        if (order.size() == 0) 
+        {
+      
         while (li.hasNext()) 
         {
             advisor = (Advisor) li.next();
-            if (!order.contains(advisor) ) 
-                {
-                order.add(advisor);
-                }
+             order.add(advisor);
         }
-        
+        }  
         Iterator it  = order.iterator();
         
         while (it.hasNext()) 
@@ -125,7 +124,7 @@ public final class AdviceAdderHelper
                 advice = listClassAdvice[i];
                 try
                 {
-                 
+
                     advisor = new NameMatchMethodPointcutAdvisor((Advice) advice.newInstance());
                    
                 }
@@ -187,7 +186,6 @@ public final class AdviceAdderHelper
                 // we are only interested in *Advice.class files
                 if (files[i].endsWith("Advice.class"))
                 {
-                    
                     // removes the .class extension
                     classes.add(Class.forName(pckgname + '.' + files[i].substring(0, files[i].length() - SUFFIX_CLASS_LENGTH)));
                 }
