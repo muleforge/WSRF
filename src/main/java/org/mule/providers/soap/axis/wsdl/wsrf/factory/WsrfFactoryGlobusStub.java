@@ -18,6 +18,8 @@ import org.apache.axis.message.MessageElement;
 import org.apache.axis.message.addressing.ReferencePropertiesType;
 import org.apache.log4j.Logger;
 
+
+
 /**
  * Factory Soap Binding Stub (Generic).
  */
@@ -87,7 +89,6 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
      * 
      * @param endpointURL the endpoint url
      * @param service the service
-     * 
      */
     public WsrfFactoryGlobusStub(java.net.URL endpointURL, javax.xml.rpc.Service service)
         throws org.apache.axis.AxisFault
@@ -100,7 +101,6 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
      * Instantiates a new wsrf factory globus stub.
      * 
      * @param service the service
-     * 
      */
     public WsrfFactoryGlobusStub(javax.xml.rpc.Service service) throws org.apache.axis.AxisFault
     {
@@ -219,7 +219,6 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
      * Creates the call.
      * 
      * @return the org.apache.axis.client. call
-     * 
      */
     protected org.apache.axis.client.Call createCall() throws java.rmi.RemoteException
     {
@@ -300,7 +299,6 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
      * 
      * @param request request to create Resource
      * @return CreateResourceResponse create recource information
-     * @throws RemoteException the remote exception
      */
     public String createResource(Object request) throws java.rmi.RemoteException
     {
