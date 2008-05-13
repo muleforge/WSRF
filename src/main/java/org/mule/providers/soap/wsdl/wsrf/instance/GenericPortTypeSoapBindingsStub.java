@@ -539,7 +539,6 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
      * Configure call.
      * 
      * @param call the call
-     * @throws RemoteException the remote exception
      */
     protected void configureCall(Call call) throws java.rmi.RemoteException
     {
@@ -624,7 +623,6 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
      * @param getResourcePropertyRequest the get resource property request
      * @return org.oasis.wsrf.properties.GetResourcePropertyResponse Get Resource
      *         Property Response
-     * @throws RemoteException the remote exception
      * @see org.mule.providers.soap.wsdl.wsrf.instance.GenenericPortType#getResourceProperty(javax.xml.namespace.QName)
      */
     public org.oasis.wsrf.properties.GetResourcePropertyResponse getResourceProperty(javax.xml.namespace.QName getResourcePropertyRequest)
