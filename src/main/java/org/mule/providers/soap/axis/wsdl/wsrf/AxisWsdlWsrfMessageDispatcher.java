@@ -79,6 +79,7 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
         if (aopSpringContext != null)
         {
            extenderCall = (IExtendCall) aopSpringContext.getBean(Messages.getString("AxisWsdlWsrfMessageDispatcher.BEAN_SPRING_EXTENDER_TARGET"));
+           
            extenderProxyCall = AdviceAdderHelper.addAdvisorsTo(extenderCall);
          }
         else
