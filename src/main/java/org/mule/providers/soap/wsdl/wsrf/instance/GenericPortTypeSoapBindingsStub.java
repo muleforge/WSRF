@@ -621,8 +621,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
      * Gets the resource property.
      * 
      * @param getResourcePropertyRequest the get resource property request
-     * @return org.oasis.wsrf.properties.GetResourcePropertyResponse Get Resource
-     *         Property Response
+     * @return org.oasis.wsrf.properties.GetResourcePropertyResponse Get Resource  Property Response
      * @see org.mule.providers.soap.wsdl.wsrf.instance.GenenericPortType#getResourceProperty(javax.xml.namespace.QName)
      */
     public org.oasis.wsrf.properties.GetResourcePropertyResponse getResourceProperty(javax.xml.namespace.QName getResourcePropertyRequest)
