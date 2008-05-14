@@ -191,7 +191,7 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
         qName = new javax.xml.namespace.QName(
             Messages.getString(WSRFParameter.WSRF_FACTORY_SERVICE_NS), ">" + Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME)); //$NON-NLS-1$ //$NON-NLS-2$
         cachedSerQNames.add(qName);
-        //TODO raffaele.picardi:TOP CreateResource class generic
+
         cls = CreateResource.class;
         cachedSerClasses.add(cls);
         cachedSerFactories.add(beansf);
@@ -302,11 +302,15 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
      */
     public String createResource(Object request) throws java.rmi.RemoteException
     {
+        
         //TODO raffaele.picardi:TOP continue to add other properties
         if (super.cachedEndpoint == null)
         {
             throw new org.apache.axis.NoEndPointException();
         }
+        operations = new org.apache.axis.description.OperationDesc[1];
+        initOperationDesc1();
+        
         org.apache.axis.client.Call call = createCall();
         call.setOperation(operations[0]);
         call.setUseSOAPAction(true);
@@ -333,9 +337,9 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
         Logger.getLogger(this.getClass()).debug("try to find xxx" + WSRFParameter.RESOURCE_KEY_SUB + "  element in    ReferenceProperties array of EndPointReference ");
         //TODO raffaele.picardi: discuss about the  use external property to configure resource key qname entity instead use pattern matching xxxWSRFParameter.RESOURCE_KEY_SUB 
         
-        for (int i=0; i< messages.length;i++)
+        for (int i = 0;  i < messages.length; i++)
         {
-            resourceKey =messages[i];
+            resourceKey = messages[i];
             if (resourceKey.getName().indexOf(WSRFParameter.RESOURCE_KEY_SUB) != -1)
             {
                 Logger.getLogger(this.getClass()).debug(resourceKey.getName() +  "  element FOUND in    ReferenceProperties array of EndPointReference at position " + i);
