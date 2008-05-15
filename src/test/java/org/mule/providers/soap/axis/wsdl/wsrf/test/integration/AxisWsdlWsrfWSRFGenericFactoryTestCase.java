@@ -23,7 +23,6 @@ import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 
 
 import org.mule.tck.FunctionalTestCase;
-import org.mule.umo.UMOEventContext;
 import org.mule.umo.UMOMessage;
 
 

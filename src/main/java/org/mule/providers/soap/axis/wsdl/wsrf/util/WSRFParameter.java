@@ -10,6 +10,7 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.util;
 
+// TODO: Auto-generated Javadoc
 /**
  * Constants Message Mule Class in order to use/manage Message WSRF Mule Provider
  * Specifications.
@@ -100,32 +101,61 @@ public class WSRFParameter
     public static final String WSRF_ENDPOINT_PROPERTY_MAP = "wsrfOption";
     
     /**
-     * The Constant WSRF_FACTORY_PORT_TYPE_PORT_ADDRESS specifies port type address of
-     * globus service.
+     * The Constant WSRF_FACTORY_PORT_TYPE_PORT_ADDRESS specifies port type address
+     * of globus service.
      */
     public static final String WSRF_FACTORY_PORT_TYPE_PORT_ADDRESS = "wsrfFactoryPortTypePortAddress";
     
     /** The Constant wsrfPrefix. */
     public static final String wsrfPrefix = "wsrf";
 
-    /** The Constant WSRF_FACTORY_PORT_TYPE specifies port type */
+    /** The Constant WSRF_FACTORY_PORT_TYPE specifies port type. */
     public static final String WSRF_FACTORY_PORT_TYPE = "wsrfFactoryPortType";
     
-    /** The Constant WSRF_FACTORY_SERVICE_NS specifies factory service namespace */
+    /** The Constant WSRF_FACTORY_SERVICE_NS specifies factory service namespace. */
     public static final String WSRF_FACTORY_SERVICE_NS = "wsrfFactoryServiceNS";
     
-    /** The Constant WSRF_FACTORY_SERVICE_NAME specifies factory service name  */
+    /** The Constant WSRF_FACTORY_SERVICE_NAME specifies factory service name. */
     public static final String WSRF_FACTORY_SERVICE_NAME = "wsrfFactoryServiceName";
     
-    /** The Constant WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME  specifies name of  service operation about create resource  */
+    /**
+     * The Constant WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME specifies name of
+     * service operation about create resource.
+     */
     public static final String WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME = "wsrfFactoryCreateResourceOperationName";
     
-    /** The Constant WSRF_FACTORY_CREATE_RESOURCE_NAME  specifies name of  response   object about create resource  operation */
+    /**
+     * The Constant WSRF_FACTORY_CREATE_RESOURCE_NAME specifies name of response
+     * object about create resource operation.
+     */
     public static final String WSRF_FACTORY_CREATE_RESOURCE_RESPONSE_NAME = "wsrfFactoryCreateResourceResponseName";
     
-    /** The Constant WSRF_FACTORY_CREATE_RESOURCE_REQUEST_NS  specifies namespace  of  create resource request  operation */
+    /**
+     * The Constant WSRF_FACTORY_CREATE_RESOURCE_REQUEST_NS specifies namespace of
+     * create resource request operation.
+     */
     public static final String WSRF_FACTORY_CREATE_RESOURCE_REQUEST_NS = "wsrfFactoryCreateResourceRequestNS";
+
+    /** The Constant WSRF_RESOURCEPROPERTY_OPERATION specifies WS-RP operation. */
+    public static final String WSRF_RESOURCEPROPERTY_OPERATION = "wsrfResourcePropertyOperation";
+
+    /** The Constant WSRF_RESOURCEPROPERTY_NAME specifies name of resource property . */
+    public static final String WSRF_RESOURCEPROPERTY_NAME = "wsrfResourcePropertyName";
     
+    /** The Constant WSRF_RESOURCEPROPERTY_NS specifies namespace of resource property . */
+    public static final String WSRF_RESOURCEPROPERTY_NS = "wsrfResourcePropertyNS";
+    
+    /** The Constant WSRF_RESOURCEPROPERTY_STANDALONE_MODE speciefies if WS-RP operation MUST be performed without  method axis invocation of grid service instance . If "no" resource peroperty operation will be performed before axis method invocation */
+    public static final String WSRF_RESOURCEPROPERTY_STANDALONE_MODE = "wsrfResourcePropertyStandaloneMode";
+
+    /** The Constant WSRF_GET_RESOURCE_PROPERTY . */
+    public static final Object GET_RESOURCE_PROPERTY = "GetResourceProperty";
+
+    /** The Constant WSRF_SET_RESOURCE_PROPERTY . */
+    public static final Object SET_RESOURCE_PROPERTY = "SetResourceProperty";
+
+    /** The Constant WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE will be add in WSRF_EXTRA_RESPONSE_MAP map to contain MessageElement[]  object returned from axis call invocation  . */
+    public static final Object WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE = "wsrfMessageElementArraySoapResponse";
     
 }
 

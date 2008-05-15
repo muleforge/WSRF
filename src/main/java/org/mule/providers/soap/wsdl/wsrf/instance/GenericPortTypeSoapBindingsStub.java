@@ -50,7 +50,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
      */
     private static void initOperationDesc1()
     {
-        org.apache.axis.description.OperationDesc oper;
+/*        org.apache.axis.description.OperationDesc oper;
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("add");
         oper.addParameter(new javax.xml.namespace.QName(
@@ -82,26 +82,8 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
         operations[1] = oper;
 
-        /*
-         * TODO raffaele.picardi: load runtime operation about method to invoke
-         * 
-         * oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("getValueRP");
-        oper.addParameter(new javax.xml.namespace.QName(
-            "http://www.globus.org/namespaces/examples/core/MathService_instance", "getValueRP"),
-            new javax.xml.namespace.QName(
-                "http://www.globus.org/namespaces/examples/core/MathService_instance", ">getValueRP"),
-            GetValueRP.class,
-            org.apache.axis.description.ParameterDesc.IN, false, false);
-        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
-        oper.setReturnClass(int.class);
-        oper.setReturnQName(new javax.xml.namespace.QName(
-            "http://www.globus.org/namespaces/examples/core/MathService_instance", "getValueRPResponse"));
-        oper.setStyle(org.apache.axis.constants.Style.DOCUMENT);
-        oper.setUse(org.apache.axis.constants.Use.LITERAL);
-        operations[2] = oper;
-        
-        */
+       */
+        org.apache.axis.description.OperationDesc oper;
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("GetResourceProperty");
@@ -380,14 +362,6 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         cachedSerFactories.add(simplesf);
         cachedDeserFactories.add(simpledf);
 
-        //TODO raffaele.picardi: addResponse
-        qName = new javax.xml.namespace.QName(
-            "http://www.globus.org/namespaces/examples/core/MathService_instance", ">addResponse");
-        cachedSerQNames.add(qName);
-        cls = Response.class;
-        cachedSerClasses.add(cls);
-        cachedSerFactories.add(beansf);
-        cachedDeserFactories.add(beandf);
 
         qName = new javax.xml.namespace.QName(
             "http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd",

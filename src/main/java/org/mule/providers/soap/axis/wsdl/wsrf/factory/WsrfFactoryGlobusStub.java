@@ -43,8 +43,9 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
 
     static
     {
-        operations = new org.apache.axis.description.OperationDesc[1];
+        operations = new org.apache.axis.description.OperationDesc[5];
         initOperationDesc1();
+
     }
 
     /**
@@ -74,6 +75,8 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
         operations[0] = oper;
 
     }
+
+   
 
     /**
      * Instantiates a new wsrf factory globus stub.
@@ -124,56 +127,56 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
         java.lang.Class simpledf = org.apache.axis.encoding.ser.SimpleDeserializerFactory.class;
         java.lang.Class simplelistsf = org.apache.axis.encoding.ser.SimpleListSerializerFactory.class;
         java.lang.Class simplelistdf = org.apache.axis.encoding.ser.SimpleListDeserializerFactory.class;
-        qName = new javax.xml.namespace.QName(Messages.getString("WsrfFactoryGlobusStub.WS_ADDRESSING"), //$NON-NLS-1$
-            Messages.getString("WsrfFactoryGlobusStub.FAULT_SUBCODE")); //$NON-NLS-1$
+        qName = new javax.xml.namespace.QName("", //$NON-NLS-1$
+            ""); //$NON-NLS-1$
         cachedSerQNames.add(qName);
         cls = org.apache.axis.message.addressing.FaultSubcodeValues.class;
         cachedSerClasses.add(cls);
         cachedSerFactories.add(enumsf);
         cachedDeserFactories.add(enumdf);
 
-        qName = new javax.xml.namespace.QName(Messages.getString("WsrfFactoryGlobusStub.WS_ADDRESSING"), //$NON-NLS-1$
-            Messages.getString("WsrfFactoryGlobusStub.SERVICE_NAME_TYPE")); //$NON-NLS-1$
+        qName = new javax.xml.namespace.QName("", //$NON-NLS-1$
+            ""); //$NON-NLS-1$
         cachedSerQNames.add(qName);
         cls = org.apache.axis.message.addressing.ServiceNameType.class;
         cachedSerClasses.add(cls);
         cachedSerFactories.add(simplesf);
         cachedDeserFactories.add(simpledf);
 
-        qName = new javax.xml.namespace.QName(Messages.getString("WsrfFactoryGlobusStub.WS_ADDRESSING"), //$NON-NLS-1$
-            Messages.getString("WsrfFactoryGlobusStub.RELATION_SHIP_TYPE_VALUES")); //$NON-NLS-1$
+        qName = new javax.xml.namespace.QName("", //$NON-NLS-1$
+            ""); //$NON-NLS-1$
         cachedSerQNames.add(qName);
         cls = org.apache.axis.message.addressing.RelationshipTypeValues.class;
         cachedSerClasses.add(cls);
         cachedSerFactories.add(enumsf);
         cachedDeserFactories.add(enumdf);
 
-        qName = new javax.xml.namespace.QName(Messages.getString("WsrfFactoryGlobusStub.WS_ADDRESSING"), //$NON-NLS-1$
-            Messages.getString("WsrfFactoryGlobusStub.ATTRIBUTE_URI")); //$NON-NLS-1$
+        qName = new javax.xml.namespace.QName("", //$NON-NLS-1$
+            ""); //$NON-NLS-1$
         cachedSerQNames.add(qName);
         cls = org.apache.axis.message.addressing.AttributedURI.class;
         cachedSerClasses.add(cls);
         cachedSerFactories.add(simplesf);
         cachedDeserFactories.add(simpledf);
 
-        qName = new javax.xml.namespace.QName(Messages.getString("WsrfFactoryGlobusStub.WS_ADDRESSING"), //$NON-NLS-1$
-            Messages.getString("WsrfFactoryGlobusStub.REPLY_AFTER_TYPE")); //$NON-NLS-1$
+        qName = new javax.xml.namespace.QName("", //$NON-NLS-1$
+            ""); //$NON-NLS-1$
         cachedSerQNames.add(qName);
         cls = org.apache.axis.message.addressing.ReplyAfterType.class;
         cachedSerClasses.add(cls);
         cachedSerFactories.add(simplesf);
         cachedDeserFactories.add(simpledf);
 
-        qName = new javax.xml.namespace.QName(Messages.getString("WsrfFactoryGlobusStub.WS_ADDRESSING"), //$NON-NLS-1$
-            Messages.getString("WsrfFactoryGlobusStub.RELATIONSHIP")); //$NON-NLS-1$
+        qName = new javax.xml.namespace.QName("", //$NON-NLS-1$
+            ""); //$NON-NLS-1$
         cachedSerQNames.add(qName);
         cls = org.apache.axis.message.addressing.Relationship.class;
         cachedSerClasses.add(cls);
         cachedSerFactories.add(simplesf);
         cachedDeserFactories.add(simpledf);
 
-        qName = new javax.xml.namespace.QName(Messages.getString("WsrfFactoryGlobusStub.WS_ADDRESSING"), //$NON-NLS-1$
-            Messages.getString("WsrfFactoryGlobusStub.REFERENCES_PROPERTIES_TYPE")); //$NON-NLS-1$
+        qName = new javax.xml.namespace.QName("", //$NON-NLS-1$
+            ""); //$NON-NLS-1$
         cachedSerQNames.add(qName);
         cls = org.apache.axis.message.addressing.ReferencePropertiesType.class;
         cachedSerClasses.add(cls);
@@ -197,22 +200,23 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
         cachedSerFactories.add(beansf);
         cachedDeserFactories.add(beandf);
 
-        qName = new javax.xml.namespace.QName(Messages.getString("WsrfFactoryGlobusStub.WS_ADDRESSING"), //$NON-NLS-1$
-            Messages.getString("WsrfFactoryGlobusStub.ATTRIBUTED_QNAME")); //$NON-NLS-1$
+        qName = new javax.xml.namespace.QName("", //$NON-NLS-1$
+            ""); //$NON-NLS-1$
         cachedSerQNames.add(qName);
         cls = org.apache.axis.message.addressing.AttributedQName.class;
         cachedSerClasses.add(cls);
         cachedSerFactories.add(simplesf);
         cachedDeserFactories.add(simpledf);
 
-        qName = new javax.xml.namespace.QName(Messages.getString("WsrfFactoryGlobusStub.WS_ADDRESSING"), //$NON-NLS-1$
-            Messages.getString("WsrfFactoryGlobusStub.ENDPOINT_REFERENCE_TYPE")); //$NON-NLS-1$
+        qName = new javax.xml.namespace.QName("", //$NON-NLS-1$
+            ""); //$NON-NLS-1$
         cachedSerQNames.add(qName);
         cls = org.apache.axis.message.addressing.EndpointReferenceType.class;
         cachedSerClasses.add(cls);
         cachedSerFactories.add(beansf);
         cachedDeserFactories.add(beandf);
 
+    
     }
 
     /**
@@ -290,7 +294,7 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
         }
         catch (java.lang.Throwable t)
         {
-            throw new org.apache.axis.AxisFault(Messages.getString("WsrfFactoryGlobusStub.FAILED_TRY_CALL_OBJECT"), t); //$NON-NLS-1$
+            throw new org.apache.axis.AxisFault("", t); //$NON-NLS-1$
         }
     }
 
@@ -334,7 +338,7 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
         ReferencePropertiesType rfp = resp.getEndpointReference().getProperties();
         MessageElement resourceKey = null;
         MessageElement[] messages = rfp.get_any();
-        Logger.getLogger(this.getClass()).debug("try to find xxx" + WSRFParameter.RESOURCE_KEY_SUB + "  element in    ReferenceProperties array of EndPointReference ");
+        Logger.getLogger(this.getClass()).debug("try to find xxx" + WSRFParameter.RESOURCE_KEY_SUB + "  element in    ReferenceProperties array of EndPointReference "); //$NON-NLS-1$ //$NON-NLS-2$
         //TODO raffaele.picardi: discuss about the  use external property to configure resource key qname entity instead use pattern matching xxxWSRFParameter.RESOURCE_KEY_SUB 
         
         for (int i = 0;  i < messages.length; i++)
@@ -342,7 +346,7 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
             resourceKey = messages[i];
             if (resourceKey.getName().indexOf(WSRFParameter.RESOURCE_KEY_SUB) != -1)
             {
-                Logger.getLogger(this.getClass()).debug(resourceKey.getName() +  "  element FOUND in    ReferenceProperties array of EndPointReference at position " + i);
+                Logger.getLogger(this.getClass()).debug(resourceKey.getName() +  "  element FOUND in    ReferenceProperties array of EndPointReference at position " + i); //$NON-NLS-1$
                 break;
             }
         }
@@ -350,8 +354,8 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
        
         if (resourceKey == null)
         {
-            Logger.getLogger(this.getClass()).error("resource key not found! Set to 0");
-            return "0";
+            Logger.getLogger(this.getClass()).error("resource key not found! Set to 0"); //$NON-NLS-1$
+            return "0"; //$NON-NLS-1$
         }
  
         String rtrResourceKey = null;
@@ -361,11 +365,13 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
         }
         catch (Exception e) 
         {
-            Logger.getLogger(this.getClass()).error("resource key not found! Set to 0");
-            return "0";
+            Logger.getLogger(this.getClass()).error("resource key not found! Set to 0"); //$NON-NLS-1$
+            return "0"; //$NON-NLS-1$
         }
         return rtrResourceKey;
            
     }
 
+
+    
 }

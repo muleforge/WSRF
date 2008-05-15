@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: AxisWsdlWsrfMessageDispatcher.java 283 2008-05-06 10:02:17Z raffaele.picardi $
  * --------------------------------------------------------------------------------------
  * Copyright (c) MuleSource, Inc.  All rights reserved.  http://www.mulesource.com
  *
@@ -97,6 +97,7 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
      */
     protected UMOMessage doSend(UMOEvent event) throws Exception
     {
+        //TODO raffaele.picardi: manage standalone property of WsResourcePropertyAdvice
         UMOMessage messageResponse = super.doSend(event);
         
         try
