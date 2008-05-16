@@ -12,6 +12,9 @@ package org.mule.providers.soap.wsdl.wsrf.instance;
 
 
 
+import org.mule.providers.soap.axis.wsdl.wsrf.AxisWsdlWsrfConnector;
+import org.mule.providers.soap.axis.wsdl.wsrf.AxisWsdlWsrfMessageDispatcher;
+
 import javax.xml.rpc.ServiceException;
 
 import org.apache.axis.client.Call;
@@ -150,6 +153,8 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         if (service == null)
         {
             super.service = new org.apache.axis.client.Service();
+            
+           
         }
         else
         {
@@ -617,6 +622,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
 
         setRequestHeaders(call);
         setAttachments(call);
+        //TODO raffaele.picardi: call.invoke return error during getResourceProperty invocation
         java.lang.Object resp = call.invoke(new java.lang.Object[]{getResourcePropertyRequest});
 
         if (resp instanceof java.rmi.RemoteException)
@@ -625,7 +631,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         }
         else
         {
-            extractAttachments(call);
+           extractAttachments(call);
             try
             {
                 return (org.oasis.wsrf.properties.GetResourcePropertyResponse) resp;

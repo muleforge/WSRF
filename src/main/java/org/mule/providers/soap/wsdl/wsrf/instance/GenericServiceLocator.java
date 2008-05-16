@@ -12,6 +12,7 @@ package org.mule.providers.soap.wsdl.wsrf.instance;
 
 /**
  * The Class GenericServiceLocator.
+ * TODO raffaele.picardi: render generic string field TOP
  */
 public class GenericServiceLocator extends org.apache.axis.client.Service implements GenericService
 {
@@ -49,9 +50,9 @@ public class GenericServiceLocator extends org.apache.axis.client.Service implem
         super(wsdlLoc, sName);
     }
 
-    // Use to get a proxy class for MathPortTypePort
+    // Use to get a proxy class for portTypePort
     /** The Math port type port_address. */
-    private java.lang.String mathPortTypePortAddress = "http://localhost:8080/wsrf/services/";
+    private java.lang.String portTypePortAddress = "http://localhost:8080/wsrf/services/";
 
     /**
      * Gets the math port type port address.
@@ -59,23 +60,23 @@ public class GenericServiceLocator extends org.apache.axis.client.Service implem
      * @return the math port type port address
      * @see org.mule.providers.soap.wsdl.wsrf.instance.GenericService#getMathPortTypePortAddress()
      */
-    public java.lang.String getMathPortTypePortAddress()
+    public java.lang.String getPortTypePortAddress()
     {
-        return mathPortTypePortAddress;
+        return portTypePortAddress;
     }
 
     // The WSDD service name defaults to the port name.
     /** The Math port type port wsdd service name. */
-    private java.lang.String mathPortTypePortWSDDServiceName = "MathPortTypePort";
+    private java.lang.String portTypePortWSDDServiceName = "PortTypePort";
 
     /**
      * Gets the math port type port wsdd service name.
      * 
      * @return the math port type port wsdd service name
      */
-    public java.lang.String getMathPortTypePortWSDDServiceName()
+    public java.lang.String getPortTypePortWSDDServiceName()
     {
-        return mathPortTypePortWSDDServiceName;
+        return portTypePortWSDDServiceName;
     }
 
     /**
@@ -83,27 +84,27 @@ public class GenericServiceLocator extends org.apache.axis.client.Service implem
      * 
      * @param name the new math port type port wsdd service name
      */
-    public void setMathPortTypePortWSDDServiceName(java.lang.String name)
+    public void setPortTypePortWSDDServiceName(java.lang.String name)
     {
-        mathPortTypePortWSDDServiceName = name;
+        portTypePortWSDDServiceName = name;
     }
 
     /**
      * @return GenericPortType  generic port type
      * @see org.mule.providers.soap.wsdl.wsrf.instance.GenericService#getMathPortTypePort()
      */
-    public GenericPortType getMathPortTypePort() throws javax.xml.rpc.ServiceException
+    public GenericPortType getPortTypePort() throws javax.xml.rpc.ServiceException
     {
         java.net.URL endpoint;
         try
         {
-            endpoint = new java.net.URL(mathPortTypePortAddress);
+            endpoint = new java.net.URL(portTypePortAddress);
         }
         catch (java.net.MalformedURLException e)
         {
             throw new javax.xml.rpc.ServiceException(e);
         }
-        return getMathPortTypePort(endpoint);
+        return getPortTypePort(endpoint);
     }
 
     /**
@@ -113,13 +114,14 @@ public class GenericServiceLocator extends org.apache.axis.client.Service implem
      * @return GenericPortType generic port type
      * @see org.mule.providers.soap.wsdl.wsrf.instance.GenericService#getMathPortTypePort(java.net.URL)
      */
-    public GenericPortType getMathPortTypePort(java.net.URL portAddress)
+    public GenericPortType getPortTypePort(java.net.URL portAddress)
         throws javax.xml.rpc.ServiceException
     {
         try
         {
+      
             GenericPortTypeSoapBindingsStub stub = new GenericPortTypeSoapBindingsStub(portAddress, this);
-            stub.setPortName(getMathPortTypePortWSDDServiceName());
+            stub.setPortName(getPortTypePortWSDDServiceName());
             return stub;
         }
         catch (org.apache.axis.AxisFault e)
@@ -133,9 +135,9 @@ public class GenericServiceLocator extends org.apache.axis.client.Service implem
      * 
      * @param address the new math port type port endpoint address
      */
-    public void setMathPortTypePortEndpointAddress(java.lang.String address)
+    public void setPortTypePortEndpointAddress(java.lang.String address)
     {
-        mathPortTypePortAddress = address;
+        portTypePortAddress = address;
     }
 
     /**
@@ -152,8 +154,8 @@ public class GenericServiceLocator extends org.apache.axis.client.Service implem
             if (GenericPortType.class.isAssignableFrom(serviceEndpointInterface))
             {
                 GenericPortTypeSoapBindingsStub stub = new GenericPortTypeSoapBindingsStub(
-                    new java.net.URL(mathPortTypePortAddress), this);
-                stub.setPortName(getMathPortTypePortWSDDServiceName());
+                    new java.net.URL(portTypePortAddress), this);
+                stub.setPortName(getPortTypePortWSDDServiceName());
                 return stub;
             }
         }
@@ -193,9 +195,9 @@ public class GenericServiceLocator extends org.apache.axis.client.Service implem
             return getPort(serviceEndpointInterface);
         }
         java.lang.String inputPortName = portName.getLocalPart();
-        if ("MathPortTypePort".equals(inputPortName))
+        if ("PortTypePort".equals(inputPortName))
         {
-            return getMathPortTypePort();
+            return getPortTypePort();
         }
         else
         {
@@ -245,7 +247,7 @@ public class GenericServiceLocator extends org.apache.axis.client.Service implem
     {
         if ("MathPortTypePort".equals(portName))
         {
-            setMathPortTypePortEndpointAddress(address);
+            setPortTypePortEndpointAddress(address);
         }
         else
         { // Unknown Port Name

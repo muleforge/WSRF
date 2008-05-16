@@ -99,8 +99,8 @@ public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetReso
     
     assertNotNull(result);
     assertNotNull(result.getPayload());
-    assertNotNull(result.getProperty(WSRFParameter.RESOURCE_KEY));
-        
+    assertNotNull(result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
+    System.out.println(result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));     
       
     
    

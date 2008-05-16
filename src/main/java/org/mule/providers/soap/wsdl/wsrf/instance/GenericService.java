@@ -21,14 +21,14 @@ public interface GenericService extends javax.xml.rpc.Service
      * 
      * @return the math port type port address
      */
-    java.lang.String getMathPortTypePortAddress();
+    java.lang.String getPortTypePortAddress();
 
     /**
      * Gets the math port type port.
      * 
      * @return the math port type port
      */
-    GenericPortType getMathPortTypePort() throws javax.xml.rpc.ServiceException;
+    GenericPortType getPortTypePort() throws javax.xml.rpc.ServiceException;
 
     /**
      * Gets the math port type port.
@@ -36,6 +36,6 @@ public interface GenericService extends javax.xml.rpc.Service
      * @param portAddress the port address
      * @return the math port type port
      */
-    GenericPortType getMathPortTypePort(java.net.URL portAddress)
+    GenericPortType getPortTypePort(java.net.URL portAddress)
         throws javax.xml.rpc.ServiceException;
 }

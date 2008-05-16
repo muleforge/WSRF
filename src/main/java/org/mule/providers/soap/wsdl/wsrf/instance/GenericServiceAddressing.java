@@ -22,7 +22,7 @@ public interface GenericServiceAddressing extends GenericService
      * @param reference the reference
      * @return the math port type port
      */
-    GenericPortType getMathPortTypePort(org.apache.axis.message.addressing.EndpointReferenceType reference)
+    GenericPortType getPortTypePort(org.apache.axis.message.addressing.EndpointReferenceType reference)
         throws javax.xml.rpc.ServiceException;
 
 }

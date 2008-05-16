@@ -1,8 +1,3 @@
-package org.mule.providers.soap.axis.wsdl.wsrf.test.util;
-
-
-
-
 /*
  * $Id$
  * --------------------------------------------------------------------------------------
@@ -12,6 +7,12 @@ package org.mule.providers.soap.axis.wsdl.wsrf.test.util;
  * license, a copy of which has been included with this distribution in the
  * LICENSE.txt file.
  */
+package org.mule.providers.soap.axis.wsdl.wsrf.test.util;
+
+
+
+
+
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;

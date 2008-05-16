@@ -10,6 +10,21 @@
 
 package org.mule.providers.soap.wsdl.wsrf.instance;
 
+import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
+import org.mule.umo.UMOEvent;
+
+import javax.xml.namespace.QName;
+import javax.xml.rpc.ServiceException;
+
+import org.apache.axis.EngineConfiguration;
+import org.apache.axis.message.addressing.AddressingHeaders;
+import org.apache.axis.message.addressing.EndpointReferenceType;
+import org.apache.axis.message.addressing.ReferencePropertiesType;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.globus.wsrf.encoding.SerializationException;
+import org.globus.wsrf.impl.SimpleResourceKey;
+
 /**
  * The Class GenericServiceAddressingLocator.
  */
@@ -17,6 +32,11 @@ public class GenericServiceAddressingLocator extends GenericServiceLocator
     implements GenericServiceAddressing
 {
     
+    public GenericServiceAddressingLocator(EngineConfiguration config)
+    {
+        super(config);
+        
+    }
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -25,9 +45,8 @@ public class GenericServiceAddressingLocator extends GenericServiceLocator
      * 
      * @param reference the reference
      * @return the math port type port
-     * @see org.mule.providers.soap.wsdl.wsrf.instance.GenericServiceAddressing#getMathPortTypePort(org.apache.axis.message.addressing.EndpointReferenceType)
      */
-    public GenericPortType getMathPortTypePort(org.apache.axis.message.addressing.EndpointReferenceType reference)
+    public GenericPortType getPortTypePort(org.apache.axis.message.addressing.EndpointReferenceType reference , UMOEvent event)
         throws javax.xml.rpc.ServiceException
     {
         org.apache.axis.message.addressing.AttributedURI address = reference.getAddress();
@@ -44,15 +63,56 @@ public class GenericServiceAddressingLocator extends GenericServiceLocator
         {
             throw new javax.xml.rpc.ServiceException(e);
         }
-        GenericPortType stub = getMathPortTypePort(endpoint);
+        GenericPortType stub = getPortTypePort(endpoint);
         if (stub != null)
         {
             org.apache.axis.message.addressing.AddressingHeaders headers = new org.apache.axis.message.addressing.AddressingHeaders();
             headers.setTo(address);
-            headers.setReferenceProperties(reference.getProperties());
+            String serviceNamespace = (String) event.getMessage().getProperty(WSRFParameter.SERVICE_NAMESPACE);
+            String resourceKeyName =  (String) event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY_NAME);
+            QName keyName = new QName(serviceNamespace , resourceKeyName);
+            String keyValue = (String) event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY);
+            SimpleResourceKey key = new SimpleResourceKey(keyName, keyValue);
+            
+            ReferencePropertiesType props = headers.getReferenceProperties();
+            if (props == null ) 
+            {
+                props = new ReferencePropertiesType();
+            }
+            try
+            {
+                if (keyValue ==  null )
+                {
+                    Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : ReferencesProperties IGNORED . Resource key not found..");
+                }
+                else 
+                {
+                props.add(key.toSOAPElement());
+                }
+            }
+            catch (SerializationException e)
+            {
+                e.printStackTrace();
+            } 
+            Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : ReferencesProperties injected..");
+            headers.setReferenceProperties(props);
+            
             ((javax.xml.rpc.Stub) stub)._setProperty(
                 org.apache.axis.message.addressing.Constants.ENV_ADDRESSING_SHARED_HEADERS, headers);
         }
         return stub;
+        
     }
+/**
+ * GenericPortType
+ * @param EndpointReferenceType reference
+ * @return GenericPortType
+ */
+    public GenericPortType getPortTypePort(EndpointReferenceType reference) throws ServiceException
+    {
+
+        return getPortTypePort(reference);
+    }
+    
+   
 }

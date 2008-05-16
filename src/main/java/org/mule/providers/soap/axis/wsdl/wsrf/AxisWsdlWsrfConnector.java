@@ -35,6 +35,7 @@ public class AxisWsdlWsrfConnector extends AxisWsdlConnector
     {
         super();
         this.setClientConfig(DEFAULT_GLOBUS_AXIS_CLIENT_CONFIG);
+        
     }
     
 /**

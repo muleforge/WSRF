@@ -11,18 +11,30 @@
 package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
+import org.mule.providers.soap.axis.wsdl.AxisWsdlConnector;
 import org.mule.providers.soap.axis.wsdl.wsrf.StubPriorityAdvice;
+import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryPortType;
+import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryServiceAddressingLocator;
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
+import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortType;
 import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortTypeSoapBindingsStub;
+import org.mule.providers.soap.wsdl.wsrf.instance.GenericServiceAddressingLocator;
 import org.mule.umo.UMOEvent;
+import org.mule.umo.endpoint.UMOEndpointURI;
+import org.mule.util.BeanUtils;
 
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.namespace.QName;
 
+import org.apache.axis.EngineConfigurationFactory;
 import org.apache.axis.client.Call;
+import org.apache.axis.configuration.FileProvider;
+import org.apache.axis.message.addressing.Address;
+import org.apache.axis.message.addressing.EndpointReferenceType;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.oasis.wsrf.properties.GetResourcePropertyResponse;
@@ -53,7 +65,7 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
         GenericPortTypeSoapBindingsStub stub = null;
         String operationRP =  (String) event.getMessage().getProperty(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION);
         
-        if (operationRP == null ||  !operationRP.equals(WSRFParameter.GET_RESOURCE_PROPERTY) || !operationRP.equals(WSRFParameter.SET_RESOURCE_PROPERTY)) 
+        if  (!(operationRP != null && (operationRP.equals(WSRFParameter.GET_RESOURCE_PROPERTY) || !operationRP.equals(WSRFParameter.SET_RESOURCE_PROPERTY)))) 
         {
             Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : " + " Skipped WS-RP operation : no operation defined " + WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION);
             return;
@@ -82,9 +94,39 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
         
         try
         {
+            UMOEndpointURI endpointUri = event.getEndpoint().getEndpointURI();
+            String endPointURI = endpointUri.getAddress();
+            int indexOfInitOfParameter =  endPointURI.indexOf("?");
+            endPointURI = endPointURI.substring(0, indexOfInitOfParameter);
+
+  
+            //TODO raffaele.picardi: check if event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY_NAME) does not exist
+
+            GenericServiceAddressingLocator serviceLocator = new GenericServiceAddressingLocator(new FileProvider(AxisWsdlConnector.DEFAULT_MULE_AXIS_CLIENT_CONFIG));
+            EndpointReferenceType serviceEPR;
+            GenericPortType service = null;
+            try
+            {
+         
+                serviceEPR = new EndpointReferenceType();
+                serviceEPR.setAddress(new Address(endPointURI));
+                
+                service = serviceLocator.getPortTypePort(serviceEPR , event);
+              
+                      Logger.getLogger(this.getClass()).log(Level.DEBUG,
+                    this.getClass().getName() + " : " + " service port type port load.");
+            }
+            catch (Exception e)
+            {
+                Logger.getLogger(this.getClass()).log(Level.ERROR,
+                    this.getClass().getName() + " : " + " Error during port type port loading. WS-RP operation skipped ");
+                e.printStackTrace();
+                return;
+            }
+       
             
-            stub = new GenericPortTypeSoapBindingsStub(call.getService());
-            response = stub.getResourceProperty(new QName(nsProperty, propertyName));
+            //TODO raffaele.picardi: TOP set service URI no endpoint exception
+            response = service.getResourceProperty(new QName(nsProperty, propertyName));
         }
         catch (Exception e)
         {
