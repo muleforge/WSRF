@@ -10,6 +10,10 @@
 
 package org.mule.providers.soap.wsdl.wsrf.instance;
 
+import org.mule.umo.UMOEvent;
+
+import org.apache.axis.client.Call;
+
 /**
  * The Interface GenenericPortType.
  */
@@ -24,9 +28,11 @@ public interface GenericPortType extends java.rmi.Remote
          * Gets the resource property.
          * 
          * @param getResourcePropertyRequest the get resource property request
+         * @param event event
+         * @param call call created from Axis Wsdl Wsrf Message Dispatcher
          * @return the resource property
          */
-        org.oasis.wsrf.properties.GetResourcePropertyResponse getResourceProperty(javax.xml.namespace.QName getResourcePropertyRequest) throws java.rmi.RemoteException;
+        org.oasis.wsrf.properties.GetResourcePropertyResponse getResourceProperty(javax.xml.namespace.QName getResourcePropertyRequest ,UMOEvent event, Call call) throws java.rmi.RemoteException;
         //TODO raffaele.picardi: add other standard WSRF operations as setResourceProperty or setMultipleResourceProperty
         
         

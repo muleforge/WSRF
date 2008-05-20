@@ -22,6 +22,9 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 /**
  * Test Message Dispatcher synchr for Wsdl Wsrf Web Service
  * @author raffaele.picardi
@@ -100,8 +103,10 @@ public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetReso
     assertNotNull(result);
     assertNotNull(result.getPayload());
     assertNotNull(result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
-    System.out.println(result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));     
-      
+    
+    
+    Logger.getLogger(this.getClass()).log(Level.INFO,
+        this.getClass().getName() + " : " +"Result from GetResourceProperty: " + MessagesTest.getString("RESOURCE_PROPERTY_NAME")  + "=  " + result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
     
    
         

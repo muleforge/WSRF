@@ -157,6 +157,7 @@ public class WSRFParameter
     /** The Constant WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE will be add in WSRF_EXTRA_RESPONSE_MAP map to contain MessageElement[]  object returned from axis call invocation  . */
     public static final String WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE = "wsrfMessageElementArraySoapResponse";
     
+    /** The Constant WSRF_RP_ERROR_RESPONSE will be add in WSRF_EXTRA_RESPONSE_MAP map to containFAULT CODE Error returned from WS-ResourceProperty axis call invocation  . */
+    public static final String WSRF_RP_ERROR_RESPONSE = "wsrfResourcePropertyErrorResponse";
+    
 }
-
-

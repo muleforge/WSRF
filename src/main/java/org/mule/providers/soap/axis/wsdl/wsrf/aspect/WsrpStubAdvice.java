@@ -11,7 +11,10 @@
 package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
+import org.mule.config.MuleProperties;
 import org.mule.providers.soap.axis.wsdl.AxisWsdlConnector;
+import org.mule.providers.soap.axis.wsdl.AxisWsdlMessageDispatcher;
+import org.mule.providers.soap.axis.wsdl.AxisWsdlMessageDispatcherFactory;
 import org.mule.providers.soap.axis.wsdl.wsrf.StubPriorityAdvice;
 import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryPortType;
 import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryServiceAddressingLocator;
@@ -90,7 +93,17 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
         }
         //namespace RP defined
         
+        Map map = (Map) event.getMessage().getProperty(WSRFParameter.WSRF_EXTRA_RESPONSE_MAP);
+        if (map == null) 
+        {
+            map = new HashMap();
+            event.getMessage().setProperty(WSRFParameter.WSRF_EXTRA_RESPONSE_MAP , map);
+            Logger.getLogger(this.getClass()).log(
+                Level.INFO,
+                this.getClass().getName() + " : " + " Map of :"  
+                                + WSRFParameter.WSRF_EXTRA_RESPONSE_MAP + "  created.");
         
+        }
         
         try
         {
@@ -105,12 +118,16 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
             GenericServiceAddressingLocator serviceLocator = new GenericServiceAddressingLocator(new FileProvider(AxisWsdlConnector.DEFAULT_MULE_AXIS_CLIENT_CONFIG));
             EndpointReferenceType serviceEPR;
             GenericPortType service = null;
+            
+         
+            
             try
             {
          
                 serviceEPR = new EndpointReferenceType();
                 serviceEPR.setAddress(new Address(endPointURI));
-                
+              //TODO raffaele.picardi: replace deprecated methods
+              
                 service = serviceLocator.getPortTypePort(serviceEPR , event);
               
                       Logger.getLogger(this.getClass()).log(Level.DEBUG,
@@ -119,37 +136,28 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
             catch (Exception e)
             {
                 Logger.getLogger(this.getClass()).log(Level.ERROR,
-                    this.getClass().getName() + " : " + " Error during port type port loading. WS-RP operation skipped ");
+                    this.getClass().getName() + " : " + " Error during port type port loading. WS-RP operation skipped");
                 e.printStackTrace();
                 return;
             }
-       
-            
-            //TODO raffaele.picardi: TOP set service URI no endpoint exception
-            response = service.getResourceProperty(new QName(nsProperty, propertyName));
+             
+            response = service.getResourceProperty(new QName(nsProperty, propertyName),event , call);
         }
         catch (Exception e)
         {
 
             Logger.getLogger(this.getClass()).log(
                 Level.ERROR,
-                this.getClass().getName() + " : " + " ERROR in getting Resourse Property: "
+                this.getClass().getName() + " : " + " ERROR in getting Resourse Property: . Error added  into "  + WSRFParameter.WSRF_EXTRA_RESPONSE_MAP + " as " +WSRFParameter.WSRF_RP_ERROR_RESPONSE  + " key"
                                 + e.getMessage());
             
             e.printStackTrace();
+            map.put(WSRFParameter.WSRF_RP_ERROR_RESPONSE, e.getMessage());
             return;
         }
 
         
-        Map map = (Map) event.getMessage().getProperty(WSRFParameter.WSRF_EXTRA_RESPONSE_MAP);
-        if (map == null) 
-        {
-            map = new HashMap();
-            Logger.getLogger(this.getClass()).log(
-                Level.INFO,
-                this.getClass().getName() + " : " + " Map of :"  
-                                + WSRFParameter.WSRF_EXTRA_RESPONSE_MAP + "  created.");
-        }
+       
      
         map.put(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE, response.get_any());
         Logger.getLogger(this.getClass()).log(

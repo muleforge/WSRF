@@ -12,14 +12,25 @@ package org.mule.providers.soap.wsdl.wsrf.instance;
 
 
 
+import org.mule.config.MuleProperties;
+import org.mule.providers.soap.SoapMethod;
 import org.mule.providers.soap.axis.wsdl.wsrf.AxisWsdlWsrfConnector;
 import org.mule.providers.soap.axis.wsdl.wsrf.AxisWsdlWsrfMessageDispatcher;
+import org.mule.umo.UMOEvent;
+import org.mule.umo.endpoint.UMOEndpointURI;
+import org.mule.umo.transformer.TransformerException;
+import org.mule.util.BeanUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Map;
+
+import javax.activation.DataHandler;
 import javax.xml.rpc.ServiceException;
 
 import org.apache.axis.client.Call;
-
-
+import org.apache.axis.message.addressing.Constants;
 
 /**
  * The Class GenericPortTypeSoapBindingsStub.
@@ -134,7 +145,6 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
      * 
      * @param endpointURL the endpoint url
      * @param service the service
-
      */
     public GenericPortTypeSoapBindingsStub(java.net.URL endpointURL, javax.xml.rpc.Service service)
         throws org.apache.axis.AxisFault
@@ -495,25 +505,86 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
     /**
      * Creates the call.
      * 
+     * @param event the event
+     * @param call2 call
      * @return the call
-     * 
      */
-    public Call  createCall() throws java.rmi.RemoteException
+    public Call  createCall(UMOEvent  event, Call call2) throws java.rmi.RemoteException
     {
-        org.apache.axis.client.Call call = null;
+   
+        Call call = null;
         try
         {
-            call = (org.apache.axis.client.Call) super.service.createCall();
+            call = getCall(event , call2);
         }
-        catch (ServiceException e)
+        catch (Exception e)
         {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+       
         configureCall(call);
         return call;
         
     }
+    
+    
+    
 
+    
+
+    /**
+     * Gets the call.
+     * 
+     * @param event the event
+     * @param call2 
+     * @return the call using same service of call2
+     * @throws Exception the exception
+     */
+    protected Call getCall(UMOEvent event, Call call2) throws Exception
+    {
+        UMOEndpointURI endpointUri = event.getEndpoint().getEndpointURI();
+
+        Call call = (Call) call2.getService().createCall();
+
+
+        // set properties on the call from the endpoint properties
+        BeanUtils.populateWithoutFail(call, event.getEndpoint().getProperties(), false);
+        call.setTargetEndpointAddress(endpointUri.getAddress());
+
+       
+
+
+        // set Mule event here so that handlers can extract info
+        call.setProperty(MuleProperties.MULE_EVENT_PROPERTY, event);
+        call.setProperty(MuleProperties.MULE_ENDPOINT_PROPERTY, event.getEndpoint());
+
+  
+        call.setTimeout(new Integer(event.getTimeout()));
+        setUserCredentials(endpointUri, call);
+
+        
+
+        return call;
+    }
+    
+    /**
+     * Sets the user credentials.
+     * 
+     * @param endpointUri the endpoint uri
+     * @param call the call
+     */
+    protected void setUserCredentials(UMOEndpointURI endpointUri, Call call)
+    {
+        if (endpointUri.getUserInfo() != null)
+        {
+            call.setUsername(endpointUri.getUsername());
+            call.setPassword(endpointUri.getPassword());
+        }
+    }
+
+    
+    
     /**
      * Configure call.
      * 
@@ -600,17 +671,21 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
      * Gets the resource property.
      * 
      * @param getResourcePropertyRequest the get resource property request
-     * @return org.oasis.wsrf.properties.GetResourcePropertyResponse Get Resource  Property Response
+     * @param event event
+     * @param justCreatedCall call created from original wsdl message dispatcher . It needs to retrieve WS-Addressing injected from WSAddressingAdvice ,
+     * @return org.oasis.wsrf.properties.GetResourcePropertyResponse Get Resource
+     *         Property Response
      * @see org.mule.providers.soap.wsdl.wsrf.instance.GenenericPortType#getResourceProperty(javax.xml.namespace.QName)
      */
-    public org.oasis.wsrf.properties.GetResourcePropertyResponse getResourceProperty(javax.xml.namespace.QName getResourcePropertyRequest)
+    public org.oasis.wsrf.properties.GetResourcePropertyResponse getResourceProperty(javax.xml.namespace.QName getResourcePropertyRequest , UMOEvent event ,Call justCreatedCall)
         throws java.rmi.RemoteException
     {
         if (super.cachedEndpoint == null)
         {
             throw new org.apache.axis.NoEndPointException();
         }
-        org.apache.axis.client.Call call = createCall();
+        Call call = createCall(event , justCreatedCall);
+        call.setProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS, justCreatedCall.getProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS));
         call.setOperation(operations[3]);
         call.setUseSOAPAction(true);
         call.setSOAPActionURI("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties/GetResourceProperty");
@@ -620,9 +695,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
         call.setOperationName(new javax.xml.namespace.QName("", "GetResourceProperty"));
 
-        setRequestHeaders(call);
-        setAttachments(call);
-        //TODO raffaele.picardi: call.invoke return error during getResourceProperty invocation
+
         java.lang.Object resp = call.invoke(new java.lang.Object[]{getResourcePropertyRequest});
 
         if (resp instanceof java.rmi.RemoteException)
