@@ -137,7 +137,7 @@ public class CreateResourceResponse implements java.io.Serializable
         typeDesc.setXmlType(new javax.xml.namespace.QName(
             Messages.getString(WSRFParameter.WSRF_FACTORY_SERVICE_NS), ">" + Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_RESPONSE_NAME))); //$NON-NLS-1$ //$NON-NLS-2$
         org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
-        //TODO raffaele.picardi:TOP generic CreateResourceResponse
+   
         elemField.setFieldName(Messages.getString("CreateResourceResponse.ENDPOINT_REFERENCE")); //$NON-NLS-1$
         elemField.setXmlName(new javax.xml.namespace.QName(
             Messages.getString("WsrfFactoryGlobusStub.WS_ADDRESSING"), Messages.getString("CreateResourceResponse.ENDPOINT_REFERENCE2"))); //$NON-NLS-1$ //$NON-NLS-2$

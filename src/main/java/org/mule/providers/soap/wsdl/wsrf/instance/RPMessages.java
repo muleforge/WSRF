@@ -41,7 +41,7 @@ public final class RPMessages
      */
     private RPMessages()
     {
-        //TODO raffaele.picardi:todo
+        //no op
     }
 
     /** The props. */

@@ -77,7 +77,13 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
      */
     public void before(Method arg0, Object[] arg1, Object arg2) throws Throwable
     {
+   
        Call call = (Call) arg1[0];
+       
+       if (call == null) 
+       {
+           return;
+       }
        
        setSerializableClasses(call);
        UMOEvent event = (UMOEvent) arg1[1];
@@ -90,7 +96,7 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
        call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
        call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
        setHeader(call , event);
-       //TODO raffaele.picardi: setAttachments(call);
+  
     }
     
     /**
@@ -124,6 +130,8 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
             oper = new org.apache.axis.description.OperationDesc();
         }
         
+        try
+        {
         oper.setName((String) event.getMessage().getProperty(WSRFParameter.METHOD));
         oper.setReturnType((QName) event.getMessage().getProperty(WSRFParameter.RETURN_QTYPE));
         oper.setReturnClass((Class) event.getMessage().getProperty(WSRFParameter.RETURN_CLASS));
@@ -133,7 +141,16 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
         oper.setStyle(org.apache.axis.constants.Style.DOCUMENT);
         oper.setUse(org.apache.axis.constants.Use.LITERAL);
         oper.getParameter(0).setName((String) event.getMessage().getProperty(WSRFParameter.METHOD));
+        
         call.setOperation(oper);
+        }
+        catch (Exception e)
+        {
+            Logger.getLogger(this.getClass()).log(Level.WARN, this.getClass().getName() + " OperationDesc :  not injected.." + e.getMessage());
+            e.printStackTrace();
+            return;
+        }
+       
         Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " OperationDesc :  injected..");
     }
 
@@ -168,12 +185,18 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
      */
     private void setReferenceProperties(AddressingHeaders headers , UMOEvent event)
     {
-        //TODO raffaele.picardi: check if event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY_NAME) does not exist
+       
         
         String serviceNamespace = (String) event.getMessage().getProperty(WSRFParameter.SERVICE_NAMESPACE);
         String resourceKeyName =  (String) event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY_NAME);
         QName keyName = new QName(serviceNamespace , resourceKeyName);
         String keyValue = (String) event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY);
+        //avoid to add ReferencesProperties if resource key is not define
+        if (keyValue == null) 
+        {
+            Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : ReferencesProperties IGNORED . Resource key not found..");
+            return;
+        }
         SimpleResourceKey key = new SimpleResourceKey(keyName, keyValue);
         
         ReferencePropertiesType props = headers.getReferenceProperties();
@@ -183,14 +206,8 @@ public class WsAddressingAdvice extends BasePriorityAdvice implements MethodBefo
         }
         try
         {
-            if (keyValue ==  null )
-            {
-                Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : ReferencesProperties IGNORED . Resource key not found..");
-            }
-            else 
-            {
             props.add(key.toSOAPElement());
-            }
+            
         }
         catch (SerializationException e)
         {

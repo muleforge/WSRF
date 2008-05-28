@@ -1,5 +1,5 @@
 /*
- * $Id: AxisWsdlWsrfWSRFGenericFactoryTestCase.java 293 2008-05-09 14:30:01Z raffaele.picardi $
+ * $Id$
  * --------------------------------------------------------------------------------------
  * Copyright (c) MuleSource, Inc.  All rights reserved.  http://www.mulesource.com
  *

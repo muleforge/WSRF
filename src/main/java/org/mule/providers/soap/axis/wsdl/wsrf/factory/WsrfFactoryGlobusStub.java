@@ -182,7 +182,7 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
         cachedSerClasses.add(cls);
         cachedSerFactories.add(beansf);
         cachedDeserFactories.add(beandf);
-        //TODO raffaele.picardi:TOP CreateResourceResponse class generic
+ 
         qName = new javax.xml.namespace.QName(
             Messages.getString(WSRFParameter.WSRF_FACTORY_SERVICE_NS), ">" + Messages.getString(WSRFParameter.WSRF_FACTORY_CREATE_RESOURCE_RESPONSE_NAME)); //$NON-NLS-1$ //$NON-NLS-2$
         cachedSerQNames.add(qName);
@@ -307,7 +307,7 @@ public class WsrfFactoryGlobusStub extends org.apache.axis.client.Stub implement
     public String createResource(Object request) throws java.rmi.RemoteException
     {
         
-        //TODO raffaele.picardi:TOP continue to add other properties
+
         if (super.cachedEndpoint == null)
         {
             throw new org.apache.axis.NoEndPointException();

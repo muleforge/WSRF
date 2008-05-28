@@ -13,22 +13,10 @@ package org.mule.providers.soap.wsdl.wsrf.instance;
 
 
 import org.mule.config.MuleProperties;
-import org.mule.providers.soap.SoapMethod;
-import org.mule.providers.soap.axis.wsdl.wsrf.AxisWsdlWsrfConnector;
-import org.mule.providers.soap.axis.wsdl.wsrf.AxisWsdlWsrfMessageDispatcher;
+import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 import org.mule.umo.UMOEvent;
 import org.mule.umo.endpoint.UMOEndpointURI;
-import org.mule.umo.transformer.TransformerException;
 import org.mule.util.BeanUtils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Map;
-
-import javax.activation.DataHandler;
-import javax.xml.rpc.ServiceException;
-
 import org.apache.axis.client.Call;
 import org.apache.axis.message.addressing.Constants;
 
@@ -130,6 +118,8 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         operations[3] = oper;
 
     }
+    
+
 
     /**
      * Instantiates a new generic port type soap bindings stub.
@@ -282,13 +272,13 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         cachedDeserFactories.add(beandf);
 
         // TODO raffaele.picardi: ResourceProperties auto serialize
-        qName = new javax.xml.namespace.QName(
+/*        qName = new javax.xml.namespace.QName(
             "http://www.globus.org/namespaces/examples/core/MathService_instance", ">MathResourceProperties");
         cachedSerQNames.add(qName);
         cls = GenericResourceProperties.class;
         cachedSerClasses.add(cls);
         cachedSerFactories.add(beansf);
-        cachedDeserFactories.add(beandf);
+        cachedDeserFactories.add(beandf);*/
 
         qName = new javax.xml.namespace.QName(
             "http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-BaseFaults-1.2-draft-01.xsd",
@@ -519,7 +509,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         }
         catch (Exception e)
         {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         }
        
@@ -568,6 +558,35 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         return call;
     }
     
+    private void setSoapMethod(Call call, UMOEvent event)
+    {
+        //TODO raffaele.picardi: implement soapMethod in order to copy call. operation desc 
+       /*SoapMethod method = new SoapMethod(new QName("", MessagesTest.getString("SOAP_METHOD_NAME")));
+        method.addNamedParameter(new QName(MessagesTest.getString("NAMED_PARAMETER")),
+            new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"),
+                MessagesTest.getString("RETURN_QNAME")), "in");
+        method.setReturnType(new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"),
+            MessagesTest.getString("RETURN_QTYPE_NAME")));
+        method.setReturnClass(Class.forName(MessagesTest.getString("RETURN_CLASSNAME")));*/
+
+     /*
+        props.put("style", "wrapped");
+        props.put("use", "literal");*/
+        //props.put(MuleProperties.MULE_SOAP_METHOD, method);
+
+        //props.put(WSRFParameter.SERVICE_NAMESPACE, Messages.getString("RESOURCE_KEY"));
+     /*   props.put(WSRFParameter.SERVICE_NAMESPACE, MessagesTest.getString("SERVICE_NAMESPACE_URI"));
+        props.put(WSRFParameter.RESOURCE_KEY_NAME, MessagesTest.getString("RESOURCE_KEY_NAME"));
+        props.put(WSRFParameter.RETURN_QNAME, MessagesTest.getString("RETURN_QNAME"));
+        props.put(WSRFParameter.RETURN_QTYPE, new javax.xml.namespace.QName(
+            MessagesTest.getString("SERVICE_NAMESPACE_URI"), MessagesTest.getString("RETURN_QTYPE_NAME")));*/
+        //props.put(WSRFParameter.RETURN_CLASS, Class.forName(MessagesTest.getString("RETURN_CLASSNAME")));
+        //props.put(WSRFParameter.SOAP_ACTION_URI, MessagesTest.getString("SOAP_ACTION_URI"));
+     
+    }
+
+
+
     /**
      * Sets the user credentials.
      * 
@@ -662,6 +681,10 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         {
             throw new org.apache.axis.AxisFault("Failure trying to get the Call object", t);
         }
+        
+    
+        
+        
     }
 
    
@@ -684,7 +707,26 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         {
             throw new org.apache.axis.NoEndPointException();
         }
-        Call call = createCall(event , justCreatedCall);
+        String standaloneStr =  (String) event.getMessage().getProperty(WSRFParameter.WSRF_RESOURCEPROPERTY_STANDALONE_MODE);
+        
+        boolean isStandalone = false;
+            
+        if (standaloneStr != null)  
+        {
+            isStandalone = standaloneStr.equals(WSRFParameter.STANDALONE_YES);
+        }
+        Call call =  null;
+        if (isStandalone)
+        {
+            call = justCreatedCall;
+            configureCall(call);
+        }
+        else
+        {
+            call = createCall(event , justCreatedCall);
+            
+        }
+        
         call.setProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS, justCreatedCall.getProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS));
         call.setOperation(operations[3]);
         call.setUseSOAPAction(true);
@@ -696,7 +738,16 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         call.setOperationName(new javax.xml.namespace.QName("", "GetResourceProperty"));
 
 
-        java.lang.Object resp = call.invoke(new java.lang.Object[]{getResourcePropertyRequest});
+        java.lang.Object resp = null;
+        if (isStandalone)
+        {
+            setSoapMethod(call, event);
+            return null;
+        }
+        else 
+         {
+            resp = call.invoke(new java.lang.Object[]{getResourcePropertyRequest});
+         }
 
         if (resp instanceof java.rmi.RemoteException)
         {

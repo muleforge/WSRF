@@ -12,6 +12,7 @@ package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
 import org.mule.config.MuleProperties;
+import org.mule.impl.MuleMessage;
 import org.mule.providers.soap.axis.wsdl.AxisWsdlConnector;
 import org.mule.providers.soap.axis.wsdl.AxisWsdlMessageDispatcher;
 import org.mule.providers.soap.axis.wsdl.AxisWsdlMessageDispatcherFactory;
@@ -23,6 +24,7 @@ import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortType;
 import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortTypeSoapBindingsStub;
 import org.mule.providers.soap.wsdl.wsrf.instance.GenericServiceAddressingLocator;
 import org.mule.umo.UMOEvent;
+import org.mule.umo.UMOMessage;
 import org.mule.umo.endpoint.UMOEndpointURI;
 import org.mule.util.BeanUtils;
 
@@ -52,6 +54,7 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
 
     /**
     * Advice perform WS-RP operation . and append its response as string property WSRF_XML_GETSET_SOAP_RESPONSE in WSRFExtraResponse map in Event Message source 
+    * If standalone mode == yes than will be only injected wsrf information in axis call just created from wsdl provider without perform a new Call invocation.
     * @param arg0 method name
     * @param arg1 args
     * @param arg2 target object
@@ -60,13 +63,19 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
     public void before(Method arg0, Object[] arg1, Object arg2) throws Throwable
     {
 
-        // TODO raffaele.picardi: implement advice Wsrp
-        
+        //TODO raffaele.picardi: manage standalone property of WsResourcePropertyAdvice
+        // TODO raffaele.picardi: manage setResourceProperty of WsResourcePropertyAdvice
         UMOEvent event = (UMOEvent) arg1[1];
         Call call = (Call) arg1[0];
+        
+        
+      
+        
+        
         GetResourcePropertyResponse response = null;
         GenericPortTypeSoapBindingsStub stub = null;
         String operationRP =  (String) event.getMessage().getProperty(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION);
+
         
         if  (!(operationRP != null && (operationRP.equals(WSRFParameter.GET_RESOURCE_PROPERTY) || !operationRP.equals(WSRFParameter.SET_RESOURCE_PROPERTY)))) 
         {
@@ -93,6 +102,18 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
         }
         //namespace RP defined
         
+    
+        String resourceKey =  (String) event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY);
+        if (resourceKey == null) 
+        {
+            
+            Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : " + " Skipped WS-RP operation : no resourceKey  property  defined  " + WSRFParameter.RESOURCE_KEY);
+            return; 
+            
+        }
+        //resource key defined
+        
+        
         Map map = (Map) event.getMessage().getProperty(WSRFParameter.WSRF_EXTRA_RESPONSE_MAP);
         if (map == null) 
         {
@@ -113,8 +134,7 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
             endPointURI = endPointURI.substring(0, indexOfInitOfParameter);
 
   
-            //TODO raffaele.picardi: check if event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY_NAME) does not exist
-
+          
             GenericServiceAddressingLocator serviceLocator = new GenericServiceAddressingLocator(new FileProvider(AxisWsdlConnector.DEFAULT_MULE_AXIS_CLIENT_CONFIG));
             EndpointReferenceType serviceEPR;
             GenericPortType service = null;
@@ -126,8 +146,7 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
          
                 serviceEPR = new EndpointReferenceType();
                 serviceEPR.setAddress(new Address(endPointURI));
-              //TODO raffaele.picardi: replace deprecated methods
-              
+            
                 service = serviceLocator.getPortTypePort(serviceEPR , event);
               
                       Logger.getLogger(this.getClass()).log(Level.DEBUG,
@@ -140,15 +159,43 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
                 e.printStackTrace();
                 return;
             }
-             
-            response = service.getResourceProperty(new QName(nsProperty, propertyName),event , call);
+            String standaloneStr =  (String) event.getMessage().getProperty(WSRFParameter.WSRF_RESOURCEPROPERTY_STANDALONE_MODE);
+            
+            boolean isStandalone = false;
+                
+            if (standaloneStr != null)  
+            {
+                isStandalone = standaloneStr.equals(WSRFParameter.STANDALONE_YES);
+            }
+            
+            if (call == null &&  isStandalone)
+            {
+                //call is not created yet.: advice can add property to event message . so next time , when call is created before method continues perform its operations
+                Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : " + " Pre  WS-RP operation : add required initial properties message");
+                if  (! (event.getMessage().getPayload() instanceof Object[])) 
+                {
+                    Logger.getLogger(this.getClass()).log(Level.ERROR, this.getClass().getName() + " : " + " Pre  WS-RP operation :  It is not possible to set getResourcePropertyRequest in Object[0] payload array. Paylod is not istance of Object[] ");
+                    return;
+                }
+                ((Object[]) (event.getMessage().getPayload()))[0] = new QName(nsProperty, propertyName);
+                return;
+            }
+            response = service.getResourceProperty(new QName(nsProperty, propertyName) , event , call);
+          
+            if (isStandalone && response == null)
+            {
+                Logger.getLogger(this.getClass()).log(
+                    Level.DEBUG,
+                    this.getClass().getName() + " : " + " Getting Resource Property in standalone mode:  "  + " response invocation will be add in payload message of wsdl provider invocation");
+                return;
+            }
         }
         catch (Exception e)
         {
 
             Logger.getLogger(this.getClass()).log(
                 Level.ERROR,
-                this.getClass().getName() + " : " + " ERROR in getting Resourse Property: . Error added  into "  + WSRFParameter.WSRF_EXTRA_RESPONSE_MAP + " as " +WSRFParameter.WSRF_RP_ERROR_RESPONSE  + " key"
+                this.getClass().getName() + " : " + " ERROR in getting Resource Property: . Error added  into "  + WSRFParameter.WSRF_EXTRA_RESPONSE_MAP + " as " +WSRFParameter.WSRF_RP_ERROR_RESPONSE  + " key"
                                 + e.getMessage());
             
             e.printStackTrace();

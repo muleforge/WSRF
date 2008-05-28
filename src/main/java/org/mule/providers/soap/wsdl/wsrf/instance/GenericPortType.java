@@ -33,7 +33,7 @@ public interface GenericPortType extends java.rmi.Remote
          * @return the resource property
          */
         org.oasis.wsrf.properties.GetResourcePropertyResponse getResourceProperty(javax.xml.namespace.QName getResourcePropertyRequest ,UMOEvent event, Call call) throws java.rmi.RemoteException;
-        //TODO raffaele.picardi: add other standard WSRF operations as setResourceProperty or setMultipleResourceProperty
+        //TODO raffaele.picardi: add other standard WSRF operations as setResourceProperty
         
         
 }

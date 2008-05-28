@@ -97,7 +97,10 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
      */
     protected UMOMessage doSend(UMOEvent event) throws Exception
     {
-        //TODO raffaele.picardi: manage standalone property of WsResourcePropertyAdvice
+ 
+
+        
+        
         UMOMessage messageResponse = super.doSend(event);
         
         try
@@ -137,6 +140,9 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
      */
     protected Call getCall(UMOEvent arg0, Object[] arg1) throws Exception
     {
+        //TODO raffaele.picardi: manage standalone property of WsResourcePropertyAdvice - try to define a pattern in order to set SoapMethod object into Message before super.doSend in WSRF Message Dispatcher
+        //test so: if it's need before advice can be add initial Message property before creating of Call during super.doSend(event) process
+        this.extenderProxyCall.extendCall(null,arg0, this);
         Call call = super.getCall(arg0, arg1);
         this.extenderProxyCall.extendCall(call, arg0, this);
         return call;

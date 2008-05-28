@@ -22,6 +22,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.axis.client.Call;
 import org.apache.axis.message.addressing.Address;
 
 import org.apache.axis.message.addressing.EndpointReferenceType;
@@ -65,6 +66,12 @@ public class WsFactoryAddressingAdvice extends BasePriorityAdvice implements Met
     {
         UMOEvent event = (UMOEvent) arg1[1];
         String factoryServiceURI = null;
+        Call call = (Call) arg1[0];
+        
+        if (call == null) 
+        {
+            return;
+        }
         
         try
         {

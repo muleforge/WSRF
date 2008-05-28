@@ -10,7 +10,7 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.util;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * Constants Message Mule Class in order to use/manage Message WSRF Mule Provider
  * Specifications.
@@ -159,5 +159,7 @@ public class WSRFParameter
     
     /** The Constant WSRF_RP_ERROR_RESPONSE will be add in WSRF_EXTRA_RESPONSE_MAP map to containFAULT CODE Error returned from WS-ResourceProperty axis call invocation  . */
     public static final String WSRF_RP_ERROR_RESPONSE = "wsrfResourcePropertyErrorResponse";
+
+    public static final Object STANDALONE_YES = "yes";
     
 }
