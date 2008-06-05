@@ -220,9 +220,11 @@ public class AxisWsdlWsrfWSRFGenericFactoryIntegrationTestCase extends Functiona
         immutableEndpoint.setEndpointURI(muleEndpointURI);
         
         SoapMethod method = new SoapMethod(new QName("", MessagesTest.getString("SOAP_METHOD_NAME")));
-        method.addNamedParameter(new QName(MessagesTest.getString("NAMED_PARAMETER")),
-            new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"),
-                MessagesTest.getString("RETURN_QNAME")), "in");
+        method.addNamedParameter(
+            new QName(MessagesTest.getString("NAMED_PARAMETER")),
+            new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"), MessagesTest.getString("RETURN_QNAME")),
+            "in"
+        );
         method.setReturnType(new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"),
             MessagesTest.getString("RETURN_QTYPE_NAME")));
         method.setReturnClass(Class.forName(MessagesTest.getString("RETURN_CLASSNAME")));

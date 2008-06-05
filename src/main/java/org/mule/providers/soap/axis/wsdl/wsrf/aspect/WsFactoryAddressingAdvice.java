@@ -10,13 +10,13 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
+import org.mule.config.MuleProperties;
 import org.mule.providers.soap.axis.wsdl.wsrf.BasePriorityAdvice;
 import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryPortType;
 import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryServiceAddressingLocator;
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 
 import org.mule.umo.UMOEvent;
-import org.mule.umo.UMOMessage;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;

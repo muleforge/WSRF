@@ -11,6 +11,7 @@
 package org.mule.providers.soap.axis.wsdl.wsrf.util;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * Constants Message Mule Class in order to use/manage Message WSRF Mule Provider
  * Specifications.
@@ -145,7 +146,12 @@ public class WSRFParameter
     /** The Constant WSRF_RESOURCEPROPERTY_NS specifies namespace of resource property . */
     public static final String WSRF_RESOURCEPROPERTY_NS = "wsrfResourcePropertyNS";
     
-    /** The Constant WSRF_RESOURCEPROPERTY_STANDALONE_MODE speciefies if WS-RP operation MUST be performed without  method axis invocation of grid service instance . If "no" resource peroperty operation will be performed before axis method invocation */
+    /**
+     * The Constant WSRF_RESOURCEPROPERTY_STANDALONE_MODE speciefies if WS-RP
+     * operation MUST be performed without method axis invocation of grid service
+     * instance . If "no" resource peroperty operation will be performed before axis
+     * method invocation
+     */
     public static final String WSRF_RESOURCEPROPERTY_STANDALONE_MODE = "wsrfResourcePropertyStandaloneMode";
 
     /** The Constant WSRF_GET_RESOURCE_PROPERTY . */
@@ -154,12 +160,21 @@ public class WSRFParameter
     /** The Constant WSRF_SET_RESOURCE_PROPERTY . */
     public static final Object SET_RESOURCE_PROPERTY = "SetResourceProperty";
 
-    /** The Constant WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE will be add in WSRF_EXTRA_RESPONSE_MAP map to contain MessageElement[]  object returned from axis call invocation  . */
+    /**
+     * The Constant WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE will be add in
+     * WSRF_EXTRA_RESPONSE_MAP map to contain MessageElement[] object returned from
+     * axis call invocation .
+     */
     public static final String WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE = "wsrfMessageElementArraySoapResponse";
     
-    /** The Constant WSRF_RP_ERROR_RESPONSE will be add in WSRF_EXTRA_RESPONSE_MAP map to containFAULT CODE Error returned from WS-ResourceProperty axis call invocation  . */
+    /**
+     * The Constant WSRF_RP_ERROR_RESPONSE will be add in WSRF_EXTRA_RESPONSE_MAP map
+     * to containFAULT CODE Error returned from WS-ResourceProperty axis call
+     * invocation .
+     */
     public static final String WSRF_RP_ERROR_RESPONSE = "wsrfResourcePropertyErrorResponse";
 
-    public static final Object STANDALONE_YES = "yes";
+    /** The Constant STANDALONE_YES. */
+    public static final String STANDALONE_YES = "yes";
     
 }

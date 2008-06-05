@@ -12,30 +12,23 @@ package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
 import org.mule.config.MuleProperties;
-import org.mule.impl.MuleMessage;
 import org.mule.providers.soap.axis.wsdl.AxisWsdlConnector;
-import org.mule.providers.soap.axis.wsdl.AxisWsdlMessageDispatcher;
-import org.mule.providers.soap.axis.wsdl.AxisWsdlMessageDispatcherFactory;
 import org.mule.providers.soap.axis.wsdl.wsrf.StubPriorityAdvice;
-import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryPortType;
-import org.mule.providers.soap.axis.wsdl.wsrf.factory.FactoryServiceAddressingLocator;
+
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortType;
 import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortTypeSoapBindingsStub;
 import org.mule.providers.soap.wsdl.wsrf.instance.GenericServiceAddressingLocator;
 import org.mule.umo.UMOEvent;
-import org.mule.umo.UMOMessage;
 import org.mule.umo.endpoint.UMOEndpointURI;
-import org.mule.util.BeanUtils;
+
 
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.namespace.QName;
 
-import org.apache.axis.EngineConfigurationFactory;
 import org.apache.axis.client.Call;
 import org.apache.axis.configuration.FileProvider;
 import org.apache.axis.message.addressing.Address;
@@ -68,7 +61,18 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
         UMOEvent event = (UMOEvent) arg1[1];
         Call call = (Call) arg1[0];
         
-        
+        String standaloneStr =  (String) event.getMessage().getProperty(WSRFParameter.WSRF_RESOURCEPROPERTY_STANDALONE_MODE);
+
+        boolean isStandalone = false;
+            
+        if (standaloneStr != null)  
+        {
+            isStandalone = standaloneStr.equals(WSRFParameter.STANDALONE_YES);
+        }
+        if (call == null && !isStandalone)
+        {
+            return;
+        }
       
         
         
@@ -104,7 +108,7 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
         
     
         String resourceKey =  (String) event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY);
-        if (resourceKey == null) 
+        if (resourceKey == null && call !=null) 
         {
             
             Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : " + " Skipped WS-RP operation : no resourceKey  property  defined  " + WSRFParameter.RESOURCE_KEY);
@@ -131,9 +135,12 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
             UMOEndpointURI endpointUri = event.getEndpoint().getEndpointURI();
             String endPointURI = endpointUri.getAddress();
             int indexOfInitOfParameter =  endPointURI.indexOf("?");
+            if (indexOfInitOfParameter != -1)
+            {  
             endPointURI = endPointURI.substring(0, indexOfInitOfParameter);
+            }
+            
 
-  
           
             GenericServiceAddressingLocator serviceLocator = new GenericServiceAddressingLocator(new FileProvider(AxisWsdlConnector.DEFAULT_MULE_AXIS_CLIENT_CONFIG));
             EndpointReferenceType serviceEPR;
@@ -159,27 +166,49 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
                 e.printStackTrace();
                 return;
             }
-            String standaloneStr =  (String) event.getMessage().getProperty(WSRFParameter.WSRF_RESOURCEPROPERTY_STANDALONE_MODE);
-            
-            boolean isStandalone = false;
-                
-            if (standaloneStr != null)  
+         
+            if (isStandalone)
             {
-                isStandalone = standaloneStr.equals(WSRFParameter.STANDALONE_YES);
-            }
-            
-            if (call == null &&  isStandalone)
-            {
-                //call is not created yet.: advice can add property to event message . so next time , when call is created before method continues perform its operations
-                Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : " + " Pre  WS-RP operation : add required initial properties message");
-                if  (! (event.getMessage().getPayload() instanceof Object[])) 
+                event.getMessage().setProperty(MuleProperties.MULE_METHOD_PROPERTY , operationRP);
+                if (call == null)
                 {
-                    Logger.getLogger(this.getClass()).log(Level.ERROR, this.getClass().getName() + " : " + " Pre  WS-RP operation :  It is not possible to set getResourcePropertyRequest in Object[0] payload array. Paylod is not istance of Object[] ");
-                    return;
+                    //call is not created yet.: advice can add property to event message . so next time , when call is created before method continues perform its operations
+                    Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : " + " Pre  WS-RP operation : add required initial properties message");
+                   //TODO raffaele.picardi: pattern to command execute auto enrichment of message based on operationRP specified
+                    if (operationRP.equals(WSRFParameter.GET_RESOURCE_PROPERTY))
+                    {
+                        if (!(event.getMessage().getPayload() instanceof Object[]))
+                        {
+                            Logger.getLogger(this.getClass())
+                                .log(
+                                    Level.ERROR,
+                                    this.getClass().getName()
+                                                    + " : "
+                                                    + " Pre  WS-RP operation :  It is not possible to set getResourcePropertyRequest in Object[0] payload array. Paylod is not istance of Object[] ");
+                            return;
+                        }
+                        // enrich message
+                        service.setSoapMethod(event);
+                        //TODO raffaele.picardi: payload of message needs to be Object[]  {} of 1 - size
+                        ((Object[]) (event.getMessage().getPayload()))[0] = new QName(nsProperty,
+                            propertyName);
+                    }
+                    else
+                    {
+                        Logger.getLogger(this.getClass())
+                            .log(
+                                Level.ERROR,
+                                this.getClass().getName()
+                                                + " : "
+                                                + " Pre  WS-RP operation :  It is not possible to fine this WS-RP operation:"
+                                                + operationRP);
+                        return;
+                    }
                 }
-                ((Object[]) (event.getMessage().getPayload()))[0] = new QName(nsProperty, propertyName);
                 return;
             }
+       
+            
             response = service.getResourceProperty(new QName(nsProperty, propertyName) , event , call);
           
             if (isStandalone && response == null)
@@ -187,6 +216,7 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
                 Logger.getLogger(this.getClass()).log(
                     Level.DEBUG,
                     this.getClass().getName() + " : " + " Getting Resource Property in standalone mode:  "  + " response invocation will be add in payload message of wsdl provider invocation");
+                
                 return;
             }
         }

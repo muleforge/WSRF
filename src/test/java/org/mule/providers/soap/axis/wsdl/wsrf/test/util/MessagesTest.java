@@ -12,6 +12,7 @@ package org.mule.providers.soap.axis.wsdl.wsrf.test.util;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+
 /**
  * The Class Messages.
  */

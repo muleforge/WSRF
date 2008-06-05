@@ -37,7 +37,8 @@ import org.springframework.aop.MethodBeforeAdvice;
 public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvice
 {
     
-    /* getPriority
+    /* 
+     * getPriority
      * @return priority
      */
     public int getPriority()
@@ -69,6 +70,13 @@ public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvi
       
         UMOEvent event = (UMOEvent) arg1[1];
         UMOMessage msg = event.getMessage();
+        
+        Call call = (Call) arg1[0];
+        if (call == null) 
+        {
+            return;
+        }
+        
         Map p = (Map) event.getEndpoint().getProperty(WSRFParameter.WSRF_ENDPOINT_PROPERTY_MAP);
         Iterator it  = null;
         String key = null;

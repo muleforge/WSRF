@@ -53,7 +53,7 @@ protected final String getConfigResources()
  * Test a single Call invocation method of Globus Grid Service using a Mule Message  with ResourceKey created from factory service and perform a GetResourceProperty Operation
  * @throws Exception exception
  */
-public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetResourceProperty() throws Exception
+/*public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetResourceProperty() throws Exception
     {
     MuleClient client = new MuleClient();
     SoapMethod method = new SoapMethod(new QName("", MessagesTest.getString("SOAP_METHOD_NAME")));
@@ -80,7 +80,7 @@ public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetReso
 
     //factory properties
     props.put(WSRFParameter.WSRF_FACTORY_SERVICE_ADDRESS, MessagesTest.getString("FACTORY_SERVICE_ADDRESS"));
-
+    props.put(MuleProperties.MULE_METHOD_PROPERTY , "add");
     UMOMessage result = client.send("vm://vmQueue", new Integer(2), props);
 
     assertNotNull(result);
@@ -96,7 +96,8 @@ public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetReso
     props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION, MessagesTest.getString("RESOURCE_PROPERTY_OPERATION"));
     props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_NAME, MessagesTest.getString("RESOURCE_PROPERTY_NAME"));
     props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_NS , MessagesTest.getString("RESOURCE_PROPERTY_NS"));
-
+    
+    
     
     result = client.send("vm://vmQueue", new Integer(2000) , props);
     
@@ -110,23 +111,17 @@ public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetReso
     
    
         
-    }
+    }*/
 
 
-/**
+/*
  * Test a single Call invocation method of Globus Grid Service using a Mule Message  with ResourceKey created from factory service and perform a GetResourceProperty Operation in standalone mode without Axis method invocation
  * @throws Exception exception
  */
 public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetResourcePropertyStandaloneMode() throws Exception
     {
-   /* MuleClient client = new MuleClient();
-    SoapMethod method = new SoapMethod(new QName("", MessagesTest.getString("SOAP_METHOD_NAME")));
-    method.addNamedParameter(new QName(MessagesTest.getString("NAMED_PARAMETER")),
-        new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"),
-            MessagesTest.getString("RETURN_QNAME")), "in");
-    method.setReturnType(new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"),
-        MessagesTest.getString("RETURN_QTYPE_NAME")));
-    method.setReturnClass(Class.forName(MessagesTest.getString("RETURN_CLASSNAME")));
+   MuleClient client = new MuleClient();
+
 
    Map props = new HashMap();
     props.put("style", "wrapped");
@@ -145,25 +140,6 @@ public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetReso
     //factory properties
     props.put(WSRFParameter.WSRF_FACTORY_SERVICE_ADDRESS, MessagesTest.getString("FACTORY_SERVICE_ADDRESS"));
 
-    UMOMessage result = client.send("vm://vmQueue", new Object[] {null,null}, props);
-
-    assertNotNull(result);
-    assertNotNull(result.getPayload());
-    assertNotNull(result.getProperty(WSRFParameter.RESOURCE_KEY));
-    System.out.println(result.getPayload());
-    System.out.println("New resource Key: " + result.getProperty(WSRFParameter.RESOURCE_KEY));
-
-    
-    props = new HashMap();
-    props.put("style", "wrapped");
-    props.put("use", "literal");
-    
-    //addressing properties
-    props.put(WSRFParameter.RESOURCE_KEY, result.getProperty(WSRFParameter.RESOURCE_KEY));
-    props.put(WSRFParameter.SERVICE_NAMESPACE, MessagesTest.getString("SERVICE_NAMESPACE_URI"));
-    props.put(WSRFParameter.RESOURCE_KEY_NAME, MessagesTest.getString("RESOURCE_KEY_NAME"));
-    
-    
     
     //Add WsResourceProperty  property
     
@@ -173,18 +149,19 @@ public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetReso
     
     
     props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_STANDALONE_MODE, "yes");
-    
+    UMOMessage result = client.send("vm://vmQueue", new Object[] {null} , props);
 
-    result = client.send("vm://vmQueue", new Integer(2000) , props);
-    
     assertNotNull(result);
     assertNotNull(result.getPayload());
-    assertNull(result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
+    assertNotNull(result.getProperty(WSRFParameter.RESOURCE_KEY));
+    assertNotNull(result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
     
+    System.out.println(result.getPayload());
+    System.out.println("New resource Key: " + result.getProperty(WSRFParameter.RESOURCE_KEY));
     
     Logger.getLogger(this.getClass()).log(Level.INFO,
         this.getClass().getName() + " : " +"Result from GetResourceProperty: " + MessagesTest.getString("RESOURCE_PROPERTY_NAME")  + "=  " + result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
-    */
+    
    
         
     }

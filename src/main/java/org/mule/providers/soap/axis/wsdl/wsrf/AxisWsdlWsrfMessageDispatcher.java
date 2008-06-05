@@ -17,7 +17,6 @@ import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 import org.mule.umo.UMOEvent;
 import org.mule.umo.UMOMessage;
 import org.mule.umo.endpoint.UMOImmutableEndpoint;
-import org.mule.umo.provider.DispatchException;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -31,6 +30,7 @@ import org.springframework.beans.BeansException;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 
 
 /**
@@ -100,7 +100,7 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
  
 
         
-        
+
         UMOMessage messageResponse = super.doSend(event);
         
         try
@@ -142,18 +142,13 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
     {
         //TODO raffaele.picardi: manage standalone property of WsResourcePropertyAdvice - try to define a pattern in order to set SoapMethod object into Message before super.doSend in WSRF Message Dispatcher
         //test so: if it's need before advice can be add initial Message property before creating of Call during super.doSend(event) process
-        this.extenderProxyCall.extendCall(null,arg0, this);
+        this.extenderProxyCall.extendCall(null , arg0 , this);
         Call call = super.getCall(arg0, arg1);
         this.extenderProxyCall.extendCall(call, arg0, this);
         return call;
     }
 
-    /* getInitialMethod
-     */
-    public Object getInitialMethod(UMOEvent arg0) throws DispatchException
-    {
-        return super.getInitialMethod(arg0);
-    }
-    
+   
+
      
 }

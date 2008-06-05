@@ -13,12 +13,20 @@ package org.mule.providers.soap.wsdl.wsrf.instance;
 
 
 import org.mule.config.MuleProperties;
+import org.mule.providers.soap.SoapMethod;
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 import org.mule.umo.UMOEvent;
 import org.mule.umo.endpoint.UMOEndpointURI;
 import org.mule.util.BeanUtils;
+
+import javax.xml.namespace.QName;
+
+
+
 import org.apache.axis.client.Call;
 import org.apache.axis.message.addressing.Constants;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 /**
  * The Class GenericPortTypeSoapBindingsStub.
@@ -26,6 +34,8 @@ import org.apache.axis.message.addressing.Constants;
 public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub implements GenericPortType
 {
     
+
+
     /** The cached ser classes. */
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     
@@ -558,30 +568,46 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         return call;
     }
     
-    private void setSoapMethod(Call call, UMOEvent event)
+    public void setSoapMethod(UMOEvent event) 
     {
-        //TODO raffaele.picardi: implement soapMethod in order to copy call. operation desc 
-       /*SoapMethod method = new SoapMethod(new QName("", MessagesTest.getString("SOAP_METHOD_NAME")));
-        method.addNamedParameter(new QName(MessagesTest.getString("NAMED_PARAMETER")),
-            new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"),
-                MessagesTest.getString("RETURN_QNAME")), "in");
-        method.setReturnType(new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"),
-            MessagesTest.getString("RETURN_QTYPE_NAME")));
-        method.setReturnClass(Class.forName(MessagesTest.getString("RETURN_CLASSNAME")));*/
+        
+        //TODO raffaele.picardi:ERROR TOP - http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd maybe namespace is not defined
+        String operation = (String) event.getMessage().getProperty(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION);
+        
+        SoapMethod method = new SoapMethod(new QName("", operation));
+        String serviceNamespaceURI =     (String) event.getMessage().getProperty(WSRFParameter.SERVICE_NAMESPACE);
+        if ( operation.equals(WSRFParameter.GET_RESOURCE_PROPERTY))
+        {
+            method.addNamedParameter(
+                new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd","GetResourceProperty"),
+                new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "QName"),
+                "in"
+                );
+            method.setReturnType(new javax.xml.namespace.QName(
+                "http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd",
+            ">GetResourcePropertyResponse"));
+         
+        
+                method.setReturnClass(org.oasis.wsrf.properties.GetResourcePropertyResponse.class);
+                
+                event.getMessage().setProperty("style", "wrapped");
+                event.getMessage().setProperty("use", "literal");
+                event.getMessage().setProperty(MuleProperties.MULE_SOAP_METHOD, method);
+                  
+                event.getMessage().setProperty(WSRFParameter.RETURN_QNAME, RPMessages.getString("GET_RESOURCE_PROPERTY_RETURN_QNAME"));
+                event.getMessage().setProperty(WSRFParameter.RETURN_QTYPE, new javax.xml.namespace.QName(serviceNamespaceURI, RPMessages.getString("GET_RESOURCE_PROPERTY_RETURN_QTYPE_NAME")));
+              
+        }
+        else 
+        {
+            Logger.getLogger(this.getClass()).log(Level.WARN, this.getClass().getName() + " WS-RP Operation" + operation +" :  not defined ..");
+            
+            
+        }
 
-     /*
-        props.put("style", "wrapped");
-        props.put("use", "literal");*/
-        //props.put(MuleProperties.MULE_SOAP_METHOD, method);
 
-        //props.put(WSRFParameter.SERVICE_NAMESPACE, Messages.getString("RESOURCE_KEY"));
-     /*   props.put(WSRFParameter.SERVICE_NAMESPACE, MessagesTest.getString("SERVICE_NAMESPACE_URI"));
-        props.put(WSRFParameter.RESOURCE_KEY_NAME, MessagesTest.getString("RESOURCE_KEY_NAME"));
-        props.put(WSRFParameter.RETURN_QNAME, MessagesTest.getString("RETURN_QNAME"));
-        props.put(WSRFParameter.RETURN_QTYPE, new javax.xml.namespace.QName(
-            MessagesTest.getString("SERVICE_NAMESPACE_URI"), MessagesTest.getString("RETURN_QTYPE_NAME")));*/
-        //props.put(WSRFParameter.RETURN_CLASS, Class.forName(MessagesTest.getString("RETURN_CLASSNAME")));
-        //props.put(WSRFParameter.SOAP_ACTION_URI, MessagesTest.getString("SOAP_ACTION_URI"));
+        
+        
      
     }
 
@@ -700,7 +726,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
      *         Property Response
      * @see org.mule.providers.soap.wsdl.wsrf.instance.GenenericPortType#getResourceProperty(javax.xml.namespace.QName)
      */
-    public org.oasis.wsrf.properties.GetResourcePropertyResponse getResourceProperty(javax.xml.namespace.QName getResourcePropertyRequest , UMOEvent event ,Call justCreatedCall)
+    public org.oasis.wsrf.properties.GetResourcePropertyResponse getResourceProperty(javax.xml.namespace.QName getResourcePropertyRequest , UMOEvent event , Call justCreatedCall)
         throws java.rmi.RemoteException
     {
         if (super.cachedEndpoint == null)
@@ -741,7 +767,6 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         java.lang.Object resp = null;
         if (isStandalone)
         {
-            setSoapMethod(call, event);
             return null;
         }
         else 
