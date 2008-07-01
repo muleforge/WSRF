@@ -74,9 +74,23 @@ public class WsMainAdvice extends BasePriorityAdvice implements MethodBeforeAdvi
         Call call = (Call) arg1[0];
         if (call == null) 
         {
+            //TODO raffaele.picardi:test and add WSRFParameter fields
+            if (event.getMessage().getProperty(WSRFParameter.RETURN_QTYPE) == null )
+            {
+                String serviceNamespace =  (String) event.getMessage().getProperty(WSRFParameter.SERVICE_NAMESPACE);
+                String qtypeName =  (String)  ">" + event.getMessage().getProperty( WSRFParameter.RETURN_QNAME);
+                event.getMessage().setProperty(WSRFParameter.RETURN_QTYPE, new javax.xml.namespace.QName(serviceNamespace,qtypeName));
+                
+            }
             return;
         }
         
+        //MANAGE Property RETURNQTYPE
+        
+        
+        
+        //end manage
+       
         Map p = (Map) event.getEndpoint().getProperty(WSRFParameter.WSRF_ENDPOINT_PROPERTY_MAP);
         Iterator it  = null;
         String key = null;

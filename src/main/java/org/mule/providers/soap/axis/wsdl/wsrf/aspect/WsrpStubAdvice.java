@@ -44,7 +44,6 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
 {
    
 
-
     /**
     * Advice perform WS-RP operation . and append its response as string property WSRF_XML_GETSET_SOAP_RESPONSE in WSRFExtraResponse map in Event Message source 
     * If standalone mode == yes than will be only injected wsrf information in axis call just created from wsdl provider without perform a new Call invocation.
