@@ -53,7 +53,7 @@ protected final String getConfigResources()
  * Test a single Call invocation method of Globus Grid Service using a Mule Message  with ResourceKey created from factory service and perform a GetResourceProperty Operation
  * @throws Exception exception
  */
-/*public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetResourceProperty() throws Exception
+public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetResourceProperty() throws Exception
     {
     MuleClient client = new MuleClient();
     SoapMethod method = new SoapMethod(new QName("", MessagesTest.getString("SOAP_METHOD_NAME")));
@@ -111,14 +111,15 @@ protected final String getConfigResources()
     
    
         
-    }*/
+    }
 
 
 /*
  * Test a single Call invocation method of Globus Grid Service using a Mule Message  with ResourceKey created from factory service and perform a GetResourceProperty Operation in standalone mode without Axis method invocation
  * @throws Exception exception
+ * TODO WSRF-24: error in standalone mode
  */
-public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetResourcePropertyStandaloneMode() throws Exception
+/*public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetResourcePropertyStandaloneMode() throws Exception
     {
    MuleClient client = new MuleClient();
 
@@ -164,6 +165,6 @@ public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetReso
     
    
         
-    }
+    }*/
 }
 
