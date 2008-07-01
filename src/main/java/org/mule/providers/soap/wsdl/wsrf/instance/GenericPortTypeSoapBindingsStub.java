@@ -53,7 +53,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
 
     static
     {
-        operations = new org.apache.axis.description.OperationDesc[4];
+        operations = new org.apache.axis.description.OperationDesc[5];
         initOperationDesc1();
     }
 
@@ -127,6 +127,48 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
                 "ResourceUnknownFaultType"), true));
         operations[3] = oper;
 
+        
+        //SetResouceProperties
+        oper = new org.apache.axis.description.OperationDesc();
+        oper.setName("SetResourceProperties");
+        oper.addParameter(new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd", "SetResourceProperties"), new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd", ">SetResourceProperties"), org.oasis.wsrf.properties.SetResourceProperties_Element.class, org.apache.axis.description.ParameterDesc.IN, false, false);
+        oper.setReturnType(new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd", ">SetResourcePropertiesResponse"));
+        oper.setReturnClass(org.oasis.wsrf.properties.SetResourcePropertiesResponse.class);
+        oper.setReturnQName(new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd", "SetResourcePropertiesResponse"));
+        oper.setStyle(org.apache.axis.constants.Style.DOCUMENT);
+        oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd", "InvalidResourcePropertyQNameFault"),
+                      "org.oasis.wsrf.properties.InvalidResourcePropertyQNameFaultType",
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd", "InvalidResourcePropertyQNameFaultType"), 
+                      true
+                     ));
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd", "UnableToModifyResourcePropertyFault"),
+                      "org.oasis.wsrf.properties.UnableToModifyResourcePropertyFaultType",
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd", "UnableToModifyResourcePropertyFaultType"), 
+                      true
+                     ));
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd", "ResourceUnknownFault"),
+                      "org.oasis.wsrf.properties.ResourceUnknownFaultType",
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd", "ResourceUnknownFaultType"), 
+                      true
+                     ));
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd", "SetResourcePropertyRequestFailedFault"),
+                      "org.oasis.wsrf.properties.SetResourcePropertyRequestFailedFaultType",
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd", "SetResourcePropertyRequestFailedFaultType"), 
+                      true
+                     ));
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd", "InvalidSetResourcePropertiesRequestContentFault"),
+                      "org.oasis.wsrf.properties.InvalidSetResourcePropertiesRequestContentFaultType",
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd", "InvalidSetResourcePropertiesRequestContentFaultType"), 
+                      true
+                     ));
+        operations[4] = oper;
+        //End SetResourceProperty
     }
     
 
@@ -211,13 +253,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         cachedSerFactories.add(beansf);
         cachedDeserFactories.add(beandf);
 
-        qName = new javax.xml.namespace.QName("http://schemas.xmlsoap.org/ws/2004/03/addressing",
-            "Relationship");
-        cachedSerQNames.add(qName);
-        cls = org.apache.axis.message.addressing.Relationship.class;
-        cachedSerClasses.add(cls);
-        cachedSerFactories.add(simplesf);
-        cachedDeserFactories.add(simpledf);
+        
 
         qName = new javax.xml.namespace.QName(
             "http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd",
@@ -265,7 +301,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
 
         qName = new javax.xml.namespace.QName(
             "http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd",
-            ">SetResourcePropertiesResponse");
+            "ResourcePropertiesResponse");
         cachedSerQNames.add(qName);
         cls = org.oasis.wsrf.properties.SetResourcePropertiesResponse.class;
         cachedSerClasses.add(cls);
@@ -500,6 +536,15 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         cachedSerFactories.add(enumsf);
         cachedDeserFactories.add(enumdf);
 
+
+        qName = new javax.xml.namespace.QName("http://schemas.xmlsoap.org/ws/2004/03/addressing",
+        "Relationship");
+    cachedSerQNames.add(qName);
+    cls = org.apache.axis.message.addressing.Relationship.class;
+    cachedSerClasses.add(cls);
+    cachedSerFactories.add(simplesf);
+    cachedDeserFactories.add(simpledf);
+        
     }
     
     /**
@@ -794,7 +839,71 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
             }
         }
     }
+/**
+ * setResourceProperties generic stub
+ * @param setResourcePropertiesRequest
+ * @param event
+ * @param justCreatedCall
+ * @return response of MessageElement[] soap object
+ * @throws java.rmi.RemoteException
+ */
+    public org.oasis.wsrf.properties.SetResourcePropertiesResponse setResourceProperties(org.oasis.wsrf.properties.SetResourceProperties_Element setResourcePropertiesRequest ,  UMOEvent event , Call justCreatedCall)         throws java.rmi.RemoteException
+    {
+        if (super.cachedEndpoint == null) 
+        {
+            throw new org.apache.axis.NoEndPointException();
+        }
+  String standaloneStr =  (String) event.getMessage().getProperty(WSRFParameter.WSRF_RESOURCEPROPERTY_STANDALONE_MODE);
+        
+        boolean isStandalone = false;
+            
+        if (standaloneStr != null)  
+        {
+            isStandalone = standaloneStr.equals(WSRFParameter.STANDALONE_YES);
+        }
+        Call call =  null;
+        if (isStandalone)
+        {
+            call = justCreatedCall;
+            configureCall(call);
+        }
+        else
+        {
+            call = createCall(event , justCreatedCall);
+            
+        }
+        
+        call.setProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS, justCreatedCall.getProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS));
+        
+        call.setOperation(operations[4]);
+        call.setUseSOAPAction(true);
+        call.setSOAPActionURI("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties/SetResourceProperties");
+        call.setEncodingStyle(null);
+        call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
+        call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
+        call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        call.setOperationName(new javax.xml.namespace.QName("", "SetResourceProperties"));
 
-   
+        setRequestHeaders(call);
+        setAttachments(call);
+        java.lang.Object resp = call.invoke(new java.lang.Object[] {setResourcePropertiesRequest});
+
+        if (resp instanceof java.rmi.RemoteException)
+        {
+            throw (java.rmi.RemoteException) resp;
+        }
+        else 
+        {
+            extractAttachments(call);
+            try
+            {
+                return (org.oasis.wsrf.properties.SetResourcePropertiesResponse) resp;
+            }
+            catch (Exception ex) 
+            {
+                return (org.oasis.wsrf.properties.SetResourcePropertiesResponse) org.apache.axis.utils.JavaUtils.convert(resp, org.oasis.wsrf.properties.SetResourcePropertiesResponse.class);
+            }
+        }
+    }
 
 }
