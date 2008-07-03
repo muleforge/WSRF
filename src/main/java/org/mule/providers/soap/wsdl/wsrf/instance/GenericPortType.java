@@ -35,6 +35,11 @@ public interface GenericPortType extends java.rmi.Remote
         org.oasis.wsrf.properties.GetResourcePropertyResponse getResourceProperty(javax.xml.namespace.QName getResourcePropertyRequest ,UMOEvent event, Call call) throws java.rmi.RemoteException;
         //TODO raffaele.picardi: add other standard WSRF operations as setResourceProperty
 
+        /**
+         * Set Resource Property
+         */
+        org.oasis.wsrf.properties.SetResourcePropertiesResponse setResourceProperties(org.oasis.wsrf.properties.SetResourceProperties_Element setResourcePropertiesRequest ,  UMOEvent event , Call justCreatedCall)    throws java.rmi.RemoteException;
+        
          /**
          * Sets the soap method.
          * 

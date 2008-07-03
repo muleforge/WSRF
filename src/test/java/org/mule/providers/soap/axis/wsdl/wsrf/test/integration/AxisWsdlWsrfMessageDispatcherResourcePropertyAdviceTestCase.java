@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: AxisWsdlWsrfMessageDispatcherResourcePropertyAdviceTestCase.java 309 2008-06-05 17:15:50Z raffaele.picardi $
  * --------------------------------------------------------------------------------------
  * Copyright (c) MuleSource, Inc.  All rights reserved.  http://www.mulesource.com
  *
@@ -165,6 +165,74 @@ public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetReso
     
    
         
-    }*/
+    }*
+    
+    
+    
+    /**
+ * Test a single Call invocation method of Globus Grid Service using a Mule Message  with ResourceKey created from factory service and perform a GetResourceProperty Operation
+ * @throws Exception exception
+ */
+public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndSetResourceProperty() throws Exception
+    {
+    MuleClient client = new MuleClient();
+    SoapMethod method = new SoapMethod(new QName("", MessagesTest.getString("SOAP_METHOD_NAME")));
+    method.addNamedParameter(new QName(MessagesTest.getString("NAMED_PARAMETER")),
+        new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"),
+            MessagesTest.getString("RETURN_QNAME")), "in");
+    method.setReturnType(new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"),
+        MessagesTest.getString("RETURN_QTYPE_NAME")));
+    method.setReturnClass(Class.forName(MessagesTest.getString("RETURN_CLASSNAME")));
+
+    Map props = new HashMap();
+    props.put("style", "wrapped");
+    props.put("use", "literal");
+    props.put(MuleProperties.MULE_SOAP_METHOD, method);
+
+    //props.put(WSRFParameter.SERVICE_NAMESPACE, Messages.getString("RESOURCE_KEY"));
+    props.put(WSRFParameter.SERVICE_NAMESPACE, MessagesTest.getString("SERVICE_NAMESPACE_URI"));
+    props.put(WSRFParameter.RESOURCE_KEY_NAME, MessagesTest.getString("RESOURCE_KEY_NAME"));
+    props.put(WSRFParameter.RETURN_QNAME, MessagesTest.getString("RETURN_QNAME"));
+    props.put(WSRFParameter.RETURN_QTYPE, new javax.xml.namespace.QName(
+        MessagesTest.getString("SERVICE_NAMESPACE_URI"), MessagesTest.getString("RETURN_QTYPE_NAME")));
+    props.put(WSRFParameter.RETURN_CLASS, Class.forName(MessagesTest.getString("RETURN_CLASSNAME")));
+    props.put(WSRFParameter.SOAP_ACTION_URI, MessagesTest.getString("SOAP_ACTION_URI"));
+
+    //factory properties
+    props.put(WSRFParameter.WSRF_FACTORY_SERVICE_ADDRESS, MessagesTest.getString("FACTORY_SERVICE_ADDRESS"));
+    props.put(MuleProperties.MULE_METHOD_PROPERTY , "add");
+    UMOMessage result = client.send("vm://vmQueue", new Integer(2), props);
+
+    assertNotNull(result);
+    assertNotNull(result.getPayload());
+    assertNotNull(result.getProperty(WSRFParameter.RESOURCE_KEY));
+    System.out.println(result.getPayload());
+    System.out.println("New resource Key: " + result.getProperty(WSRFParameter.RESOURCE_KEY));
+
+    props.put(WSRFParameter.RESOURCE_KEY, result.getProperty(WSRFParameter.RESOURCE_KEY));
+    
+    //Add WsResourceProperty  property
+    
+    props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION, MessagesTest.getString("RESOURCE_PROPERTY_OPERATION"));
+    props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_NAME, MessagesTest.getString("RESOURCE_PROPERTY_NAME"));
+    props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_NS , MessagesTest.getString("RESOURCE_PROPERTY_NS"));
+    
+    
+    
+    result = client.send("vm://vmQueue", new Integer(2000) , props);
+    
+    assertNotNull(result);
+    assertNotNull(result.getPayload());
+    assertNotNull(result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
+    
+    
+    Logger.getLogger(this.getClass()).log(Level.INFO,
+        this.getClass().getName() + " : " + "Result from SetResourceProperty: " + MessagesTest.getString("RESOURCE_PROPERTY_NAME")  + "=  " + result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
+    
+   
+        
+    }
+
+/
 }
 

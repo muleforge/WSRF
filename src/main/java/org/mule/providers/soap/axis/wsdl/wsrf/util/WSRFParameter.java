@@ -160,6 +160,11 @@ public class WSRFParameter
     /** The Constant WSRF_SET_RESOURCE_PROPERTY . */
     public static final Object SET_RESOURCE_PROPERTY = "SetResourceProperty";
 
+    
+    /** The Constant WSRF_SET_RESOURCE_PROPERTY . */
+    public static final String RESOURCE_PROPERTY_NAME_TO_SET = "wsrfResourcePropertyNameToSet";
+    
+    
     /**
      * The Constant WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE will be add in
      * WSRF_EXTRA_RESPONSE_MAP map to contain MessageElement[] object returned from
@@ -176,5 +181,24 @@ public class WSRFParameter
 
     /** The Constant STANDALONE_YES. */
     public static final String STANDALONE_YES = "yes";
+
+     /**
+      * The Constant COMMAND_SUFFIX_CLASSES
+      */
+    public static final String COMMAND_SUFFIX_CLASSES = "wsrfCommandSuffixClass";
+
+    /**
+     * RESOURCE_PROPERTY_NAME_NOT_FOUND
+     */
+    public static final String RESOURCE_PROPERTY_NAME_NOT_FOUND = "wsrpResourcePropertyNameNotFound";
+
+    /**
+     * WSRP_OPERATION_NOT_FOUND
+     */
+    public static final String WSRP_OPERATION_NOT_FOUND = "wsrpOperationNotFound";
+    /**
+     * RESOURCE_PROPERTY_NS_NOT_FOUND
+     */
+    public static final String RESOURCE_PROPERTY_NS_NOT_FOUND = "wsrpResourcePropertyNamespaceNotFound";
     
 }

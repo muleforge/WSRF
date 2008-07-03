@@ -894,7 +894,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         }
         else 
         {
-            extractAttachments(call);
+            //extractAttachments(call);
             try
             {
                 return (org.oasis.wsrf.properties.SetResourcePropertiesResponse) resp;
