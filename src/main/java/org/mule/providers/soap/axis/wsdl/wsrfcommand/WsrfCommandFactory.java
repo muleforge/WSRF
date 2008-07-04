@@ -34,11 +34,11 @@ public class WsrfCommandFactory
         IWsrfCommand command = null;
         try
         {
-            command = (IWsrfCommand) Class.forName(operationRP + RPMessages.getString(WSRFParameter.COMMAND_SUFFIX_CLASSES) ).newInstance();
+            command = (IWsrfCommand) Class.forName(RPMessages.getString(WSRFParameter.COMMAND_PREFIX_CLASS) +operationRP + RPMessages.getString(WSRFParameter.COMMAND_SUFFIX_CLASSES) ).newInstance();
         }
         catch (Exception e)
         {
-          Logger.getLogger(WsrfCommandFactory.class.getClass()).log(Level.DEBUG, WsrfCommandFactory.class.getClass().getName() + " : " + " Skipped WS-RP operation : no operation defined " + WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION);
+          Logger.getLogger(WsrfCommandFactory.class.getClass()).log(Level.ERROR, WsrfCommandFactory.class.getClass().getName() + " : " + " Skipped WS-RP operation : no operation defined " + WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION);
           WSRPOperationNotFound ex  = new WSRPOperationNotFound( RPMessages.getString(WSRFParameter.WSRP_OPERATION_NOT_FOUND) );
           ex.setStackTrace(e.getStackTrace());
         }

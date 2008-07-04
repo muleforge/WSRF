@@ -72,24 +72,9 @@ public class GetResourcePropertyWsrfCommand extends AbstractWsrfCommand
         {
             
             Logger.getLogger(this.getClass()).log(Level.ERROR, this.getClass().getName() + " : " + " Skipped WS-RP operation : no resourceKey  property  defined  " + WSRFParameter.RESOURCE_KEY);
-            return; 
-            
+            throw new WSRFException(RPMessages.getString(WSRFParameter.RESOURCE_KEY_NOT_FOUND));
         }
-        //resource key defined
-        
-        //TODO raffaele.picardi: Continue refactoring ...
-        
-       /* Map map = (Map) event.getMessage().getProperty(WSRFParameter.WSRF_EXTRA_RESPONSE_MAP);
-        if (map == null) 
-        {
-            map = new HashMap();
-            event.getMessage().setProperty(WSRFParameter.WSRF_EXTRA_RESPONSE_MAP , map);
-            Logger.getLogger(this.getClass()).log(
-                Level.INFO,
-                this.getClass().getName() + " : " + " Map of :"  
-                                + WSRFParameter.WSRF_EXTRA_RESPONSE_MAP + "  created.");
-        
-        }*/
+      
         
         try
         {
@@ -127,7 +112,7 @@ public class GetResourcePropertyWsrfCommand extends AbstractWsrfCommand
                 e.printStackTrace();
                 return;
             }
-         
+            
             if (isStandalone)
             {
                 event.getMessage().setProperty(MuleProperties.MULE_METHOD_PROPERTY , operationRP);
@@ -135,7 +120,7 @@ public class GetResourcePropertyWsrfCommand extends AbstractWsrfCommand
                 {
                     //call is not created yet.: advice can add property to event message . so next time , when call is created before method continues perform its operations
                     Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : " + " Pre  WS-RP operation : add required initial properties message");
-                   //TODO raffaele.picardi: pattern to command execute auto enrichment of message based on operationRP specified
+                  
                     if (operationRP.equals(WSRFParameter.GET_RESOURCE_PROPERTY))
                     {
                         if (!(event.getMessage().getPayload() instanceof Object[]))
@@ -185,15 +170,12 @@ public class GetResourcePropertyWsrfCommand extends AbstractWsrfCommand
         }
         catch (Exception e)
         {
-
-        /*    Logger.getLogger(this.getClass()).log(
+            Logger.getLogger(this.getClass()).log(
                 Level.ERROR,
-                this.getClass().getName() + " : " + " ERROR in getting Resource Property: . Error added  into "  + WSRFParameter.WSRF_EXTRA_RESPONSE_MAP + " as " +WSRFParameter.WSRF_RP_ERROR_RESPONSE  + " key"
-                                + e.getMessage());
+                this.getClass().getName() + " : " + " response null");
+       
+            throw new WSRFException(e.getMessage());
             
-            e.printStackTrace();
-            map.put(WSRFParameter.WSRF_RP_ERROR_RESPONSE, e.getMessage());
-            return;*/
         }
 
            
