@@ -31,12 +31,19 @@ public interface GenericPortType extends java.rmi.Remote
          * @param event event
          * @param call call created from Axis Wsdl Wsrf Message Dispatcher
          * @return the resource property
+         * @throws RemoteException the remote exception
          */
         org.oasis.wsrf.properties.GetResourcePropertyResponse getResourceProperty(javax.xml.namespace.QName getResourcePropertyRequest ,UMOEvent event, Call call) throws java.rmi.RemoteException;
-        //TODO raffaele.picardi: add other standard WSRF operations as setResourceProperty
+
 
         /**
-         * Set Resource Property
+         * Set Resource Property.
+         * 
+         * @param setResourcePropertiesRequest the set resource properties request
+         * @param event the event
+         * @param justCreatedCall the just created call
+         * @return the sets the resource properties response
+         * @throws RemoteException the remote exception
          */
         org.oasis.wsrf.properties.SetResourcePropertiesResponse setResourceProperties(org.oasis.wsrf.properties.SetResourceProperties_Element setResourcePropertiesRequest ,  UMOEvent event , Call justCreatedCall)    throws java.rmi.RemoteException;
         

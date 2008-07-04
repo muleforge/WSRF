@@ -616,7 +616,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
     public void setSoapMethod(UMOEvent event) 
     {
         
-        //TODO raffaele.picardi:ERROR TOP - ClassCastException from Globus Server on parameter of GetResourceProperty operation
+        //TODO WSRF-25:  ClassCastException from Globus Server on parameter of GetResourceProperty operation in remote mode
         //needs to set <GetResourceProperty xmlns="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd" xmlns:ns1="http://www.globus.org/namespaces/examples/core/MathService_instance">ns1:LastOp</GetResourceProperty></soapenv:Body>
         String operation = (String) event.getMessage().getProperty(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION);
         
