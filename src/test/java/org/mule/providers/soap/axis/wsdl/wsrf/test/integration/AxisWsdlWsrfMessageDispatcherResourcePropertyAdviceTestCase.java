@@ -213,22 +213,37 @@ public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndSetReso
     
     //Add WsResourceProperty  property
     
-    props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION, MessagesTest.getString("RESOURCE_PROPERTY_OPERATION"));
-    props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_NAME, MessagesTest.getString("RESOURCE_PROPERTY_NAME"));
+    props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION, MessagesTest.getString("RESOURCE_SET_PROPERTY_OPERATION"));
+    props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_NAME, MessagesTest.getString("RESOURCE_PROPERTY_NAME_TO_SET"));
     props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_NS , MessagesTest.getString("RESOURCE_PROPERTY_NS"));
     
-    
-    
+    props.put(WSRFParameter.RESOURCE_SET_PROPERTY_VALUE , MessagesTest.getString("RESOURCE_PROPERTY_NEW_VALUE"));
+    //TODO raffaele.picardi: test with a MessageElement[] object
     result = client.send("vm://vmQueue", new Integer(2000) , props);
     
     assertNotNull(result);
     assertNotNull(result.getPayload());
     assertNotNull(result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
     
-    
+
     Logger.getLogger(this.getClass()).log(Level.INFO,
         this.getClass().getName() + " : " + "Result from SetResourceProperty: " + MessagesTest.getString("RESOURCE_PROPERTY_NAME")  + "=  " + result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
     
+   
+    
+    props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION, MessagesTest.getString("RESOURCE_PROPERTY_OPERATION"));
+    UMOMessage resultAfterSet = client.send("vm://vmQueue", new Integer(2000) , props);
+    
+    
+    assertNotNull(resultAfterSet);
+    assertNotNull(resultAfterSet.getPayload());
+    assertNotNull(resultAfterSet.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
+    
+    Logger.getLogger(this.getClass()).log(Level.INFO,
+        this.getClass().getName() + " : " + "Result from GetResourceProperty: " + MessagesTest.getString("RESOURCE_PROPERTY_NAME")  + "=  " + result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
+   //TODO raffaele.picardi: add assertTrue on new value of resource property
+   // assertTrue((MessageElement[])result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE)[0]));
+   
    
         
     }
