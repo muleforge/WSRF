@@ -124,18 +124,28 @@ public final void  testCall() throws Exception
             //result = rd.sendRemote(Messages.getString("EHelloServiceObjectArrayTest.11"),"", null); //$NON-NLS-1$
              //logger.info(this, "invoke done.",""); //$NON-NLS-1$
        System.out.println("invoke done.");
-             Thread.sleep(5000);
-        } catch (UMOException e) {
-            // TODO Auto-generated catch block
+       Thread.sleep(5000);
+        } 
+      catch (UMOException e) 
+        {
+
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
+        } 
+        catch (InterruptedException e) 
+        {
+
             e.printStackTrace();
         }
-        finally {
-            if (result!=null)
+        finally 
+        {
+            if (result != null)
+            {
                  System.out.println(result.getPayload().toString()); //$NON-NLS-1$
-                    else  System.out.println("result is null");
+            }
+             else
+             {
+                 System.out.println("result is null");
+             }
             
         }
         //end section to transfer in External system
