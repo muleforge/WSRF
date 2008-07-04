@@ -216,7 +216,7 @@ public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndSetReso
     props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION, MessagesTest.getString("RESOURCE_SET_PROPERTY_OPERATION"));
     props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_NAME, MessagesTest.getString("RESOURCE_PROPERTY_NAME_TO_SET"));
     props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_NS , MessagesTest.getString("RESOURCE_PROPERTY_NS"));
-    
+    props.put(WSRFParameter.RP_SET_OPERATION_TYPE ,  "update");
     props.put(WSRFParameter.RESOURCE_SET_PROPERTY_VALUE , MessagesTest.getString("RESOURCE_PROPERTY_NEW_VALUE"));
     //TODO raffaele.picardi: test with a MessageElement[] object
     result = client.send("vm://vmQueue", new Integer(2000) , props);
