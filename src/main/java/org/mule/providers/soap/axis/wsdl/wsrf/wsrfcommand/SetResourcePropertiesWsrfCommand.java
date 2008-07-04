@@ -34,7 +34,7 @@ import org.oasis.wsrf.properties.GetResourcePropertyResponse;
 /**
  * Command Object for GetResourceProperty operation
  */
-public class GetResourcePropertyWsrfCommand extends AbstractWsrfCommand 
+public class SetResourcePropertiesWsrfCommand extends AbstractWsrfCommand 
 {
 
     /**
