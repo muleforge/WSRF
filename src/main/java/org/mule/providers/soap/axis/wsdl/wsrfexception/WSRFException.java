@@ -21,7 +21,6 @@ public class WSRFException extends Exception
      */
     public String getMessage()
     {
-        // TODO Auto-generated method stub
         return super.getMessage() + " -- " + this.wsrfError;
     }
 
