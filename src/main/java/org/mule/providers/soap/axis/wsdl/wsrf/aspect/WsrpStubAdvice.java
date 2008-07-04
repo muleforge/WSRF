@@ -11,37 +11,25 @@
 package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
-import org.mule.config.MuleProperties;
-import org.mule.providers.soap.axis.wsdl.AxisWsdlConnector;
 import org.mule.providers.soap.axis.wsdl.wsrf.StubPriorityAdvice;
 
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 import org.mule.providers.soap.axis.wsdl.wsrfcommand.IWsrfCommand;
 import org.mule.providers.soap.axis.wsdl.wsrfcommand.WsrfCommandFactory;
 import org.mule.providers.soap.axis.wsdl.wsrfexception.WSRFException;
-import org.mule.providers.soap.axis.wsdl.wsrfexception.WSRFOperationException;
+
 import org.mule.providers.soap.axis.wsdl.wsrfexception.WSRPOperationNotFound;
-import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortType;
-import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortTypeSoapBindingsStub;
-import org.mule.providers.soap.wsdl.wsrf.instance.GenericServiceAddressingLocator;
 import org.mule.umo.UMOEvent;
-import org.mule.umo.endpoint.UMOEndpointURI;
+
 
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
 
 import org.apache.axis.client.Call;
-import org.apache.axis.configuration.FileProvider;
-import org.apache.axis.message.addressing.Address;
-import org.apache.axis.message.addressing.EndpointReferenceType;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.oasis.wsrf.properties.GetResourcePropertyResponse;
-import org.oasis.wsrf.properties.SetResourcePropertiesResponse;
+
 import org.springframework.aop.MethodBeforeAdvice;
 /**
  * This Stub Advice perform Wsrp request using WSDL2JAVA stub
@@ -79,7 +67,11 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
             return;
         }
         String operationRP =  (String) event.getMessage().getProperty(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION);
-
+        if (operationRP == null)
+        {
+            Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : " + " Skipped WS-RP operation : no operation defined " + WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION);
+            return;
+        }
         
       
         
