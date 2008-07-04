@@ -44,7 +44,8 @@ public final class AdviceAdderHelper
     private static final int SUFFIX_CLASS_LENGTH = 6;
     
     /**
-     * It refers to match method advisor TODO MULE-WSRF-6: Discuss about externalize
+     * It refers to match method advisor 
+     * TODO MULE-WSRF-6: Discuss about externalize
      * string.
      */
     private static final String MAPPED_NAME = "extend*";

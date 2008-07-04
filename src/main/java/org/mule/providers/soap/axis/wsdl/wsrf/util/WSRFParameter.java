@@ -11,7 +11,6 @@
 package org.mule.providers.soap.axis.wsdl.wsrf.util;
 
 
-// TODO: Auto-generated Javadoc
 /**
  * Constants Message Mule Class in order to use/manage Message WSRF Mule Provider
  * Specifications.
@@ -200,5 +199,12 @@ public class WSRFParameter
      * RESOURCE_PROPERTY_NS_NOT_FOUND
      */
     public static final String RESOURCE_PROPERTY_NS_NOT_FOUND = "wsrpResourcePropertyNamespaceNotFound";
+
+    
+    /** The Constant RESOURCE_KEY_NOT_FOUND. */
+    public static final String RESOURCE_KEY_NOT_FOUND = "wsrfResourceKeyNotFound";
+    
+    /** The Constant COMMAND_PREFIX_CLASS. */
+    public static final String COMMAND_PREFIX_CLASS = "wsrfCommandPrefixClass";
     
 }
