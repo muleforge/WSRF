@@ -647,6 +647,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
         }
         else 
         {
+            //TODO raffaele.picardi: manage set resource property soap method in standalone mode
             Logger.getLogger(this.getClass()).log(Level.WARN, this.getClass().getName() + " WS-RP Operation" + operation +" :  not defined ..");
             
             

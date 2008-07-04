@@ -10,7 +10,6 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.util;
 
-
 /**
  * Constants Message Mule Class in order to use/manage Message WSRF Mule Provider
  * Specifications.
@@ -18,25 +17,25 @@ package org.mule.providers.soap.axis.wsdl.wsrf.util;
 public class WSRFParameter
 
 {
-       
+
     /** The Constant SERVICE_NAMESPACE. */
     public static final String SERVICE_NAMESPACE = "serviceNamespace";
-    
+
     /** The Constant RESOURCEKEY_NAME. */
     public static final String RESOURCE_KEY_NAME = "resourceKeyName";
-    
+
     /** The Constant RESOURCEKEY. */
     public static final String RESOURCE_KEY = "resourceKey";
 
     /** The Constant RESOURCEKEY substring . */
     public static final String RESOURCE_KEY_SUB = "ResourceKey";
-    
+
     /** The Constant RETURNQNAME. */
     public static final String RETURN_QNAME = "returnQName";
 
     /** The Constant SOAP_METHODS. */
     public static final String SOAP_METHODS = "soapMethods";
-    
+
     /** The Constant RETURNQTYPE. */
     public static final String RETURN_QTYPE = "returnQType";
 
@@ -54,8 +53,7 @@ public class WSRFParameter
      * by advice
      */
     public static final String WSRF_EXTRA_RESPONSE_MAP = "WSRFExtraResponse";
-    
-    
+
     /**
      * The Constant WSRF_FACTORY_SERVICE_ADDRESS . It contains extra wsrf property:
      * Service URI of Factory Service to use in order to create resource
@@ -71,7 +69,7 @@ public class WSRFParameter
 
     /** The Constant SESSION_MAPPING_YES. */
     public static final String SESSION_MAPPING_YES = "yes";
-    
+
     /** The Constant SESSION_MAPPING_NO. */
     public static final String SESSION_MAPPING_NO = "no";
 
@@ -83,7 +81,7 @@ public class WSRFParameter
 
     /** The Constant FIRST_VALUE_IN. */
     public static final int FIRST_VALUE_IN = 2000;
-    
+
     /** The Constant SECOND_VALUE_IN. */
     public static final int SECOND_VALUE_IN = 4000;
 
@@ -93,43 +91,43 @@ public class WSRFParameter
      * correlationID and Service URI.
      */
     public static final String WSRF_MULE_CORRELATIONID_RESOURCE_KEY_MAPPING = "wsrfMuleCorrelationIDResourceKeyMapping";
-    
+
     /**
      * The Constant WSRF_ENDPOINT_PROPERTY_MAP . It specifies the property name of
      * map object thath encapsulates all wsrf properties-.
      */
     public static final String WSRF_ENDPOINT_PROPERTY_MAP = "wsrfOption";
-    
+
     /**
      * The Constant WSRF_FACTORY_PORT_TYPE_PORT_ADDRESS specifies port type address
      * of globus service.
      */
     public static final String WSRF_FACTORY_PORT_TYPE_PORT_ADDRESS = "wsrfFactoryPortTypePortAddress";
-    
+
     /** The Constant wsrfPrefix. */
     public static final String wsrfPrefix = "wsrf";
 
     /** The Constant WSRF_FACTORY_PORT_TYPE specifies port type. */
     public static final String WSRF_FACTORY_PORT_TYPE = "wsrfFactoryPortType";
-    
+
     /** The Constant WSRF_FACTORY_SERVICE_NS specifies factory service namespace. */
     public static final String WSRF_FACTORY_SERVICE_NS = "wsrfFactoryServiceNS";
-    
+
     /** The Constant WSRF_FACTORY_SERVICE_NAME specifies factory service name. */
     public static final String WSRF_FACTORY_SERVICE_NAME = "wsrfFactoryServiceName";
-    
+
     /**
      * The Constant WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME specifies name of
      * service operation about create resource.
      */
     public static final String WSRF_FACTORY_CREATE_RESOURCE_OPERATION_NAME = "wsrfFactoryCreateResourceOperationName";
-    
+
     /**
      * The Constant WSRF_FACTORY_CREATE_RESOURCE_NAME specifies name of response
      * object about create resource operation.
      */
     public static final String WSRF_FACTORY_CREATE_RESOURCE_RESPONSE_NAME = "wsrfFactoryCreateResourceResponseName";
-    
+
     /**
      * The Constant WSRF_FACTORY_CREATE_RESOURCE_REQUEST_NS specifies namespace of
      * create resource request operation.
@@ -141,10 +139,10 @@ public class WSRFParameter
 
     /** The Constant WSRF_RESOURCEPROPERTY_NAME specifies name of resource property . */
     public static final String WSRF_RESOURCEPROPERTY_NAME = "wsrfResourcePropertyName";
-    
+
     /** The Constant WSRF_RESOURCEPROPERTY_NS specifies namespace of resource property . */
     public static final String WSRF_RESOURCEPROPERTY_NS = "wsrfResourcePropertyNS";
-    
+
     /**
      * The Constant WSRF_RESOURCEPROPERTY_STANDALONE_MODE speciefies if WS-RP
      * operation MUST be performed without method axis invocation of grid service
@@ -157,20 +155,18 @@ public class WSRFParameter
     public static final Object GET_RESOURCE_PROPERTY = "GetResourceProperty";
 
     /** The Constant WSRF_SET_RESOURCE_PROPERTY . */
-    public static final Object SET_RESOURCE_PROPERTY = "SetResourceProperty";
+    public static final Object SET_RESOURCE_PROPERTY = "SetResourceProperties";
 
-    
     /** The Constant WSRF_SET_RESOURCE_PROPERTY . */
     public static final String RESOURCE_PROPERTY_NAME_TO_SET = "wsrfResourcePropertyNameToSet";
-    
-    
+
     /**
      * The Constant WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE will be add in
      * WSRF_EXTRA_RESPONSE_MAP map to contain MessageElement[] object returned from
      * axis call invocation .
      */
     public static final String WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE = "wsrfMessageElementArraySoapResponse";
-    
+
     /**
      * The Constant WSRF_RP_ERROR_RESPONSE will be add in WSRF_EXTRA_RESPONSE_MAP map
      * to containFAULT CODE Error returned from WS-ResourceProperty axis call
@@ -181,30 +177,43 @@ public class WSRFParameter
     /** The Constant STANDALONE_YES. */
     public static final String STANDALONE_YES = "yes";
 
-     /**
-      * The Constant COMMAND_SUFFIX_CLASSES
-      */
+    /** The Constant COMMAND_SUFFIX_CLASSES. */
     public static final String COMMAND_SUFFIX_CLASSES = "wsrfCommandSuffixClass";
 
-    /**
-     * RESOURCE_PROPERTY_NAME_NOT_FOUND
-     */
+    /** RESOURCE_PROPERTY_NAME_NOT_FOUND. */
     public static final String RESOURCE_PROPERTY_NAME_NOT_FOUND = "wsrpResourcePropertyNameNotFound";
 
-    /**
-     * WSRP_OPERATION_NOT_FOUND
-     */
+    /** WSRP_OPERATION_NOT_FOUND. */
     public static final String WSRP_OPERATION_NOT_FOUND = "wsrpOperationNotFound";
-    /**
-     * RESOURCE_PROPERTY_NS_NOT_FOUND
-     */
+
+    /** RESOURCE_PROPERTY_NS_NOT_FOUND. */
     public static final String RESOURCE_PROPERTY_NS_NOT_FOUND = "wsrpResourcePropertyNamespaceNotFound";
 
-    
     /** The Constant RESOURCE_KEY_NOT_FOUND. */
     public static final String RESOURCE_KEY_NOT_FOUND = "wsrfResourceKeyNotFound";
-    
+
     /** The Constant COMMAND_PREFIX_CLASS. */
     public static final String COMMAND_PREFIX_CLASS = "wsrfCommandPrefixClass";
-    
+
+    /** The Constant RP_SET_OPERATION_TYPE. */
+    public static final String RP_SET_OPERATION_TYPE = "wsrfResourcePropertySetType";
+
+    /** The Constant RP_SET_OPERATION_TYPE_MISSING. */
+    public static final String RP_SET_OPERATION_TYPE_MISSING = "wsrfSetResourcePropertyOperationTypeMissing";
+
+    /** The Constant RESOURCE_SET_PROPERTY_VALUE. */
+    public static final String RESOURCE_SET_PROPERTY_VALUE = "wsrfResourcePropertyValue";
+
+    /** The Constant DELETE_SET_OPERATION. */
+    public static final String DELETE_SET_OPERATION = "delete";
+
+    /** The Constant UPDATE_SET_OPERATION. */
+    public static final String UPDATE_SET_OPERATION = "update";
+
+    /** The Constant INSERT_SET_OPERATION. */
+    public static final String INSERT_SET_OPERATION = "insert";
+
+    /** The Constant RP_SET_PROPERTY_VALUE_MISSING. */
+    public static final String RP_SET_PROPERTY_VALUE_MISSING = "wsrfSetResourcePropertyValueMissing";
+
 }
