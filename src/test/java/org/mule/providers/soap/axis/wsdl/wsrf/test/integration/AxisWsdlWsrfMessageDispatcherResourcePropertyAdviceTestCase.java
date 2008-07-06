@@ -22,6 +22,7 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
+import org.apache.axis.message.MessageElement;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -170,10 +171,11 @@ public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndGetReso
     
     
     /**
- * Test a single Call invocation method of Globus Grid Service using a Mule Message  with ResourceKey created from factory service and perform a GetResourceProperty Operation
+ * Test a single Call invocation method of Globus Grid Service using a Mule Message  with ResourceKey created from factory service and perform on sequence : an Update, Delete , Insert of SetResourceProperty Operation
+ * Test on String Resource Property type
  * @throws Exception exception
  */
-public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndSetResourceProperty() throws Exception
+public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndSetResourcePropertyUpdateDeleteInsert() throws Exception
     {
     MuleClient client = new MuleClient();
     SoapMethod method = new SoapMethod(new QName("", MessagesTest.getString("SOAP_METHOD_NAME")));
@@ -209,8 +211,8 @@ public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndSetReso
     System.out.println(result.getPayload());
     System.out.println("New resource Key: " + result.getProperty(WSRFParameter.RESOURCE_KEY));
 
-    props.put(WSRFParameter.RESOURCE_KEY, result.getProperty(WSRFParameter.RESOURCE_KEY));
-    
+   props.put(WSRFParameter.RESOURCE_KEY, result.getProperty(WSRFParameter.RESOURCE_KEY));
+    //props.put(WSRFParameter.RESOURCE_KEY, "3559661");
     //Add WsResourceProperty  property
     
     props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION, MessagesTest.getString("RESOURCE_SET_PROPERTY_OPERATION"));
@@ -227,10 +229,11 @@ public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndSetReso
     
 
     Logger.getLogger(this.getClass()).log(Level.INFO,
-        this.getClass().getName() + " : " + "Result from SetResourceProperty: " + MessagesTest.getString("RESOURCE_PROPERTY_NAME")  + "=  " + result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
+        this.getClass().getName() + " : " + "Result from Update SetResourceProperty: " + MessagesTest.getString("RESOURCE_PROPERTY_NAME_TO_SET")  + "=  " + result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
     
-   
-    
+    assertTrue(((Boolean)result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE)).booleanValue());
+
+    //Test GetResourceProperty after set
     props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION, MessagesTest.getString("RESOURCE_PROPERTY_OPERATION"));
     UMOMessage resultAfterSet = client.send("vm://vmQueue", new Integer(2000) , props);
     
@@ -240,13 +243,54 @@ public final void  testCallSingleInstanceGlobusServiceByMessageFactoryAndSetReso
     assertNotNull(resultAfterSet.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
     
     Logger.getLogger(this.getClass()).log(Level.INFO,
-        this.getClass().getName() + " : " + "Result from GetResourceProperty: " + MessagesTest.getString("RESOURCE_PROPERTY_NAME")  + "=  " + result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
-   //TODO raffaele.picardi: add assertTrue on new value of resource property
-   // assertTrue((MessageElement[])result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE)[0]));
+        this.getClass().getName() + " : " + "Result from GetResourceProperty: " + MessagesTest.getString("RESOURCE_PROPERTY_NAME_TO_SET")  + "=  " + result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
+   // TODO raffaele.picardi: add assertTrue on new value of resource property
+        MessageElement resp = ((MessageElement[]) resultAfterSet.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE))[0];
+  
+    assertEquals(resp.getChildren().get(0).toString(), MessagesTest.getString("RESOURCE_PROPERTY_NEW_VALUE"));
    
-   
+ //Now try to delete property:
+    props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION, MessagesTest.getString("RESOURCE_SET_PROPERTY_OPERATION"));
+    props.put(WSRFParameter.RP_SET_OPERATION_TYPE ,  "delete");
+    UMOMessage resultOfDelete = client.send("vm://vmQueue", new Integer(2000) , props);  
+    
+    assertNotNull(resultOfDelete);
+    assertNotNull(resultOfDelete.getPayload());
+    assertNotNull(resultOfDelete.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
+    
+    assertTrue(((Boolean) resultOfDelete.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE)).booleanValue());
+
+    Logger.getLogger(this.getClass()).log(Level.INFO,
+        this.getClass().getName() + " : " + "Result from Delete SetResourceProperty: " + MessagesTest.getString("RESOURCE_PROPERTY_NAME_TO_SET")  + "=  " + result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
+    
+ //check that property is deleted
+    props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION, MessagesTest.getString("RESOURCE_PROPERTY_OPERATION"));
+    UMOMessage resultAfterDelete = client.send("vm://vmQueue", new Integer(2000) , props);
+    
+    
+    assertNotNull(resultAfterDelete);
+    assertNotNull(resultAfterDelete.getPayload());
+ 
+    
+ //Now try to reinsert property
+    
+    props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION, MessagesTest.getString("RESOURCE_SET_PROPERTY_OPERATION"));
+    props.put(WSRFParameter.RP_SET_OPERATION_TYPE ,  "insert");
+    UMOMessage resultOfInsert = client.send("vm://vmQueue", new Integer(2000) , props);  
+    
+    assertNotNull(resultOfInsert);
+    assertNotNull(resultOfInsert.getPayload());
+    assertNotNull(resultOfInsert.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
+    
+    assertTrue(((Boolean) resultOfInsert.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE)).booleanValue());
+
+    Logger.getLogger(this.getClass()).log(Level.INFO,
+        this.getClass().getName() + " : " + "Result from Insert SetResourceProperty: " + MessagesTest.getString("RESOURCE_PROPERTY_NAME_TO_SET")  + "=  " + result.getProperty(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE));
+  //Now try to
+    
         
     }
+
 
 
 }
