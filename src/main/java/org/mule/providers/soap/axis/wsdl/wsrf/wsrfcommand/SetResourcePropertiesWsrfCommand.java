@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: SetResourcePropertyWsrfCommand.java 329 2008-07-04 16:34:08Z raffaele.picardi $
  * --------------------------------------------------------------------------------------
  * Copyright (c) MuleSource, Inc.  All rights reserved.  http://www.mulesource.com
  *
@@ -201,7 +201,7 @@ public class SetResourcePropertiesWsrfCommand extends AbstractWsrfCommand
                 Level.ERROR,
                 this.getClass().getName() + " : " + " response null");
        
-            throw new WSRFException(e.getMessage());
+            throw new WSRFException(e.getClass().getName()+":"+ e.getMessage() + " caused by:" + e.getCause());
             
         }
 
@@ -240,6 +240,10 @@ public class SetResourcePropertiesWsrfCommand extends AbstractWsrfCommand
             {
             update.set_any((MessageElement[]) propertyValue);
             }
+            else if (propertyValue instanceof MessageElement) 
+            {
+                update.set_any(new MessageElement[] {(MessageElement) propertyValue});
+            }
             else 
             {
                 //TODO raffaele.picardi:here propertyValue needs to be registered type and serializable
@@ -265,6 +269,10 @@ public class SetResourcePropertiesWsrfCommand extends AbstractWsrfCommand
             if (propertyValue instanceof MessageElement[]) 
             {
                 insertType.set_any((MessageElement[]) propertyValue);
+            }
+            else if (propertyValue instanceof MessageElement) 
+            {
+                insertType.set_any(new MessageElement[] {(MessageElement) propertyValue});
             }
             else 
             {

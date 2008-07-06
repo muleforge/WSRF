@@ -21,7 +21,7 @@ public class WSRFException extends Exception
      */
     public String getMessage()
     {
-        return super.getMessage() + " -- " + this.wsrfError;
+        return "Original message exception: " + super.getMessage() + " -- WSRF Message: " + this.wsrfError;
     }
 
     /** The Constant serialVersionUID. */
