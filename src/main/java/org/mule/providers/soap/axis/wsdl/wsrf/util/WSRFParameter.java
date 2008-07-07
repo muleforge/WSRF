@@ -10,6 +10,7 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.util;
 
+// TODO: Auto-generated Javadoc
 /**
  * Constants Message Mule Class in order to use/manage Message WSRF Mule Provider
  * Specifications.
@@ -215,5 +216,11 @@ public class WSRFParameter
 
     /** The Constant RP_SET_PROPERTY_VALUE_MISSING. */
     public static final String RP_SET_PROPERTY_VALUE_MISSING = "wsrfSetResourcePropertyValueMissing";
+/**
+ *  The Constant WSRF_RESOURCE_LIFETIME_OPERATION. */
+     public static final String WSRF_RESOURCE_LIFETIME_OPERATION = "wsrfLifetimeOperation";
+
+    /** The Constant WSRF_RESOURCE_LIFETIME_OPERATION_NOT_FOUND. */
+    public static final String WSRF_RESOURCE_LIFETIME_OPERATION_NOT_FOUND = "wsltOperationNotFound";
 
 }

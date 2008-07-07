@@ -10,16 +10,42 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.test.util;
 
+
+/**
+ * The Class InfoEntryCatalogType.
+ */
 public class InfoEntryCatalogType  implements java.io.Serializable {
+    
+    /** The ID file. */
     private java.lang.String IDFile;
+    
+    /** The return code. */
     private java.lang.String returnCode;
+    
+    /** The is success. */
     private boolean isSuccess;
+    
+    /** The osd. */
     private OsdEntry[] osd;
+    
+    /** The sunt. */
     private java.lang.String sunt;
 
+    /**
+     * Instantiates a new info entry catalog type.
+     */
     public InfoEntryCatalogType() {
     }
 
+    /**
+     * Instantiates a new info entry catalog type.
+     * 
+     * @param IDFile the iD file
+     * @param isSuccess the is success
+     * @param osd the osd
+     * @param returnCode the return code
+     * @param sunt the sunt
+     */
     public InfoEntryCatalogType(
            java.lang.String IDFile,
            boolean isSuccess,
@@ -47,7 +73,7 @@ public class InfoEntryCatalogType  implements java.io.Serializable {
     /**
      * Sets the IDFile value for this InfoEntryCatalogType.
      * 
-     * @param IDFile
+     * @param IDFile the iD file
      */
     public void setIDFile(java.lang.String IDFile) {
         this.IDFile = IDFile;
@@ -67,7 +93,7 @@ public class InfoEntryCatalogType  implements java.io.Serializable {
     /**
      * Sets the returnCode value for this InfoEntryCatalogType.
      * 
-     * @param returnCode
+     * @param returnCode the return code
      */
     public void setReturnCode(java.lang.String returnCode) {
         this.returnCode = returnCode;
@@ -87,7 +113,7 @@ public class InfoEntryCatalogType  implements java.io.Serializable {
     /**
      * Sets the isSuccess value for this InfoEntryCatalogType.
      * 
-     * @param isSuccess
+     * @param isSuccess the is success
      */
     public void setIsSuccess(boolean isSuccess) {
         this.isSuccess = isSuccess;
@@ -107,16 +133,28 @@ public class InfoEntryCatalogType  implements java.io.Serializable {
     /**
      * Sets the osd value for this InfoEntryCatalogType.
      * 
-     * @param osd
+     * @param osd the osd
      */
     public void setOsd(OsdEntry[] osd) {
         this.osd = osd;
     }
 
+    /**
+     * Gets the osd.
+     * 
+     * @param i the i
+     * @return the osd
+     */
     public OsdEntry getOsd(int i) {
         return this.osd[i];
     }
 
+    /**
+     * Sets the osd.
+     * 
+     * @param i the i
+     * @param _value the _value
+     */
     public void setOsd(int i, OsdEntry _value) {
         this.osd[i] = _value;
     }
@@ -135,13 +173,18 @@ public class InfoEntryCatalogType  implements java.io.Serializable {
     /**
      * Sets the sunt value for this InfoEntryCatalogType.
      * 
-     * @param sunt
+     * @param sunt the sunt
      */
     public void setSunt(java.lang.String sunt) {
         this.sunt = sunt;
     }
 
+    /** The __equals calc. */
     private java.lang.Object __equalsCalc = null;
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof InfoEntryCatalogType))
         {
@@ -161,25 +204,29 @@ public class InfoEntryCatalogType  implements java.io.Serializable {
         }
         __equalsCalc = obj;
         boolean _equals;
-        _equals = true && 
-            ((this.IDFile==null && other.getIDFile()==null) || 
-             (this.IDFile!=null &&
+        _equals = true &&   ((this.IDFile == null && other.getIDFile() == null) ||  
+             (this.IDFile != null &&
               this.IDFile.equals(other.getIDFile()))) &&
-            ((this.returnCode==null && other.getReturnCode()==null) || 
-             (this.returnCode!=null &&
+            ((this.returnCode == null && other.getReturnCode() == null) || 
+             (this.returnCode != null &&
               this.returnCode.equals(other.getReturnCode()))) &&
             this.isSuccess == other.isIsSuccess() &&
-            ((this.osd==null && other.getOsd()==null) || 
-             (this.osd!=null &&
+            ((this.osd == null && other.getOsd() == null) || 
+             (this.osd != null &&
               java.util.Arrays.equals(this.osd, other.getOsd()))) &&
-            ((this.sunt==null && other.getSunt()==null) || 
-             (this.sunt!=null &&
+            ((this.sunt == null && other.getSunt() == null) || 
+             (this.sunt != null &&
               this.sunt.equals(other.getSunt())));
         __equalsCalc = null;
         return _equals;
     }
 
+    /** The __hash code calc. */
     private boolean __hashCodeCalc = false;
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
     public synchronized int hashCode() {
         if (__hashCodeCalc) {
             return 0;
@@ -210,70 +257,7 @@ public class InfoEntryCatalogType  implements java.io.Serializable {
         __hashCodeCalc = false;
         return _hashCode;
     }
-/*
-    // Type metadata
-    private static org.apache.axis.description.TypeDesc typeDesc =
-        new org.apache.axis.description.TypeDesc(InfoEntryCatalogType.class, true);
 
-    static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", "InfoEntryCatalogType"));
-        org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("IDFile");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "IDFile"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
-        typeDesc.addFieldDesc(elemField);
-        elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("returnCode");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "returnCode"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
-        typeDesc.addFieldDesc(elemField);
-        elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("isSuccess");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "isSuccess"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
-        typeDesc.addFieldDesc(elemField);
-        elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("osd");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "osd"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.globus.org/namespaces/examples/core/MathService_instance", "osdEntry"));
-        typeDesc.addFieldDesc(elemField);
-        elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("sunt");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "sunt"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
-        typeDesc.addFieldDesc(elemField);
-    }
-
-    *//**
-     * Return type metadata object
-     *//*
-    public static org.apache.axis.description.TypeDesc getTypeDesc() {
-        return typeDesc;
-    }
-
-    *//**
-     * Get Custom Serializer
-     *//*
-    public static org.apache.axis.encoding.Serializer getSerializer(
-           java.lang.String mechType, 
-           java.lang.Class _javaType,  
-           javax.xml.namespace.QName _xmlType) {
-        return 
-          new  org.apache.axis.encoding.ser.BeanSerializer(
-            _javaType, _xmlType, typeDesc);
-    }
-
-    *//**
-     * Get Custom Deserializer
-     *//*
-    public static org.apache.axis.encoding.Deserializer getDeserializer(
-           java.lang.String mechType, 
-           java.lang.Class _javaType,  
-           javax.xml.namespace.QName _xmlType) {
-        return 
-          new  org.apache.axis.encoding.ser.BeanDeserializer(
-            _javaType, _xmlType, typeDesc);
-    }*/
 
 }
 

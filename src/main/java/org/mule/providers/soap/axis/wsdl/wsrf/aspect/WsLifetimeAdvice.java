@@ -12,35 +12,27 @@ package org.mule.providers.soap.axis.wsdl.wsrf.aspect;
 
 
 import org.mule.providers.soap.axis.wsdl.wsrf.StubPriorityAdvice;
-
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 import org.mule.providers.soap.axis.wsdl.wsrf.wsrfcommand.IWsrfCommand;
 import org.mule.providers.soap.axis.wsdl.wsrf.wsrfcommand.WsrfCommandFactory;
+import org.mule.providers.soap.axis.wsdl.wsrfexception.WSLTOperationNotFound;
 import org.mule.providers.soap.axis.wsdl.wsrfexception.WSRFException;
-
 import org.mule.providers.soap.axis.wsdl.wsrfexception.WSRPOperationNotFound;
 import org.mule.umo.UMOEvent;
-
-
 
 import java.lang.reflect.Method;
 
 import org.apache.axis.client.Call;
-
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-
 import org.springframework.aop.MethodBeforeAdvice;
 /**
- * This Stub Advice perform Wsrp request using WSDL2JAVA stub
+ * This Stub Advice perform WS Lifetime request using WSDL2JAVA stub
  */
-public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAdvice
+public class WsLifetimeAdvice extends StubPriorityAdvice implements MethodBeforeAdvice
 {
-   
-
-    /**
-    * Advice perform WS-RP operation . and append its response as string property WSRF_XML_GETSET_SOAP_RESPONSE in WSRFExtraResponse map in Event Message source 
-    * If standalone mode == yes than will be only injected wsrf information in axis call just created from wsdl provider without perform a new Call invocation.
+   /**
+    * Extend Call object intercept injecting WS Lifetime information in order to prepare invocation
     * @param arg0 method name
     * @param arg1 args
     * @param arg2 target object
@@ -48,8 +40,7 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
     */
     public void before(Method arg0, Object[] arg1, Object arg2) throws Throwable
     {
-
-        //TODO raffaele.picardi: manage standalone property of WsResourcePropertyAdvice
+        //TODO raffaele.picardi: manage standalone property of WsLifetimeAdvice
         UMOEvent event = (UMOEvent) arg1[1];
         Call call = (Call) arg1[0];
         
@@ -65,10 +56,10 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
         {
             return;
         }
-        String operationRP =  (String) event.getMessage().getProperty(WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION);
-        if (operationRP == null)
+        String operationLT =  (String) event.getMessage().getProperty(WSRFParameter.WSRF_RESOURCE_LIFETIME_OPERATION);
+        if (operationLT == null)
         {
-            Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : " + " Skipped WS-RP operation : no operation defined " + WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION);
+            Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : " + " Skipped WS-LT operation : no operation defined " + WSRFParameter.WSRF_RESOURCE_LIFETIME_OPERATION);
             return;
         }
         
@@ -77,11 +68,11 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
         IWsrfCommand commandOperation;
         try 
         {
-            commandOperation = WsrfCommandFactory.createRPCommand(operationRP);
+            commandOperation = WsrfCommandFactory.createLTCommand(operationLT);
         }
-        catch (WSRPOperationNotFound e)
+        catch (WSLTOperationNotFound e)
         {
-            Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : " + " Skipped WS-RP operation : no operation defined " + WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION);
+            Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : " + " Skipped WS-LT operation : no operation defined " + WSRFParameter.WSRF_RESOURCE_LIFETIME_OPERATION);
             return;
         }
         
@@ -94,13 +85,13 @@ public class WsrpStubAdvice extends StubPriorityAdvice implements MethodBeforeAd
         }
         catch (WSRFException e)
         {
-            Logger.getLogger(this.getClass()).log(Level.ERROR, this.getClass().getName() + " : " + " WS-RP operation error " + WSRFParameter.WSRF_RESOURCEPROPERTY_OPERATION);
+            Logger.getLogger(this.getClass()).log(Level.ERROR, this.getClass().getName() + " : " + " WS-LT operation error " + WSRFParameter.WSRF_RESOURCE_LIFETIME_OPERATION);
             return;
             
         }
 
 
-   
+        
     }
 
 }
