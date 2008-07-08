@@ -22,8 +22,10 @@ public interface GenericPortType extends java.rmi.Remote
         
        
     
-          
-              
+    
+    
+        public final static int DESTROY_OPERATION = 5;
+
         /**
          * Gets the resource property.
          * 
@@ -72,7 +74,14 @@ public interface GenericPortType extends java.rmi.Remote
          * @return the org.oasis.wsrf.lifetime. set termination time response
          */
         org.oasis.wsrf.lifetime.SetTerminationTimeResponse setTerminationTime(org.oasis.wsrf.lifetime.SetTerminationTime setTerminationTimeRequest  ,  UMOEvent event , Call justCreatedCall) throws java.rmi.RemoteException;
-        
+ 
+        /**
+         * Gets the operation.
+         * 
+         * @param operation the operation . use constant as GenericPortType.DESTROY_OPERATION
+         * @return the operation operation
+         */
+        org.apache.axis.description.OperationDesc getOperation(int operation);
 }
 
 

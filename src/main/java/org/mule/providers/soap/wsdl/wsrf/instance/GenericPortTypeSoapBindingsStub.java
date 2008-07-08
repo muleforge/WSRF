@@ -54,6 +54,16 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
     /** The _operations. */
     private static org.apache.axis.description.OperationDesc[] operations;
 
+    /** 
+     * get Operation
+     * @param operation operation index
+     * @return org.apache.axis.description.OperationDesc 
+     */
+    public org.apache.axis.description.OperationDesc getOperation(int operation)
+    {
+        return operations[operation];
+    }
+    
     static
     {
         operations = new org.apache.axis.description.OperationDesc[7];
@@ -194,7 +204,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
                       new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "ResourceUnknownFaultType"), 
                       true
                      ));
-        operations[5] = oper;
+        operations[DESTROY_OPERATION] = oper;
         //End destroy
         
         //SetTerminationTime

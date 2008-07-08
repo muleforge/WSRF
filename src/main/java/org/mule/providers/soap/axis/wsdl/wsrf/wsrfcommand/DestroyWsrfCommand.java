@@ -10,19 +10,22 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.wsrfcommand;
 
+
 import org.mule.config.MuleProperties;
+import org.mule.providers.soap.SoapMethod;
 import org.mule.providers.soap.axis.wsdl.AxisWsdlConnector;
-import org.mule.providers.soap.axis.wsdl.wsrf.factory.Messages;
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 import org.mule.providers.soap.axis.wsdl.wsrfexception.WSRFException;
-import org.mule.providers.soap.axis.wsdl.wsrfexception.WSRFOperationException;
 import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortType;
 import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortTypeSoapBindingsStub;
 import org.mule.providers.soap.wsdl.wsrf.instance.GenericServiceAddressingLocator;
 import org.mule.providers.soap.wsdl.wsrf.instance.RPMessages;
+import org.mule.umo.UMOEvent;
 import org.mule.umo.endpoint.UMOEndpointURI;
 
 import javax.xml.namespace.QName;
+import javax.xml.rpc.ParameterMode;
+
 
 import org.apache.axis.configuration.FileProvider;
 import org.apache.axis.message.addressing.Address;
@@ -31,16 +34,18 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.oasis.wsrf.lifetime.Destroy;
 import org.oasis.wsrf.lifetime.DestroyResponse;
-import org.oasis.wsrf.properties.GetResourcePropertyResponse;
 
+
+// TODO: Auto-generated Javadoc
 /**
- * Command Object for Destroy Lifetime operation
+ * Command Object for Destroy Lifetime operation.
  */
 public class DestroyWsrfCommand extends AbstractWsrfCommand 
 {
 
     /**
-     * Handle execute method
+     * Handle execute method.
+     * 
      * @throws WSRFException wsrf exception
      */
     protected void handleExecute() throws WSRFException
@@ -100,7 +105,7 @@ public class DestroyWsrfCommand extends AbstractWsrfCommand
             
             Destroy dr = new Destroy();
             //TODO WSRF-24: standalone mode to fix
-/*            if (isStandalone)
+            if (isStandalone)
             {
                 event.getMessage().setProperty(MuleProperties.MULE_METHOD_PROPERTY , operationLT);
                 if (call == null)
@@ -121,8 +126,8 @@ public class DestroyWsrfCommand extends AbstractWsrfCommand
                             return;
                         }
                         // enrich message
-                        service.setSoapMethod(event);
-                 
+                        setSoapMethod();
+                        setOperation(service);
          
                         //TODO raffaele.picardi: payload of message needs to be Object[]  {} of 1 - size
                         //TODO raffaele.picardi:test standalone mode
@@ -141,13 +146,11 @@ public class DestroyWsrfCommand extends AbstractWsrfCommand
                     }
                 }
                 return;
-            }*/
+            }
        
 
             response = service.destroy(dr, event , call);
             
-            
-
             if (isStandalone && response == null)
             {
                 Logger.getLogger(this.getClass()).log(
@@ -179,13 +182,59 @@ public class DestroyWsrfCommand extends AbstractWsrfCommand
     }
 
     /**
-     * getWsrfErrorReponse
+     * Sets the operation.
+     * 
+     * @param service the new operation
+     */
+    private void setOperation(GenericPortType service)
+    {
+        call.setOperation(service.getOperation(GenericPortType.DESTROY_OPERATION));
+    }
+
+    /**
+     * getWsrfErrorReponse.
      * 
      * @return string error
      */
     protected String getWsrfErrorReponse()
     {
         return WSRFParameter.WSRF_LT_ERROR_RESPONSE;
+    }
+
+    /**
+     * Sets the soap method.
+     */
+    private void setSoapMethod() 
+    {
+        
+        SoapMethod method = new SoapMethod(new QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "Destroy"));
+        String serviceNamespaceURI =     (String) event.getMessage().getProperty(WSRFParameter.SERVICE_NAMESPACE);
+            
+            method.addNamedParameter(
+                new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd" , "Destroy"),
+                new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "QName"),
+                "in"
+                );
+            method.setReturnType(new javax.xml.namespace.QName(
+                "http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd",
+            ">DestroyResponse"));
+         
+        
+                method.setReturnClass(org.oasis.wsrf.lifetime.DestroyResponse.class);
+                
+                event.getMessage().setProperty("style", "wrapped");
+                event.getMessage().setProperty("use", "literal");
+                event.getMessage().setProperty(MuleProperties.MULE_SOAP_METHOD, method);
+                  
+                event.getMessage().setProperty(WSRFParameter.RETURN_QNAME, "DestroyResponse" );
+                event.getMessage().setProperty(WSRFParameter.RETURN_QTYPE, new javax.xml.namespace.QName(serviceNamespaceURI, ">DestroyResponse"));
+              
+                call.removeAllParameters();
+                call.addParameter(new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd" , "Destroy"),
+                new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "QName"),
+                ParameterMode.IN);
+                
+            
     }
 
 }

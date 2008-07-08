@@ -103,11 +103,14 @@ public class AxisWsdlWsrfMessageDispatcherLifeTimeAdviceTestCase extends Functio
 
        
 
+        // TODO raffaele.picardi: this test failed why this following line needs to be uncommented when standlone mode is fix. 
+        props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_STANDALONE_MODE, WSRFParameter.STANDALONE_YES);
+
         props.put(WSRFParameter.WSRF_RESOURCE_LIFETIME_OPERATION,
             MessagesTest.getString("RESOURCE_LIFETIME_DESTROY_OPERATION"));
        
-        
-        result = client.send("vm://vmQueue", new Integer(2000) , props);
+        //TODO raffaele.picardi:add documentation about object arrray using standalone mode
+        result = client.send("vm://vmQueue", new Object[] {""}  , props);
 
         assertNotNull(result);
         assertNotNull(result.getPayload());
@@ -161,9 +164,6 @@ public class AxisWsdlWsrfMessageDispatcherLifeTimeAdviceTestCase extends Functio
         System.out.println("New resource Key: " + result.getProperty(WSRFParameter.RESOURCE_KEY));
 
         props.put(WSRFParameter.RESOURCE_KEY, result.getProperty(WSRFParameter.RESOURCE_KEY));
-
-        // TODO raffaele.picardi: this test failed why this following line needs to be uncommented when standlone mode is fix. 
-        //props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_STANDALONE_MODE, WSRFParameter.STANDALONE_YES);
 
         props.put(WSRFParameter.WSRF_RESOURCE_LIFETIME_OPERATION,
             MessagesTest.getString("RESOURCE_LIFETIME_SCHEDULED_OPERATION"));
