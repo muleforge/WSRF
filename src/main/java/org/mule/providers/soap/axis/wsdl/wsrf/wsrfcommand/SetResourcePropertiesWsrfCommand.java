@@ -140,7 +140,7 @@ public class SetResourcePropertiesWsrfCommand extends AbstractWsrfCommand
                 return;
             }
             //TODO WSRF-24: standalone mode to fix
-            if (isStandalone)
+           /* if (isStandalone)
             {
                 event.getMessage().setProperty(MuleProperties.MULE_METHOD_PROPERTY , operationRP);
                 if (call == null)
@@ -180,7 +180,7 @@ public class SetResourcePropertiesWsrfCommand extends AbstractWsrfCommand
                     }
                 }
                 return;
-            }
+            }*/
             
             SetResourceProperties_Element request = createRequest (setOperationType , propertyName , nsProperty , propertyValue); 
             response = service.setResourceProperties(request, event, call);
@@ -294,6 +294,16 @@ public class SetResourcePropertiesWsrfCommand extends AbstractWsrfCommand
         return request;
         
     }
+    
+    /**
+     * getWsrfErrorReponse
+     * @return string error
+     */
+        protected String getWsrfErrorReponse()
+        {
+           return WSRFParameter.WSRF_RP_ERROR_RESPONSE;
+        }
+        
 
 }
 

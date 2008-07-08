@@ -37,7 +37,7 @@ import javax.xml.namespace.QName;
  * 
  * @author raffaele.picardi
  */
-public class AxisWsdlWsrfWSRFGenericFactoryIntegrationTestCase extends FunctionalTestCase
+public class AxisWsdlWsrfWSRFGenericFactoryTestCase extends FunctionalTestCase
 {
     
 
@@ -45,7 +45,7 @@ public class AxisWsdlWsrfWSRFGenericFactoryIntegrationTestCase extends Functiona
     /**
      * Constructor.
      */
-    public AxisWsdlWsrfWSRFGenericFactoryIntegrationTestCase()
+    public AxisWsdlWsrfWSRFGenericFactoryTestCase()
     {
         System.out.println("starting...");
 

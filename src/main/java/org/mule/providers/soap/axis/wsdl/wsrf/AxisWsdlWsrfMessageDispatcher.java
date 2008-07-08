@@ -10,6 +10,7 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf;
 
+import org.mule.impl.MuleMessage;
 import org.mule.providers.soap.axis.wsdl.AxisWsdlMessageDispatcher;
 import org.mule.providers.soap.axis.wsdl.wsrf.factory.Messages;
 import org.mule.providers.soap.axis.wsdl.wsrf.util.AdviceAdderHelper;
@@ -99,9 +100,11 @@ public class AxisWsdlWsrfMessageDispatcher extends AxisWsdlMessageDispatcher
     {
  
 
+        UMOMessage messageResponse;
+      
+         messageResponse =  super.doSend(event);
+      
         
-
-        UMOMessage messageResponse = super.doSend(event);
         
         try
         {

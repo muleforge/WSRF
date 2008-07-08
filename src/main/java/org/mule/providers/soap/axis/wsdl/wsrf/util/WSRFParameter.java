@@ -10,7 +10,7 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.util;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * Constants Message Mule Class in order to use/manage Message WSRF Mule Provider
  * Specifications.
@@ -164,7 +164,7 @@ public class WSRFParameter
     /**
      * The Constant WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE will be add in
      * WSRF_EXTRA_RESPONSE_MAP map to contain MessageElement[] object returned from
-     * axis call invocation .
+     * axis call invocation .in ResourceProperty Advice
      */
     public static final String WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE = "wsrfMessageElementArraySoapResponse";
 
@@ -223,4 +223,21 @@ public class WSRFParameter
     /** The Constant WSRF_RESOURCE_LIFETIME_OPERATION_NOT_FOUND. */
     public static final String WSRF_RESOURCE_LIFETIME_OPERATION_NOT_FOUND = "wsltOperationNotFound";
 
+    /** The Constant WSRF_LT_ERROR_RESPONSE. */
+    public static final String WSRF_LT_ERROR_RESPONSE = "wsrfLifetimeErrorResponse";
+
+    /** The Constant WSRF_LIFETIME_RESPONSE. */
+    public static final String WSRF_LIFETIME_RESPONSE = "wsrfLifetimeResponse";
+
+    /** The Constant WS_LT_DESTROY_OPERATION. */
+    public static final String WS_LT_DESTROY_OPERATION = "Destroy";
+
+    /** The Constant WS_LT_SET_TERMINATION_TIME_OPERATION. */
+    public static final String WS_LT_SET_TERMINATION_TIME_OPERATION = "SetTerminationTime";
+
+    /** The Constant WS_LT_SCHEDULED_SECONDS_TIME. */
+    public static final String WS_LT_SCHEDULED_SECONDS_TIME = "wsrfLifetimeNewTerminationTime";
+
+    /** The Constant WS_LT_SCHEDULED_SECONDS_TIME_NOT_FOUND. */
+    public static final String WS_LT_SCHEDULED_SECONDS_TIME_NOT_VALID = "wsltSecondTimesTOScheduleDestructionNotValid";
 }

@@ -32,7 +32,7 @@ public interface GenericPortType extends java.rmi.Remote
          * @param call call created from Axis Wsdl Wsrf Message Dispatcher
          * @return the resource property
          */
-        org.oasis.wsrf.properties.GetResourcePropertyResponse getResourceProperty(javax.xml.namespace.QName getResourcePropertyRequest ,UMOEvent event, Call call) throws java.rmi.RemoteException;
+        org.oasis.wsrf.properties.GetResourcePropertyResponse getResourceProperty(javax.xml.namespace.QName getResourcePropertyRequest , UMOEvent event , Call call) throws java.rmi.RemoteException;
 
 
         /**
@@ -51,7 +51,27 @@ public interface GenericPortType extends java.rmi.Remote
          * @param event the new soap method
          */
         void setSoapMethod(UMOEvent event);
+
         
+        /**
+         * Destroy.
+         * 
+         * @param destroyRequest the destroy request
+         * @param event the event
+         * @param justCreatedCall the just created call
+         * @return the org.oasis.wsrf.lifetime. destroy response
+         */
+        org.oasis.wsrf.lifetime.DestroyResponse destroy(org.oasis.wsrf.lifetime.Destroy destroyRequest ,  UMOEvent event , Call justCreatedCall) throws java.rmi.RemoteException ; 
+        
+        /**
+         * Sets the termination time.
+         * 
+         * @param setTerminationTimeRequest the set termination time request
+         * @param event the event
+         * @param justCreatedCall the just created call
+         * @return the org.oasis.wsrf.lifetime. set termination time response
+         */
+        org.oasis.wsrf.lifetime.SetTerminationTimeResponse setTerminationTime(org.oasis.wsrf.lifetime.SetTerminationTime setTerminationTimeRequest  ,  UMOEvent event , Call justCreatedCall) throws java.rmi.RemoteException;
         
 }
 

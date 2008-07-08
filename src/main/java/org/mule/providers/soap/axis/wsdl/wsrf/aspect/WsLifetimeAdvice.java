@@ -17,7 +17,6 @@ import org.mule.providers.soap.axis.wsdl.wsrf.wsrfcommand.IWsrfCommand;
 import org.mule.providers.soap.axis.wsdl.wsrf.wsrfcommand.WsrfCommandFactory;
 import org.mule.providers.soap.axis.wsdl.wsrfexception.WSLTOperationNotFound;
 import org.mule.providers.soap.axis.wsdl.wsrfexception.WSRFException;
-import org.mule.providers.soap.axis.wsdl.wsrfexception.WSRPOperationNotFound;
 import org.mule.umo.UMOEvent;
 
 import java.lang.reflect.Method;

@@ -19,6 +19,8 @@ import org.mule.umo.UMOEvent;
 import org.mule.umo.endpoint.UMOEndpointURI;
 import org.mule.util.BeanUtils;
 
+import java.rmi.RemoteException;
+
 import javax.xml.namespace.QName;
 
 
@@ -30,6 +32,7 @@ import org.apache.log4j.Logger;
 
 /**
  * The Class GenericPortTypeSoapBindingsStub.
+ * TODO raffaele.picardi: split code using the command Pattern
  */
 public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub implements GenericPortType
 {
@@ -53,7 +56,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
 
     static
     {
-        operations = new org.apache.axis.description.OperationDesc[5];
+        operations = new org.apache.axis.description.OperationDesc[7];
         initOperationDesc1();
     }
 
@@ -169,7 +172,61 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
                      ));
         operations[4] = oper;
         //End SetResourceProperty
-    }
+        
+        //Destroy
+        oper = new org.apache.axis.description.OperationDesc();
+        oper.setName("Destroy");
+        oper.addParameter(new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "Destroy"), new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", ">Destroy"), org.oasis.wsrf.lifetime.Destroy.class, org.apache.axis.description.ParameterDesc.IN, false, false);
+        oper.setReturnType(new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", ">DestroyResponse"));
+        oper.setReturnClass(org.oasis.wsrf.lifetime.DestroyResponse.class);
+        oper.setReturnQName(new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "DestroyResponse"));
+        oper.setStyle(org.apache.axis.constants.Style.DOCUMENT);
+        oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "ResourceNotDestroyedFault"),
+                      "org.oasis.wsrf.lifetime.ResourceNotDestroyedFaultType",
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "ResourceNotDestroyedFaultType"), 
+                      true
+                     ));
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "ResourceUnknownFault"),
+                      "org.oasis.wsrf.lifetime.ResourceUnknownFaultType",
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "ResourceUnknownFaultType"), 
+                      true
+                     ));
+        operations[5] = oper;
+        //End destroy
+        
+        //SetTerminationTime
+        oper = new org.apache.axis.description.OperationDesc();
+        oper.setName("SetTerminationTime");
+        oper.addParameter(new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "SetTerminationTime"), new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", ">SetTerminationTime"), org.oasis.wsrf.lifetime.SetTerminationTime.class, org.apache.axis.description.ParameterDesc.IN, false, false);
+        oper.setReturnType(new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", ">SetTerminationTimeResponse"));
+        oper.setReturnClass(org.oasis.wsrf.lifetime.SetTerminationTimeResponse.class);
+        oper.setReturnQName(new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "SetTerminationTimeResponse"));
+        oper.setStyle(org.apache.axis.constants.Style.DOCUMENT);
+        oper.setUse(org.apache.axis.constants.Use.LITERAL);
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "UnableToSetTerminationTimeFault"),
+                      "org.oasis.wsrf.lifetime.UnableToSetTerminationTimeFaultType",
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "UnableToSetTerminationTimeFaultType"), 
+                      true
+                     ));
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "ResourceUnknownFault"),
+                      "org.oasis.wsrf.lifetime.ResourceUnknownFaultType",
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "ResourceUnknownFaultType"), 
+                      true
+                     ));
+        oper.addFault(new org.apache.axis.description.FaultDesc(
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "TerminationTimeChangeRejectedFault"),
+                      "org.oasis.wsrf.lifetime.TerminationTimeChangeRejectedFaultType",
+                      new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "TerminationTimeChangeRejectedFaultType"), 
+                      true
+                     ));
+        operations[6] = oper;
+        //End SetTerminationTime
+        }
     
 
 
@@ -545,6 +602,64 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
     cachedSerFactories.add(simplesf);
     cachedDeserFactories.add(simpledf);
         
+    /* Lifetime */
+    qName = new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", ">DestroyResponse");
+    cachedSerQNames.add(qName);
+    cls = org.oasis.wsrf.lifetime.DestroyResponse.class;
+    cachedSerClasses.add(cls);
+    cachedSerFactories.add(beansf);
+    cachedDeserFactories.add(beandf);
+    
+    qName = new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", ">Destroy");
+    cachedSerQNames.add(qName);
+    cls = org.oasis.wsrf.lifetime.Destroy.class;
+    cachedSerClasses.add(cls);
+    cachedSerFactories.add(beansf);
+    cachedDeserFactories.add(beandf);
+    
+    qName = new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "ResourceNotDestroyedFaultType");
+    cachedSerQNames.add(qName);
+    cls = org.oasis.wsrf.lifetime.ResourceNotDestroyedFaultType.class;
+    cachedSerClasses.add(cls);
+    cachedSerFactories.add(beansf);
+    cachedDeserFactories.add(beandf);
+    
+    qName = new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "UnableToSetTerminationTimeFaultType");
+    cachedSerQNames.add(qName);
+    cls = org.oasis.wsrf.lifetime.UnableToSetTerminationTimeFaultType.class;
+    cachedSerClasses.add(cls);
+    cachedSerFactories.add(beansf);
+    cachedDeserFactories.add(beandf);
+    
+    qName = new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "TerminationTimeChangeRejectedFaultType");
+    cachedSerQNames.add(qName);
+    cls = org.oasis.wsrf.lifetime.TerminationTimeChangeRejectedFaultType.class;
+    cachedSerClasses.add(cls);
+    cachedSerFactories.add(beansf);
+    cachedDeserFactories.add(beandf);
+    
+    qName = new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", ">SetTerminationTime");
+    cachedSerQNames.add(qName);
+    cls = org.oasis.wsrf.lifetime.SetTerminationTime.class;
+    cachedSerClasses.add(cls);
+    cachedSerFactories.add(beansf);
+    cachedDeserFactories.add(beandf);
+    
+    qName = new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", ">TerminationNotification");
+    cachedSerQNames.add(qName);
+    cls = org.oasis.wsrf.lifetime.TerminationNotification.class;
+    cachedSerClasses.add(cls);
+    cachedSerFactories.add(beansf);
+    cachedDeserFactories.add(beandf);
+    
+    qName = new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", ">ScheduledResourceTerminationRP");
+    cachedSerQNames.add(qName);
+    cls = org.oasis.wsrf.lifetime.ScheduledResourceTerminationRP.class;
+    cachedSerClasses.add(cls);
+    cachedSerFactories.add(beansf);
+    cachedDeserFactories.add(beandf);
+    
+
     }
     
     /**
@@ -842,13 +957,13 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
     }
 /**
  * setResourceProperties generic stub
- * @param setResourcePropertiesRequest
- * @param event
- * @param justCreatedCall
- * @return response of MessageElement[] soap object
- * @throws java.rmi.RemoteException
+ * @param setResourcePropertiesRequest request
+ * @param event mule event
+ * @param justCreatedCall call object
+ * @return response of MessageElement[] soap object 
+ * @throws java.rmi.RemoteException remote exception
  */
-    public org.oasis.wsrf.properties.SetResourcePropertiesResponse setResourceProperties(org.oasis.wsrf.properties.SetResourceProperties_Element setResourcePropertiesRequest ,  UMOEvent event , Call justCreatedCall)         throws java.rmi.RemoteException
+    public org.oasis.wsrf.properties.SetResourcePropertiesResponse setResourceProperties(org.oasis.wsrf.properties.SetResourceProperties_Element setResourcePropertiesRequest ,  UMOEvent event , Call justCreatedCall)  throws java.rmi.RemoteException
     {
         if (super.cachedEndpoint == null) 
         {
@@ -906,5 +1021,144 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
             }
         }
     }
+    
+    /**
+     * Destroy
+     * @param destroyRequest destroy request object
+     * @param event mule event
+     * @param justCreatedCall call object
+     * @throws RemoteException remote exception 
+     * @return destroy response
+     */
+    public org.oasis.wsrf.lifetime.DestroyResponse destroy(org.oasis.wsrf.lifetime.Destroy destroyRequest ,  UMOEvent event , Call justCreatedCall) throws java.rmi.RemoteException  
+    {
+        if (super.cachedEndpoint == null)
+        {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        String standaloneStr =  (String) event.getMessage().getProperty(WSRFParameter.WSRF_RESOURCEPROPERTY_STANDALONE_MODE);
+        
+        boolean isStandalone = false;
+            
+        if (standaloneStr != null)  
+        {
+            isStandalone = standaloneStr.equals(WSRFParameter.STANDALONE_YES);
+        }
+        Call call =  null;
+        if (isStandalone)
+        {
+            call = justCreatedCall;
+            configureCall(call);
+        }
+        else
+        {
+            call = createCall(event , justCreatedCall);
+            
+        }
+        
+        call.setProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS, justCreatedCall.getProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS));
+
+             
+        call.setOperation(operations[5]);
+        call.setUseSOAPAction(true);
+        call.setSOAPActionURI("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime/Destroy");
+        call.setEncodingStyle(null);
+        call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
+        call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
+        call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        call.setOperationName(new javax.xml.namespace.QName("", "Destroy"));
+
+        setRequestHeaders(call);
+        setAttachments(call);
+        java.lang.Object resp = call.invoke(new java.lang.Object[] {destroyRequest});
+
+        if (resp instanceof java.rmi.RemoteException) 
+        {
+            throw (java.rmi.RemoteException) resp;
+        }
+        else 
+        {
+            //extractAttachments(call);
+            try
+            {
+                return (org.oasis.wsrf.lifetime.DestroyResponse) resp;
+            } 
+            catch (java.lang.Exception exception) 
+            {
+                return (org.oasis.wsrf.lifetime.DestroyResponse) org.apache.axis.utils.JavaUtils.convert(resp, org.oasis.wsrf.lifetime.DestroyResponse.class);
+            }
+        }
+    }
+    
+    /**
+     * set termination request of lifetime.
+     * 
+     * @param setTerminationTimeRequest request
+     * @param event the event
+     * @param justCreatedCall the just created call
+     * @return response
+     * @throws java.rmi.RemoteException exception
+     * @throws RemoteException the remote exception
+     */
+    public org.oasis.wsrf.lifetime.SetTerminationTimeResponse setTerminationTime(org.oasis.wsrf.lifetime.SetTerminationTime setTerminationTimeRequest  ,  UMOEvent event , Call justCreatedCall) throws java.rmi.RemoteException
+     {
+        if (super.cachedEndpoint == null) 
+        {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        String standaloneStr =  (String) event.getMessage().getProperty(WSRFParameter.WSRF_RESOURCEPROPERTY_STANDALONE_MODE);
+        
+        boolean isStandalone = false;
+            
+        if (standaloneStr != null)  
+        {
+            isStandalone = standaloneStr.equals(WSRFParameter.STANDALONE_YES);
+        }
+        Call call =  null;
+        if (isStandalone)
+        {
+            call = justCreatedCall;
+            configureCall(call);
+        }
+        else
+        {
+            call = createCall(event , justCreatedCall);
+            
+        }
+        
+        call.setProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS, justCreatedCall.getProperty(Constants.ENV_ADDRESSING_REQUEST_HEADERS));
+
+        
+        call.setOperation(operations[6]);
+        call.setUseSOAPAction(true);
+        call.setSOAPActionURI("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime/SetTerminationTime");
+        call.setEncodingStyle(null);
+        call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
+        call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
+        call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        call.setOperationName(new javax.xml.namespace.QName("", "SetTerminationTime"));
+
+        setRequestHeaders(call);
+        setAttachments(call);
+        java.lang.Object resp = call.invoke(new java.lang.Object[] {setTerminationTimeRequest});
+
+        if (resp instanceof java.rmi.RemoteException) 
+        {
+            throw (java.rmi.RemoteException) resp;
+        }
+        else
+        {
+            //extractAttachments(call);
+            try
+            {
+                return (org.oasis.wsrf.lifetime.SetTerminationTimeResponse) resp;
+            }
+            catch (java.lang.Exception exception) 
+            {
+                return (org.oasis.wsrf.lifetime.SetTerminationTimeResponse) org.apache.axis.utils.JavaUtils.convert(resp, org.oasis.wsrf.lifetime.SetTerminationTimeResponse.class);
+            }
+        }
+    }
+
 
 }

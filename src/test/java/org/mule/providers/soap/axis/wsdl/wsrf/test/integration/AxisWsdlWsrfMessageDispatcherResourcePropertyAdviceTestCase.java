@@ -34,12 +34,12 @@ import org.apache.log4j.Logger;
  * 
  * @author raffaele.picardi
  */
-public class AxisWsdlWsrfMessageDispatcherResourcePropertyAdviceIntegrationTestCase extends FunctionalTestCase
+public class AxisWsdlWsrfMessageDispatcherResourcePropertyAdviceTestCase extends FunctionalTestCase
 {
     /**
      * Constructor
      */
-    public AxisWsdlWsrfMessageDispatcherResourcePropertyAdviceIntegrationTestCase()
+    public AxisWsdlWsrfMessageDispatcherResourcePropertyAdviceTestCase()
     {
         System.out.println("start...");
 

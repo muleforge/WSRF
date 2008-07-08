@@ -10,26 +10,25 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.wsrfcommand;
 
-import org.mule.config.MuleProperties;
 import org.mule.providers.soap.axis.wsdl.AxisWsdlConnector;
-import org.mule.providers.soap.axis.wsdl.wsrf.factory.Messages;
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 import org.mule.providers.soap.axis.wsdl.wsrfexception.WSRFException;
-import org.mule.providers.soap.axis.wsdl.wsrfexception.WSRFOperationException;
 import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortType;
 import org.mule.providers.soap.wsdl.wsrf.instance.GenericPortTypeSoapBindingsStub;
 import org.mule.providers.soap.wsdl.wsrf.instance.GenericServiceAddressingLocator;
 import org.mule.providers.soap.wsdl.wsrf.instance.RPMessages;
 import org.mule.umo.endpoint.UMOEndpointURI;
 
-import javax.xml.namespace.QName;
+import java.util.Calendar;
+
 
 import org.apache.axis.configuration.FileProvider;
 import org.apache.axis.message.addressing.Address;
 import org.apache.axis.message.addressing.EndpointReferenceType;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.oasis.wsrf.properties.GetResourcePropertyResponse;
+import org.oasis.wsrf.lifetime.SetTerminationTime;
+import org.oasis.wsrf.lifetime.SetTerminationTimeResponse;
 
 /**
  * Command Object for SetTerminationTime operation
@@ -42,154 +41,170 @@ public class SetTerminationTimeWsrfCommand extends AbstractWsrfCommand
      * @throws WSRFException wsrf exception
      */
     protected void handleExecute() throws WSRFException
-    {
-       /* GetResourcePropertyResponse response = null;
-        GenericPortTypeSoapBindingsStub stub = null;
-        String operationRP = WSRFParameter.GET_RESOURCE_PROPERTY.toString(); 
-        //operationRP defined
-        String propertyName =  (String) event.getMessage().getProperty(WSRFParameter.WSRF_RESOURCEPROPERTY_NAME);
-        if (propertyName == null) 
-        {
-            
-            Logger.getLogger(this.getClass()).log(Level.ERROR, this.getClass().getName() + " : " + " Skipped WS-RP operation : no resource property name defined  " + WSRFParameter.WSRF_RESOURCEPROPERTY_NAME);
-            throw new WSRFException(RPMessages.getString(WSRFParameter.RESOURCE_PROPERTY_NAME_NOT_FOUND));
-          
-        }
-        //name RP defined
-        String nsProperty =  (String) event.getMessage().getProperty(WSRFParameter.WSRF_RESOURCEPROPERTY_NS);
-        if (nsProperty == null) 
-        {
-            
-            Logger.getLogger(this.getClass()).log(Level.ERROR, this.getClass().getName() + " : " + " Skipped WS-RP operation : no namespace resource property  defined  " + WSRFParameter.WSRF_RESOURCEPROPERTY_NS);
-            throw new WSRFException(RPMessages.getString(WSRFParameter.RESOURCE_PROPERTY_NS_NOT_FOUND));
-            
-        }
-        //namespace RP defined
-        
+    {  
+     SetTerminationTimeResponse response = null;
+    GenericPortTypeSoapBindingsStub stub = null;
+    String operationLT = WSRFParameter.WS_LT_SET_TERMINATION_TIME_OPERATION.toString(); 
+    //operationRP defined
+
     
-        String resourceKey =  (String) event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY);
-        if (resourceKey == null && call != null) 
-        {
-            
-            Logger.getLogger(this.getClass()).log(Level.ERROR, this.getClass().getName() + " : " + " Skipped WS-RP operation : no resourceKey  property  defined  " + WSRFParameter.RESOURCE_KEY);
-            throw new WSRFException(RPMessages.getString(WSRFParameter.RESOURCE_KEY_NOT_FOUND));
-        }
+
+    String resourceKey =  (String) event.getMessage().getProperty(WSRFParameter.RESOURCE_KEY);
+    if (resourceKey == null && call != null) 
+    {
+        
+        Logger.getLogger(this.getClass()).log(Level.ERROR, this.getClass().getName() + " : " + " Skipped WS-RP operation : no resourceKey  property  defined  " + WSRFParameter.RESOURCE_KEY);
+        throw new WSRFException(RPMessages.getString(WSRFParameter.RESOURCE_KEY_NOT_FOUND));
+    }
+    int seconds = 0;
+    String secondsStr =  (String) event.getMessage().getProperty(WSRFParameter.WS_LT_SCHEDULED_SECONDS_TIME);
+    if (secondsStr == null && call != null) 
+    {
+        
+        Logger.getLogger(this.getClass()).log(Level.INFO, this.getClass().getName() + " : " + " set 0 to deafault value of not specified property:  " + WSRFParameter.WS_LT_SCHEDULED_SECONDS_TIME);
+        
       
+    }
+    else 
+    {
+        try
+        {
+            seconds = Integer.parseInt(secondsStr);
+        }
+        catch (Exception e) 
+        {
+            Logger.getLogger(this.getClass()).log(Level.ERROR, this.getClass().getName() + " : " + " invalid specified property:  " + WSRFParameter.WS_LT_SCHEDULED_SECONDS_TIME);
+            throw new WSRFException(RPMessages.getString(WSRFParameter.WS_LT_SCHEDULED_SECONDS_TIME_NOT_VALID));
+            
+        }
+    }
+    try
+    {
+        UMOEndpointURI endpointUri = event.getEndpoint().getEndpointURI();
+        String endPointURI = endpointUri.getAddress();
+        int indexOfInitOfParameter =  endPointURI.indexOf("?");
+        if (indexOfInitOfParameter != -1)
+        {  
+        endPointURI = endPointURI.substring(0, indexOfInitOfParameter);
+        }
+        
+
+      
+        GenericServiceAddressingLocator serviceLocator = new GenericServiceAddressingLocator(new FileProvider(AxisWsdlConnector.DEFAULT_MULE_AXIS_CLIENT_CONFIG));
+        EndpointReferenceType serviceEPR;
+        GenericPortType service = null;
+        
+     
         
         try
         {
-            UMOEndpointURI endpointUri = event.getEndpoint().getEndpointURI();
-            String endPointURI = endpointUri.getAddress();
-            int indexOfInitOfParameter =  endPointURI.indexOf("?");
-            if (indexOfInitOfParameter != -1)
-            {  
-            endPointURI = endPointURI.substring(0, indexOfInitOfParameter);
-            }
-            
-
+     
+            serviceEPR = new EndpointReferenceType();
+            serviceEPR.setAddress(new Address(endPointURI));
+        
+            service = serviceLocator.getPortTypePort(serviceEPR , event);
           
-            GenericServiceAddressingLocator serviceLocator = new GenericServiceAddressingLocator(new FileProvider(AxisWsdlConnector.DEFAULT_MULE_AXIS_CLIENT_CONFIG));
-            EndpointReferenceType serviceEPR;
-            GenericPortType service = null;
-            
-         
-            
-            try
+                  Logger.getLogger(this.getClass()).log(Level.DEBUG,
+                this.getClass().getName() + " : " + " service port type port load.");
+        }
+        catch (Exception e)
+        {
+            Logger.getLogger(this.getClass()).log(Level.ERROR,
+                this.getClass().getName() + " : " + " Error during port type port loading. WS-LT operation skipped");
+            e.printStackTrace();
+            return;
+        }
+        
+        SetTerminationTime setTerminationTimeRequest = new SetTerminationTime();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.SECOND, seconds);
+        setTerminationTimeRequest.setRequestedTerminationTime(calendar);
+        //TODO WSRF-24: standalone mode to fix
+/*            if (isStandalone)
+        {
+            event.getMessage().setProperty(MuleProperties.MULE_METHOD_PROPERTY , operationLT);
+            if (call == null)
             {
-         
-                serviceEPR = new EndpointReferenceType();
-                serviceEPR.setAddress(new Address(endPointURI));
-            
-                service = serviceLocator.getPortTypePort(serviceEPR , event);
+                //call is not created yet.: advice can add property to event message . so next time , when call is created before method continues perform its operations
+                Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : " + " Pre  WS-LT operation : add required initial properties message");
               
-                      Logger.getLogger(this.getClass()).log(Level.DEBUG,
-                    this.getClass().getName() + " : " + " service port type port load.");
-            }
-            catch (Exception e)
-            {
-                Logger.getLogger(this.getClass()).log(Level.ERROR,
-                    this.getClass().getName() + " : " + " Error during port type port loading. WS-RP operation skipped");
-                e.printStackTrace();
-                return;
-            }
-            
-            if (isStandalone)
-            {
-                event.getMessage().setProperty(MuleProperties.MULE_METHOD_PROPERTY , operationRP);
-                if (call == null)
+                if (operationLT.equals(WSRFParameter.WS_LT_DESTROY_OPERATION))
                 {
-                    //call is not created yet.: advice can add property to event message . so next time , when call is created before method continues perform its operations
-                    Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : " + " Pre  WS-RP operation : add required initial properties message");
-                  
-                    if (operationRP.equals(WSRFParameter.GET_RESOURCE_PROPERTY))
-                    {
-                        if (!(event.getMessage().getPayload() instanceof Object[]))
-                        {
-                            Logger.getLogger(this.getClass())
-                                .log(
-                                    Level.ERROR,
-                                    this.getClass().getName()
-                                                    + " : "
-                                                    + " Pre  WS-RP operation :  It is not possible to set getResourcePropertyRequest in Object[0] payload array. Paylod is not istance of Object[] ");
-                            return;
-                        }
-                        // enrich message
-                        service.setSoapMethod(event);
-                        //TODO raffaele.picardi: payload of message needs to be Object[]  {} of 1 - size
-                        ((Object[]) (event.getMessage().getPayload()))[0] = new QName(nsProperty,
-                            propertyName);
-                    }
-                    else
+                    if (!(event.getMessage().getPayload() instanceof Object[]))
                     {
                         Logger.getLogger(this.getClass())
                             .log(
                                 Level.ERROR,
                                 this.getClass().getName()
                                                 + " : "
-                                                + " Pre  WS-RP operation :  It is not possible to fine this WS-RP operation:"
-                                                + operationRP);
+                                                + " Pre  WS-LT  operation :  It is not possible to set DestroyRequest in Object[0] payload array. Paylod is not istance of Object[] ");
                         return;
                     }
+                    // enrich message
+                    service.setSoapMethod(event);
+             
+     
+                    //TODO raffaele.picardi: payload of message needs to be Object[]  {} of 1 - size
+                    //TODO raffaele.picardi:test standalone mode
+                    ((Object[]) (event.getMessage().getPayload()))[0] = dr;
                 }
-                return;
+                else
+                {
+                    Logger.getLogger(this.getClass())
+                        .log(
+                            Level.ERROR,
+                            this.getClass().getName()
+                                            + " : "
+                                            + " Pre  WS-LT  operation :  It is not possible to fine this WS-LT operation:"
+                                            + operationLT);
+                    return;
+                }
             }
-       
-            
-            response = service.getResourceProperty(new QName(nsProperty, propertyName) , event , call);
-            
-            
+            return;
+        }*/
+   
+        
+        response = service.setTerminationTime(setTerminationTimeRequest , event , call);
+        
+        
 
-            if (isStandalone && response == null)
-            {
-                Logger.getLogger(this.getClass()).log(
-                    Level.DEBUG,
-                    this.getClass().getName() + " : " + " Getting Resource Property in standalone mode:  "  + " response invocation will be add in payload message of wsdl provider invocation");
-                
-                return;
-            }
-        }
-        catch (Exception e)
+        if (isStandalone && response == null)
         {
             Logger.getLogger(this.getClass()).log(
-                Level.ERROR,
-                this.getClass().getName() + " : " + " response null");
-       
-            throw new WSRFException(e.getMessage());
+                Level.DEBUG,
+                this.getClass().getName() + " : " + " Destroy in standalone mode:  "  + " response invocation will be add in payload message of wsdl provider invocation");
             
+            return;
         }
-
-           
-        this.wsrfExtraResponseMap.put(WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE, response.get_any());
-        Logger.getLogger(this.getClass()).log(
-            Level.INFO,
-            this.getClass().getName() + " : " + " WS-RP operation successfull. Response added in    "
-                            + WSRFParameter.WSRF_EXTRA_RESPONSE_MAP + "  map as [key = "
-                            + WSRFParameter.WSRF_MESSAGE_ELEMENT_ARRAY_SOAP_RESPONSE + " , value= "
-                            + response.get_any().toString());
-
-        */
-        //TODO raffaele.picardi: implement  SetTerminationTime
     }
+    catch (Exception e)
+    {
+        Logger.getLogger(this.getClass()).log(
+            Level.ERROR,
+            this.getClass().getName() + " : " + " response null");
+   
+        throw new WSRFException(e.getMessage());
+        
+    }
+
+       
+    this.wsrfExtraResponseMap.put(WSRFParameter.WSRF_LIFETIME_RESPONSE, new Boolean(true));
+    Logger.getLogger(this.getClass()).log(
+        Level.INFO,
+        this.getClass().getName() + " : " + " WS-LT operation successfull. Response added in    "
+                        + WSRFParameter.WSRF_EXTRA_RESPONSE_MAP + "  map as [key = "
+                        + WSRFParameter.WSRF_LIFETIME_RESPONSE + " , value= "  + "true");
+
+    }
+    
+    /**
+     * getWsrfErrorReponse
+     * @return string error
+     */
+        protected String getWsrfErrorReponse()
+        {
+           return WSRFParameter.WSRF_LT_ERROR_RESPONSE;
+        }
 
 }
 

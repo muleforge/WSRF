@@ -73,12 +73,17 @@ public abstract  class AbstractWsrfCommand implements IWsrfCommand
                              + e.getMessage());
          
          e.printStackTrace();
-         wsrfExtraResponseMap.put(WSRFParameter.WSRF_RP_ERROR_RESPONSE, e.getMessage());
+         wsrfExtraResponseMap.put(getWsrfErrorReponse(), e.getMessage());
          return;
      }
      
     }
-
+/**
+ * Get string key used into WsrfExtraResponse map to add error of advice
+ * @return string of error
+ */
+    protected abstract  String getWsrfErrorReponse();
+    
 /**
  * Handle method to override for execute logic.
  * 
