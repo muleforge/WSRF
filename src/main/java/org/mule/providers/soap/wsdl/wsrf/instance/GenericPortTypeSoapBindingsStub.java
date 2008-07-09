@@ -235,6 +235,7 @@ public class GenericPortTypeSoapBindingsStub extends org.apache.axis.client.Stub
                       true
                      ));
         operations[6] = oper;
+        operations[SET_TERMINATION_TIME_OPERATION] = oper;
         //End SetTerminationTime
         }
     

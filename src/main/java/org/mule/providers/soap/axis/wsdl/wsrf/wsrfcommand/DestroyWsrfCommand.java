@@ -125,14 +125,12 @@ public class DestroyWsrfCommand extends AbstractWsrfCommand
                                                     + " Pre  WS-LT  operation :  It is not possible to set DestroyRequest in Object[0] payload array. Paylod is not istance of Object[] ");
                             return;
                         }
-                        // enrich message
-                        setSoapMethod();
-                        setOperation(service);
-         
+                       
                         //TODO raffaele.picardi: payload of message needs to be Object[]  {} of 1 - size
                         //TODO raffaele.picardi:test standalone mode
                         ((Object[]) (event.getMessage().getPayload()))[0] = dr;
                     }
+                    
                     else
                     {
                         Logger.getLogger(this.getClass())
@@ -144,6 +142,13 @@ public class DestroyWsrfCommand extends AbstractWsrfCommand
                                                 + operationLT);
                         return;
                     }
+                }
+                else
+                { //call != null
+                    // enrich message
+                    setSoapMethod();
+                    setOperation(service);
+     
                 }
                 return;
             }
@@ -228,7 +233,7 @@ public class DestroyWsrfCommand extends AbstractWsrfCommand
                   
                 event.getMessage().setProperty(WSRFParameter.RETURN_QNAME, "DestroyResponse" );
                 event.getMessage().setProperty(WSRFParameter.RETURN_QTYPE, new javax.xml.namespace.QName(serviceNamespaceURI, ">DestroyResponse"));
-              
+        
                 call.removeAllParameters();
                 call.addParameter(new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd" , "Destroy"),
                 new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "QName"),

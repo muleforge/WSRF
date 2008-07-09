@@ -14,6 +14,7 @@ import org.mule.umo.UMOEvent;
 
 import org.apache.axis.client.Call;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Interface GenenericPortType.
  */
@@ -24,7 +25,11 @@ public interface GenericPortType extends java.rmi.Remote
     
     
     
-        public final static int DESTROY_OPERATION = 5;
+        /** The Constant DESTROY_OPERATION. */
+        public static final int DESTROY_OPERATION = 5;
+        
+        /** The Constant SET_TERMINATION_TIME_OPERATION. */
+        public static final int SET_TERMINATION_TIME_OPERATION = 6;
 
         /**
          * Gets the resource property.
@@ -33,6 +38,7 @@ public interface GenericPortType extends java.rmi.Remote
          * @param event event
          * @param call call created from Axis Wsdl Wsrf Message Dispatcher
          * @return the resource property
+         * @throws RemoteException the remote exception
          */
         org.oasis.wsrf.properties.GetResourcePropertyResponse getResourceProperty(javax.xml.namespace.QName getResourcePropertyRequest , UMOEvent event , Call call) throws java.rmi.RemoteException;
 
@@ -44,14 +50,15 @@ public interface GenericPortType extends java.rmi.Remote
          * @param event the event
          * @param justCreatedCall the just created call
          * @return the sets the resource properties response
+         * @throws RemoteException the remote exception
          */
         org.oasis.wsrf.properties.SetResourcePropertiesResponse setResourceProperties(org.oasis.wsrf.properties.SetResourceProperties_Element setResourcePropertiesRequest ,  UMOEvent event , Call justCreatedCall)    throws java.rmi.RemoteException;
         
          /**
-         * Sets the soap method.
-         * 
-         * @param event the new soap method
-         */
+             * Sets the soap method.
+             * 
+             * @param event the new soap method
+             */
         void setSoapMethod(UMOEvent event);
 
         
@@ -62,6 +69,7 @@ public interface GenericPortType extends java.rmi.Remote
          * @param event the event
          * @param justCreatedCall the just created call
          * @return the org.oasis.wsrf.lifetime. destroy response
+         * @throws RemoteException the remote exception
          */
         org.oasis.wsrf.lifetime.DestroyResponse destroy(org.oasis.wsrf.lifetime.Destroy destroyRequest ,  UMOEvent event , Call justCreatedCall) throws java.rmi.RemoteException ; 
         
@@ -72,13 +80,15 @@ public interface GenericPortType extends java.rmi.Remote
          * @param event the event
          * @param justCreatedCall the just created call
          * @return the org.oasis.wsrf.lifetime. set termination time response
+         * @throws RemoteException the remote exception
          */
         org.oasis.wsrf.lifetime.SetTerminationTimeResponse setTerminationTime(org.oasis.wsrf.lifetime.SetTerminationTime setTerminationTimeRequest  ,  UMOEvent event , Call justCreatedCall) throws java.rmi.RemoteException;
  
         /**
          * Gets the operation.
          * 
-         * @param operation the operation . use constant as GenericPortType.DESTROY_OPERATION
+         * @param operation the operation . use constant as
+         *            GenericPortType.DESTROY_OPERATION
          * @return the operation operation
          */
         org.apache.axis.description.OperationDesc getOperation(int operation);

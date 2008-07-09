@@ -10,6 +10,8 @@
 
 package org.mule.providers.soap.axis.wsdl.wsrf.wsrfcommand;
 
+import org.mule.config.MuleProperties;
+import org.mule.providers.soap.SoapMethod;
 import org.mule.providers.soap.axis.wsdl.AxisWsdlConnector;
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 import org.mule.providers.soap.axis.wsdl.wsrfexception.WSRFException;
@@ -21,12 +23,16 @@ import org.mule.umo.endpoint.UMOEndpointURI;
 
 import java.util.Calendar;
 
+import javax.xml.namespace.QName;
+import javax.xml.rpc.ParameterMode;
+
 
 import org.apache.axis.configuration.FileProvider;
 import org.apache.axis.message.addressing.Address;
 import org.apache.axis.message.addressing.EndpointReferenceType;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.oasis.wsrf.lifetime.Destroy;
 import org.oasis.wsrf.lifetime.SetTerminationTime;
 import org.oasis.wsrf.lifetime.SetTerminationTimeResponse;
 
@@ -120,7 +126,7 @@ public class SetTerminationTimeWsrfCommand extends AbstractWsrfCommand
         calendar.add(Calendar.SECOND, seconds);
         setTerminationTimeRequest.setRequestedTerminationTime(calendar);
         //TODO WSRF-24: standalone mode to fix
-/*            if (isStandalone)
+        if (isStandalone)
         {
             event.getMessage().setProperty(MuleProperties.MULE_METHOD_PROPERTY , operationLT);
             if (call == null)
@@ -128,7 +134,7 @@ public class SetTerminationTimeWsrfCommand extends AbstractWsrfCommand
                 //call is not created yet.: advice can add property to event message . so next time , when call is created before method continues perform its operations
                 Logger.getLogger(this.getClass()).log(Level.DEBUG, this.getClass().getName() + " : " + " Pre  WS-LT operation : add required initial properties message");
               
-                if (operationLT.equals(WSRFParameter.WS_LT_DESTROY_OPERATION))
+                if (operationLT.equals(WSRFParameter.WS_LT_SET_TERMINATION_TIME_OPERATION))
                 {
                     if (!(event.getMessage().getPayload() instanceof Object[]))
                     {
@@ -137,17 +143,15 @@ public class SetTerminationTimeWsrfCommand extends AbstractWsrfCommand
                                 Level.ERROR,
                                 this.getClass().getName()
                                                 + " : "
-                                                + " Pre  WS-LT  operation :  It is not possible to set DestroyRequest in Object[0] payload array. Paylod is not istance of Object[] ");
+                                                + " Pre  WS-LT  operation :  It is not possible to set SetTerminationTime request  in Object[0] payload array. Paylod is not istance of Object[] ");
                         return;
                     }
-                    // enrich message
-                    service.setSoapMethod(event);
-             
-     
+                   
                     //TODO raffaele.picardi: payload of message needs to be Object[]  {} of 1 - size
                     //TODO raffaele.picardi:test standalone mode
-                    ((Object[]) (event.getMessage().getPayload()))[0] = dr;
+                    ((Object[]) (event.getMessage().getPayload()))[0] = setTerminationTimeRequest;
                 }
+                
                 else
                 {
                     Logger.getLogger(this.getClass())
@@ -160,8 +164,15 @@ public class SetTerminationTimeWsrfCommand extends AbstractWsrfCommand
                     return;
                 }
             }
+            else
+            { //call != null
+                // enrich message
+                setSoapMethod();
+                setOperation(service);
+ 
+            }
             return;
-        }*/
+        }
    
         
         response = service.setTerminationTime(setTerminationTimeRequest , event , call);
@@ -172,7 +183,7 @@ public class SetTerminationTimeWsrfCommand extends AbstractWsrfCommand
         {
             Logger.getLogger(this.getClass()).log(
                 Level.DEBUG,
-                this.getClass().getName() + " : " + " Destroy in standalone mode:  "  + " response invocation will be add in payload message of wsdl provider invocation");
+                this.getClass().getName() + " : " + " SetTerminationTime in standalone mode:  "  + " response invocation will be add in payload message of wsdl provider invocation");
             
             return;
         }
@@ -205,6 +216,58 @@ public class SetTerminationTimeWsrfCommand extends AbstractWsrfCommand
         {
            return WSRFParameter.WSRF_LT_ERROR_RESPONSE;
         }
+        
+        
+        
+        /**
+         * Sets the operation.
+         * 
+         * @param service the new operation
+         */
+        private void setOperation(GenericPortType service)
+        {
+            call.setOperation(service.getOperation(GenericPortType.SET_TERMINATION_TIME_OPERATION));
+        }
+
+
+
+        /**
+         * Sets the soap method.
+         */
+        private void setSoapMethod() 
+        {
+            
+           SoapMethod method = new SoapMethod(new QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd", "SetTerminationTime"));
+            String serviceNamespaceURI =     (String) event.getMessage().getProperty(WSRFParameter.SERVICE_NAMESPACE);
+                
+                method.addNamedParameter(
+                    new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd" , "SetTerminationTime"),
+                    new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "QName"),
+                    "in"
+                    );
+                method.setReturnType(new javax.xml.namespace.QName(
+                    "http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd",
+                ">SetTerminationTimeResponse"));
+             
+            
+                    method.setReturnClass(org.oasis.wsrf.lifetime.SetTerminationTimeResponse.class);
+                    
+                    event.getMessage().setProperty("style", "wrapped");
+                    event.getMessage().setProperty("use", "literal");
+                    event.getMessage().setProperty(MuleProperties.MULE_SOAP_METHOD, method);
+                      
+                    event.getMessage().setProperty(WSRFParameter.RETURN_QNAME, "SetTerminationTimeResponse" );
+                    event.getMessage().setProperty(WSRFParameter.RETURN_QTYPE, new javax.xml.namespace.QName(serviceNamespaceURI, ">SetTerminationTimeResponse"));
+            
+                    call.removeAllParameters();
+                    call.addParameter(new javax.xml.namespace.QName("http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.xsd" , "SetTerminationTime"),
+                    new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "QName"),
+                    ParameterMode.IN);
+                  
+                
+        }
+
+        
 
 }
 
