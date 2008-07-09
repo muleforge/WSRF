@@ -56,7 +56,7 @@ public class AxisWsdlWsrfMessageDispatcherLifeTimeAdviceTestCase extends Functio
     /**
      * Test a single Call invocation method of Globus Grid Service using a Mule
      * Message with ResourceKey created from factory service and perform a
-     * GetResourceProperty Operation
+     * Destroy Operation in standalone mode
      * 
      * @throws Exception exception
      */
@@ -103,23 +103,89 @@ public class AxisWsdlWsrfMessageDispatcherLifeTimeAdviceTestCase extends Functio
 
        
 
-        // TODO raffaele.picardi: this test failed why this following line needs to be uncommented when standlone mode is fix. 
-        props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_STANDALONE_MODE, WSRFParameter.STANDALONE_YES);
+       props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_STANDALONE_MODE, WSRFParameter.STANDALONE_YES);
 
         props.put(WSRFParameter.WSRF_RESOURCE_LIFETIME_OPERATION,
             MessagesTest.getString("RESOURCE_LIFETIME_DESTROY_OPERATION"));
        
-        //TODO raffaele.picardi:add documentation about object arrray using standalone mode
-        result = client.send("vm://vmQueue", new Object[] {""}  , props);
+         result = client.send("vm://vmQueue", new Object[] {""}  , props);
 
         assertNotNull(result);
         assertNotNull(result.getPayload());
         
-        assertNotNull(result.getProperty(WSRFParameter.WSRF_LIFETIME_RESPONSE));
+    
 
 
     }
 
+    /** Test a single Call invocation method of Globus Grid Service using a Mule
+     * Message with ResourceKey created from factory service and perform set termination time in standalone mode 
+     * @throws Exception exception
+     */
+    public final void testCallSingleInstanceGlobusServiceByMessageFactoryAndSetTerminationTimeStandalone()
+        throws Exception
+    {
+        MuleClient client = new MuleClient();
+        SoapMethod method = new SoapMethod(new QName("", MessagesTest.getString("SOAP_METHOD_NAME")));
+        method.addNamedParameter(new QName(MessagesTest.getString("NAMED_PARAMETER")),
+            new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"),
+                MessagesTest.getString("RETURN_QNAME")), "in");
+        method.setReturnType(new javax.xml.namespace.QName(MessagesTest.getString("SERVICE_NAMESPACE_URI"),
+            MessagesTest.getString("RETURN_QTYPE_NAME")));
+        method.setReturnClass(Class.forName(MessagesTest.getString("RETURN_CLASSNAME")));
+
+        Map props = new HashMap();
+        props.put("style", "wrapped");
+        props.put("use", "literal");
+        props.put(MuleProperties.MULE_SOAP_METHOD, method);
+
+        // props.put(WSRFParameter.SERVICE_NAMESPACE,
+        // Messages.getString("RESOURCE_KEY"));
+        props.put(WSRFParameter.SERVICE_NAMESPACE, MessagesTest.getString("SERVICE_NAMESPACE_URI"));
+        props.put(WSRFParameter.RESOURCE_KEY_NAME, MessagesTest.getString("RESOURCE_KEY_NAME"));
+        props.put(WSRFParameter.RETURN_QNAME, MessagesTest.getString("RETURN_QNAME"));
+        props.put(WSRFParameter.RETURN_QTYPE, new javax.xml.namespace.QName(
+            MessagesTest.getString("SERVICE_NAMESPACE_URI"), MessagesTest.getString("RETURN_QTYPE_NAME")));
+        props.put(WSRFParameter.RETURN_CLASS, Class.forName(MessagesTest.getString("RETURN_CLASSNAME")));
+        props.put(WSRFParameter.SOAP_ACTION_URI, MessagesTest.getString("SOAP_ACTION_URI"));
+
+        // factory properties
+        props.put(WSRFParameter.WSRF_FACTORY_SERVICE_ADDRESS,
+            MessagesTest.getString("FACTORY_SERVICE_ADDRESS"));
+        props.put(MuleProperties.MULE_METHOD_PROPERTY, "add");
+        UMOMessage result = client.send("vm://vmQueue", new Integer(2), props);
+
+        assertNotNull(result);
+        assertNotNull(result.getPayload());
+        assertNotNull(result.getProperty(WSRFParameter.RESOURCE_KEY));
+        System.out.println(result.getPayload());
+        System.out.println("New resource Key: " + result.getProperty(WSRFParameter.RESOURCE_KEY));
+
+        props.put(WSRFParameter.RESOURCE_KEY, result.getProperty(WSRFParameter.RESOURCE_KEY));
+
+        props.put(WSRFParameter.WSRF_RESOURCE_LIFETIME_OPERATION,
+            MessagesTest.getString("RESOURCE_LIFETIME_SCHEDULED_OPERATION"));
+       
+        props.put(WSRFParameter.WS_LT_SCHEDULED_SECONDS_TIME,
+            MessagesTest.getString("RESOURCE_LIFETIME_SECONDS_TIME_TO_SCHEDULED_DESTRUCTION"));
+       
+        
+
+        props.put(WSRFParameter.WSRF_RESOURCEPROPERTY_STANDALONE_MODE, WSRFParameter.STANDALONE_YES);
+
+       
+        
+        result = client.send("vm://vmQueue", new Object[] {""} , props);
+
+        assertNotNull(result);
+        assertNotNull(result.getPayload());
+        
+        
+        
+        
+    }
+    
+    
      /** Test a single Call invocation method of Globus Grid Service using a Mule
      * Message with ResourceKey created from factory service and perform set termination time 
      * @throws Exception exception
