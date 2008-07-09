@@ -14,7 +14,7 @@ import org.mule.umo.UMOEvent;
 
 import org.apache.axis.client.Call;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Interface GenenericPortType.
  */
@@ -26,10 +26,10 @@ public interface GenericPortType extends java.rmi.Remote
     
     
         /** The Constant DESTROY_OPERATION. */
-        public static final int DESTROY_OPERATION = 5;
+       int DESTROY_OPERATION = 5;
         
         /** The Constant SET_TERMINATION_TIME_OPERATION. */
-        public static final int SET_TERMINATION_TIME_OPERATION = 6;
+        int SET_TERMINATION_TIME_OPERATION = 6;
 
         /**
          * Gets the resource property.
@@ -93,5 +93,6 @@ public interface GenericPortType extends java.rmi.Remote
          */
         org.apache.axis.description.OperationDesc getOperation(int operation);
 }
+
 
 
