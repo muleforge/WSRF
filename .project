@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>WSRFTransport</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.maven.ide.eclipse.maven2Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.atlassw.tools.eclipse.checkstyle.CheckstyleBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.maven.ide.eclipse.maven2Nature</nature>
+		<nature>com.atlassw.tools.eclipse.checkstyle.CheckstyleNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>srcAxis</name>
+			<type>2</type>
+			<location>I:/extsrc/axis-src-1_4/axis-1_4/src</location>
+		</link>
+		<link>
+			<name>mule-1.4.3-src</name>
+			<type>2</type>
+			<location>I:/mule-1.4.3/src/mule-1.4.3-src</location>
+		</link>
+	</linkedResources>
+</projectDescription>
