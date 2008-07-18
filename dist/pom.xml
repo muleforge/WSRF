@@ -8,11 +8,11 @@
 	<properties>
 		<muleVersion>1.4.2</muleVersion>
 	</properties>
-	<artifactId>mule-wsrf-transport</artifactId>
+	<artifactId>mule-transport-wsrf</artifactId>
 	<!-- This should be "pom" not "jar" but if it is set to "pom", the list of dependencies gets ignored
 	by the assembly plugin. -->
 	<packaging>jar</packaging>
-	<name>org.mule.transports.mule-transport-wsrf</name>
+	<name>WSRF Transport</name>
 	<description>The aim of this project is to extend WSDL SOAP mule transport in order to integrate Grid Globus Service (GT4 Globus Alliance org) on Mule.</description>
 	<distributionManagement>
 		<repository>
