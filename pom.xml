@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.mule.transports</groupId>
-  <artifactId>wsrf-transport</artifactId>
+  <artifactId>mule-wsrf-transport</artifactId>
   <name>org.mule.transports.mule-transport-wsrf</name>
-  <version>1.0</version>
+  <version>1.0</version> 
   <description>The aim of this Project is to extend WSDL SOAP mule transport in order to integrate Grid Globus Service (GT4 Globus Alliance org) on Mule.</description>
   <issueManagement>
     <system>JIRA</system>
@@ -32,9 +32,9 @@
     </developer>
   </developers>
   <scm>
-    <connection>svn://svn.wsrf-transport.muleforge.org/wsrf-transport/</connection>
-    <developerConnection>https://svn.muleforge.org/wsrf-transport/</developerConnection>
-    <url>http://svn.muleforge.org/wsrf-transport/</url>
+    <connection>scm:svn:http://svn.muleforge.org/wsrf-transport/tags/mule-wsrf-transport-1.0</connection>
+    <developerConnection>scm:svn:https://svn.muleforge.org/wsrf-transport/tags/mule-wsrf-transport-1.0</developerConnection>
+    <url>http://svn.muleforge.org/wsrf-transport/tags/mule-wsrf-transport-1.0</url>
   </scm>
   <build>
     <extensions>
@@ -73,7 +73,9 @@
           <configLocation>http://www.muleforge.org/download/checkstyle.xml?version=1</configLocation>
         </configuration>
       </plugin>
-      
+
+
+		
     </plugins>
 	  
 	  
@@ -222,5 +224,7 @@
 	
     <muleVersion>1.4.2</muleVersion>
   </properties>
+
+
 </project>
 

@@ -13,9 +13,7 @@ package org.mule.providers.soap.axis.wsdl.wsrf.test.integration;
 import org.mule.config.MuleProperties;
 import org.mule.extras.client.MuleClient;
 import org.mule.providers.soap.SoapMethod;
-import org.mule.providers.soap.axis.wsdl.wsrf.test.util.InfoEntryCatalogType;
 import org.mule.providers.soap.axis.wsdl.wsrf.test.util.MessagesTest;
-import org.mule.providers.soap.axis.wsdl.wsrf.test.util.OsdEntry;
 import org.mule.providers.soap.axis.wsdl.wsrf.util.WSRFParameter;
 import org.mule.tck.FunctionalTestCase;
 import org.mule.umo.UMOMessage;
@@ -25,9 +23,6 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
-import org.apache.axis.message.MessageElement;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 
 /**
  * Test Message Dispatcher synchr for Wsdl Wsrf Web Service
