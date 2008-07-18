@@ -1,0 +1,7 @@
+http\://www.globus.org/namespaces/examples/core/MathService_instance=org.globus.examples.stubs.MathService_instance
+http\://www.globus.org/namespaces/examples/core/MathService_instance/bindings=org.globus.examples.stubs.MathService_instance.bindings
+http\://www.globus.org/namespaces/examples/core/MathService_instance/service=org.globus.examples.stubs.MathService_instance.service
+
+http\://www.globus.org/namespaces/examples/core/FactoryService=org.globus.examples.stubs.Factory
+http\://www.globus.org/namespaces/examples/core/FactoryService/bindings=org.globus.examples.stubs.Factory.bindings
+http\://www.globus.org/namespaces/examples/core/FactoryService/service=org.globus.examples.stubs.Factory.service

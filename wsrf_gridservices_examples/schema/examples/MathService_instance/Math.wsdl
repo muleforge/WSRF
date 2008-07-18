@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="MathService"
+    targetNamespace="http://www.globus.org/namespaces/examples/core/MathService_instance"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://www.globus.org/namespaces/examples/core/MathService_instance"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsrp="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.xsd"
+    xmlns:wsrlw="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.wsdl"
+    xmlns:wsrpw="http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.wsdl"
+    xmlns:wsdlpp="http://www.globus.org/namespaces/2004/10/WSDLPreprocessor"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+<wsdl:import 
+    namespace=
+    "http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceProperties-1.2-draft-01.wsdl"
+    location="../../wsrf/properties/WS-ResourceProperties.wsdl" />
+
+<wsdl:import 
+    namespace=
+    "http://docs.oasis-open.org/wsrf/2004/06/wsrf-WS-ResourceLifetime-1.2-draft-01.wsdl"
+    location="../../wsrf/lifetime/WS-ResourceLifetime.wsdl" />
+
+<!--============================================================
+
+                      T Y P E S
+                      
+  ============================================================-->
+<types>
+<xsd:schema targetNamespace="http://www.globus.org/namespaces/examples/core/MathService_instance"
+    xmlns:tns="http://www.globus.org/namespaces/examples/core/MathService_instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    
+
+	<!-- REQUESTS AND RESPONSES -->
+	
+	<xsd:element name="add" type="xsd:int"/>
+	<xsd:element name="addResponse">
+		<xsd:complexType/>
+	</xsd:element>
+
+	<xsd:element name="subtract" type="xsd:int"/>
+	<xsd:element name="subtractResponse">
+		<xsd:complexType/>
+	</xsd:element>
+
+	<xsd:element name="getValueRP">
+		<xsd:complexType/>
+	</xsd:element>
+	<xsd:element name="getValueRPResponse" type="xsd:int"/>
+
+
+	<!-- RESOURCE PROPERTIES -->
+
+	<xsd:element name="Value" type="xsd:int"/>
+	<xsd:element name="LastOp" type="xsd:string"/>
+	
+	<xsd:element name="NewIntValue" type="xsd:int"/>
+	<xsd:element name="NewStringValue" type="xsd:string"/>
+
+	<xsd:complexType name="InfoEntryCatalogType">
+		
+		<xsd:sequence>
+
+			<xsd:element name="IDFile" type="xsd:string" minOccurs="1"
+				maxOccurs="1" />
+			<xsd:element name="returnCode" type="xsd:string"
+				maxOccurs="1" minOccurs="1">
+			</xsd:element>
+			<xsd:element name="isSuccess" type="xsd:boolean"
+				maxOccurs="1" minOccurs="1">
+			</xsd:element>
+			<xsd:element name="osd" type="tns:osdEntry"
+				maxOccurs="unbounded" minOccurs="1">
+			</xsd:element>
+			<xsd:element name="sunt" type="xsd:string" maxOccurs="1" minOccurs="1"></xsd:element>
+		</xsd:sequence>
+
+	</xsd:complexType>
+	  <xsd:complexType name="osdEntry">
+            	<xsd:sequence>
+            		<xsd:element name="pathFileID" type="xsd:string"
+            			maxOccurs="1" minOccurs="1">
+            		</xsd:element>
+            		<xsd:element name="addressEPR" type="xsd:string" maxOccurs="1" minOccurs="1"></xsd:element>
+            		<xsd:element name="subLengthByte" type="xsd:int" maxOccurs="1" minOccurs="1"></xsd:element>
+            	</xsd:sequence>
+     </xsd:complexType>
+	
+	<xsd:element name="MathResourceProperties">
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element ref="tns:Value" minOccurs="1" maxOccurs="1"/>
+			<xsd:element ref="tns:LastOp" minOccurs="1" maxOccurs="1"/>
+			<xsd:element ref="tns:NewStringValue" minOccurs="1" maxOccurs="1"/>
+			<xsd:element ref="tns:NewIntValue" minOccurs="1" maxOccurs="1"/>
+			<xsd:element type="tns:InfoEntryCatalogType" minOccurs="1" maxOccurs="1"/>
+			
+		</xsd:sequence>
+	</xsd:complexType>
+	</xsd:element>
+  
+</xsd:schema>
+</types>
+
+
+<!--============================================================
+
+                       M E S S A G E S
+                      
+  ============================================================-->
+
+    
+<message name="AddInputMessage">
+	<part name="parameters" element="tns:add"/>
+</message>
+<message name="AddOutputMessage">
+	<part name="parameters" element="tns:addResponse"/>
+</message>
+
+<message name="SubtractInputMessage">
+	<part name="parameters" element="tns:subtract"/>
+</message>
+<message name="SubtractOutputMessage">
+	<part name="parameters" element="tns:subtractResponse"/>
+</message>
+
+<message name="GetValueRPInputMessage">
+	<part name="parameters" element="tns:getValueRP"/>
+</message>
+<message name="GetValueRPOutputMessage">
+	<part name="parameters" element="tns:getValueRPResponse"/>
+</message>
+
+
+
+<!--============================================================
+
+                       P O R T T Y P E
+                      
+  ============================================================-->
+<portType name="MathPortType" 
+    wsdlpp:extends="wsrpw:GetResourceProperty
+    wsrpw:SetResourceProperties
+    wsrlw:ImmediateResourceTermination 
+    wsrlw:ScheduledResourceTermination
+    " 
+    wsrp:ResourceProperties="tns:MathResourceProperties">
+
+	<operation name="add">
+		<input message="tns:AddInputMessage"/>
+		<output message="tns:AddOutputMessage"/>
+	</operation>
+        
+	<operation name="subtract">
+		<input message="tns:SubtractInputMessage"/>
+		<output message="tns:SubtractOutputMessage"/>
+	</operation>
+
+	<operation name="getValueRP">
+		<input message="tns:GetValueRPInputMessage"/>
+		<output message="tns:GetValueRPOutputMessage"/>
+	</operation>
+
+</portType>
+
+</definitions>

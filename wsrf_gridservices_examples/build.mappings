@@ -1,0 +1,2 @@
+first,org/globus/examples/services/core/first,schema/examples/MathService_instance/Math.wsdl
+factory,org/globus/examples/services/core/factory,schema/examples/MathService_instance/Math.wsdl,schema/examples/FactoryService/Factory.wsdl

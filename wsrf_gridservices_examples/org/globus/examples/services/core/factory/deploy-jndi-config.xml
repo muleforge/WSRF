@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jndiConfig xmlns="http://wsrf.globus.org/jndi/config">
+
+<!-- Instance service -->
+<service name="examples/core/factory/MathService">
+	<resource name="home" type="org.globus.examples.services.core.factory.impl.MathResourceHome">
+	<resourceParams>
+
+		<parameter>
+			<name>resourceClass</name>
+			<value>org.globus.examples.services.core.factory.impl.MathResource</value>
+		</parameter>
+
+		<parameter>
+			<name>factory</name>
+			<value>org.globus.wsrf.jndi.BeanFactory</value>
+		</parameter>
+
+		<parameter>
+			<name>resourceKeyType</name>
+			<value>java.lang.Integer</value>
+		</parameter>
+
+		<parameter>
+			<name>resourceKeyName</name>
+			<value>{http://www.globus.org/namespaces/examples/core/MathService_instance}MathResourceKey</value>
+		</parameter>
+
+	</resourceParams>
+	</resource>
+</service>
+
+<!-- Factory service -->
+<service name="examples/core/factory/MathFactoryService">
+	<resourceLink name="home" target="java:comp/env/services/examples/core/factory/MathService/home"/>
+</service>
+
+</jndiConfig>

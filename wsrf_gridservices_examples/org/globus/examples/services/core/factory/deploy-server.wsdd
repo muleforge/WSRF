@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment name="defaultServerConfig" 
+    xmlns="http://xml.apache.org/axis/wsdd/" 
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Instance service -->
+    <service name="examples/core/factory/MathService" provider="Handler" use="literal" style="document">
+        <parameter name="className" value="org.globus.examples.services.core.factory.impl.MathService"/>
+        <wsdlFile>share/schema/examples/MathService_instance/Math_service.wsdl</wsdlFile>
+        <parameter name="allowedMethods" value="*"/>
+        <parameter name="handlerClass" value="org.globus.axis.providers.RPCProvider"/>
+        <parameter name="scope" value="Application"/>
+        <parameter name="providers" value="GetRPProvider SetRPProvider DestroyProvider SetTerminationTimeProvider"/>
+    </service>
+
+    <!-- Factory service -->
+    <service name="examples/core/factory/MathFactoryService" provider="Handler" use="literal" style="document">
+        <parameter name="className" value="org.globus.examples.services.core.factory.impl.MathFactoryService"/>
+        <wsdlFile>share/schema/examples/FactoryService/Factory_service.wsdl</wsdlFile>
+        <parameter name="allowedMethods" value="*"/>
+        <parameter name="handlerClass" value="org.globus.axis.providers.RPCProvider"/>
+        <parameter name="scope" value="Application"/>
+        <parameter name="instance" value="examples/core/factory/MathService"/>
+    </service>
+
+</deployment>
