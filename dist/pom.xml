@@ -8,11 +8,11 @@
 	<properties>
 		<muleVersion>1.4.2</muleVersion>
 	</properties>
-	<artifactId>wsrf-transport</artifactId>
+	<artifactId>mule-transport-wsrf</artifactId>
 	<!-- This should be "pom" not "jar" but if it is set to "pom", the list of dependencies gets ignored
 	by the assembly plugin. -->
 	<packaging>jar</packaging>
-	<name>org.mule.transports.mule-transport-wsrf</name>
+	<name>WSRF Transport</name>
 	<description>The aim of this project is to extend WSDL SOAP mule transport in order to integrate Grid Globus Service (GT4 Globus Alliance org) on Mule.</description>
 	<distributionManagement>
 		<repository>
@@ -28,12 +28,117 @@
 		</snapshotRepository>
 	</distributionManagement>
 	<dependencies>
-		<!-- Add dependencies here -->
-		<dependency>
-			<groupId>org.mule.tests</groupId>
-			<artifactId>mule-tests-functional</artifactId>
-			<version>${version}</version>
-		</dependency>
+	 <dependency>
+      <groupId>org.mule.transports</groupId>
+      <artifactId>mule-transport-vm</artifactId>
+      <version>${muleVersion}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mule.transports</groupId>
+      <artifactId>mule-transport-tcp</artifactId>
+      <version>${muleVersion}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mule.transports</groupId>
+      <artifactId>mule-transport-file</artifactId>
+      <version>${muleVersion}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mule.transports</groupId>
+      <artifactId>mule-transport-stream</artifactId>
+      <version>${muleVersion}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mule.modules</groupId>
+      <artifactId>mule-module-client</artifactId>
+      <version>${muleVersion}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mule.tests</groupId>
+      <artifactId>mule-tests-functional</artifactId>
+      <version>${muleVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>wsrf</groupId>
+      <artifactId>addressing</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.axis</groupId>
+      <artifactId>axis</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mule.transports</groupId>
+      <artifactId>mule-transport-axis</artifactId>
+      <version>${muleVersion}</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.activation</groupId>
+      <artifactId>activation</artifactId>
+      <version>1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>spring</groupId>
+      <artifactId>spring</artifactId>
+      <version>1.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>spring</groupId>
+      <artifactId>spring-aop</artifactId>
+      <version>1.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>spring</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>1.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>spring</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>1.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>aopalliance</groupId>
+      <artifactId>aopalliance</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>wsrf</groupId>
+      <artifactId>wsrfcore</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>wsrf</groupId>
+      <artifactId>wsdl4j</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>wsrf</groupId>
+      <artifactId>wsrf_core_stubs</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>wsrf</groupId>
+      <artifactId>cog-jglobus</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>wss4j</groupId>
+      <artifactId>wss4j</artifactId>
+      <version>1.5.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk12</artifactId>
+      <version>130</version>
+    </dependency>
 	</dependencies>
 	<build>
 		<defaultGoal>install</defaultGoal>
@@ -50,7 +155,7 @@
 					
 					<finalName>${artifactId}-${version}</finalName>
 					<descriptors>
-						<descriptor>dist/assembly.xml</descriptor>
+						<descriptor>assembly.xml</descriptor>
 					</descriptors>
 					<appendAssemblyId>false</appendAssemblyId>
 					<tarLongFileMode>gnu</tarLongFileMode>
@@ -79,7 +184,7 @@
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-webdav</artifactId>
-				<version>1.0-beta-2-SNAPSHOT</version>
+				<version>1.0-beta-2</version>
 			</extension>
 		</extensions>
 			
